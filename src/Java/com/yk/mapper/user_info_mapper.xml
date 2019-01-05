@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yk.dao.UserInfoDao">
+
+    <resultMap type="com.yk.pojo.UserInfo" id="userInfoResultMap">
+        <!-- 用id属性来映射主键字段 -->
+        <id property="id" column="_id"/>
+        <!-- 用result属性来映射非主键字段 -->
+        <result property="userId" column="user_id"/>
+        <result property="userName" column="user_name"/>
+        <result property="userPhone" column="user_phone"/>
+        <result property="userPassword" column="user_password"/>
+        <result property="userSex" column="user_sex"/>
+    </resultMap>
+    
+    <parameterMap id="userInfoParameterMap" type="com.yk.pojo.UserInfo">
+        <parameter property="userId" resultMap="userInfoResultMap"/>
+        <parameter property="userName" resultMap="userInfoResultMap"/>
+        <parameter property="userPhone" resultMap="userInfoResultMap"/>
+        <parameter property="userPassword" resultMap="userInfoResultMap"/>
+        <parameter property="userSex" resultMap="userInfoResultMap"/>
+    </parameterMap>
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="selectByUserId"  resultMap="userInfoResultMap">
+        select * from user_info where user_id = #{userId}
+    </select>
+
+    <insert id="insertUser" parameterMap="userInfoParameterMap">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+            user_info(`_id`,user_id,user_name,user_phone,user_password,user_sex)
+        values
+            (null,#{userId},#{userName},#{userPhone},#{userPassword},#{userSex})
+    </insert>
+</mapper>
