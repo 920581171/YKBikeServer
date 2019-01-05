@@ -3,7 +3,7 @@ package com.yk.response;
 public abstract class CommonResponse {
     private int code;
     private String msg;
-    private String data;
+    private Object data;
 
     public int getCode() {
         return code;
@@ -21,11 +21,11 @@ public abstract class CommonResponse {
         this.msg = msg;
     }
 
-    public String getData() {
+    public Object getData() {
         return data;
     }
 
-    public void setData(String data) {
+    public void setData(Object data) {
         this.data = data;
     }
 }

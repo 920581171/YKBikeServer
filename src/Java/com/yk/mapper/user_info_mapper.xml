@@ -29,6 +29,18 @@
         where user_id = #{userId}
     </select>
 
+    <select id="selectByUserName" resultMap="userInfoResultMap">
+        select *
+        from user_info
+        where user_name = #{userName}
+    </select>
+
+    <select id="selectByUserPhone" resultMap="userInfoResultMap">
+        select *
+        from user_info
+        where user_phone = #{userPhone}
+    </select>
+
     <insert id="insertUser" parameterMap="userInfoParameterMap">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()

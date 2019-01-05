@@ -15,9 +15,28 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     UserInfoDao userInfoDao;
 
+    /**
+     *根据userId查找用户
+     */
     @Override
     public UserInfo searchUserId(String userId) {
         return userInfoDao.selectByUserId(userId);
+    }
+
+    /**
+     *根据userName查找用户
+     */
+    @Override
+    public UserInfo searchUserName(String userName) {
+        return userInfoDao.selectByUserName(userName);
+    }
+
+    /**
+     *根据userPhone查找用户
+     */
+    @Override
+    public UserInfo searchUserPhone(String userPhone) {
+        return userInfoDao.selectByUserPhone(userPhone);
     }
 
     /**
