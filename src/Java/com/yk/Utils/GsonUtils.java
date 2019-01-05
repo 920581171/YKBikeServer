@@ -3,24 +3,18 @@ package com.yk.Utils;
 import com.google.gson.Gson;
 
 public class GsonUtils {
-    private static GsonUtils instance;
+    private static Gson gson;
 
     private GsonUtils(){}
 
-    public static GsonUtils getInstance() {
-        if (instance==null){
+    public static Gson getGson() {
+        if (gson==null){
             synchronized (GsonUtils.class){
-                if (instance==null){
-                    instance = new GsonUtils();
+                if (gson==null){
+                    gson = new Gson();
                 }
             }
         }
-        return instance;
-    }
-
-    private Gson gson = new Gson();
-
-    public Gson getGson() {
         return gson;
     }
 }

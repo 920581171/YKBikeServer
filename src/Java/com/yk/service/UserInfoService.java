@@ -4,6 +4,7 @@ import com.yk.pojo.UserInfo;
 
 public interface UserInfoService {
     UserInfo searchUserId(String userId);
-    int addUserName(String userName,String userPassword);
-    int addUserPhone(String userPhone);
+    int addUserByName(String userName, String userPassword);
+    int addUserByPhone(String userPhone);
+    int updateUserInfo(UserInfo userInfo);
 }

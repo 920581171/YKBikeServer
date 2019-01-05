@@ -13,7 +13,7 @@
         <result property="userPassword" column="user_password"/>
         <result property="userSex" column="user_sex"/>
     </resultMap>
-    
+
     <parameterMap id="userInfoParameterMap" type="com.yk.pojo.UserInfo">
         <parameter property="userId" resultMap="userInfoResultMap"/>
         <parameter property="userName" resultMap="userInfoResultMap"/>
@@ -23,8 +23,10 @@
     </parameterMap>
 
     <!-- 目的：为dao接口方法提供sql语句配置 -->
-    <select id="selectByUserId"  resultMap="userInfoResultMap">
-        select * from user_info where user_id = #{userId}
+    <select id="selectByUserId" resultMap="userInfoResultMap">
+        select *
+        from user_info
+        where user_id = #{userId}
     </select>
 
     <insert id="insertUser" parameterMap="userInfoParameterMap">
@@ -32,8 +34,20 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-            user_info(`_id`,user_id,user_name,user_phone,user_password,user_sex)
+        user_info(`_id`,user_id,user_name,user_phone,user_password,user_sex)
         values
-            (null,#{userId},#{userName},#{userPhone},#{userPassword},#{userSex})
+        (null,#{userId},#{userName},#{userPhone},#{userPassword},#{userSex})
     </insert>
+
+    <update id="updateUserInfo" parameterMap="userInfoParameterMap">
+        update
+            user_info
+        set
+            user_name     = #{userName},
+            user_phone    = #{userPhone},
+            user_password = #{userPassword},
+            user_sex      = #{userSex}
+        where
+            user_id = #{userId}
+    </update>
 </mapper>

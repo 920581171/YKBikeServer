@@ -1,6 +1,6 @@
 package com.yk.response;
 
-public class CommonResponse {
+public abstract class CommonResponse {
     private int code;
     private String msg;
     private String data;

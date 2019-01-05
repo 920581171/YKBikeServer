@@ -20,37 +20,57 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.selectByUserId(userId);
     }
 
+    /**
+     * 根据用户名添加用户
+     * @return 自增的id
+     */
     @Override
-    public int addUserName(String userName, String userPassword) {
+    public int addUserByName(String userName, String userPassword) {
         String userId = randomUserId();
         while (userInfoDao.selectByUserId(userId) != null) {
             userId = randomUserId();
         }
 
         UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(userId);
-        userInfo.setUserName(userName);
-        userInfo.setUserPassword(userPassword);
+        userInfo.setUserId(userId)
+                .setUserName(userName)
+                .setUserPassword(userPassword);
         userInfoDao.insertUser(userInfo);
 
         return userInfo.getId();
     }
 
+    /**
+     * 根据手机号码添加用户
+     * @return 自增的id
+     */
     @Override
-    public int addUserPhone(String userPhone) {
+    public int addUserByPhone(String userPhone) {
         String userId = randomUserId();
         while (userInfoDao.selectByUserId(userId) != null) {
             userId = randomUserId();
         }
 
-        UserInfo userInfo = new UserInfo();
-        userInfo.setUserId(userId);
-        userInfo.setUserPhone(userPhone);
+        UserInfo userInfo = new UserInfo()
+                .setUserId(userId)
+                .setUserPhone(userPhone);
         userInfoDao.insertUser(userInfo);
 
         return userInfo.getId();
     }
 
+    /**
+     * 根据userId 更新用户信息
+     * @return 更改的条数
+     */
+    @Override
+    public int updateUserInfo(UserInfo userInfo) {
+        return userInfoDao.updateUserInfo(userInfo);
+    }
+
+    /**
+     * 创建随机userId
+     */
     private String randomUserId() {
         DateFormat dateFormat = new SimpleDateFormat("yyMMdd");
         Date date = new Date();
