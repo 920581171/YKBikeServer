@@ -1,21 +1,20 @@
 package com.yk.controller;
 
-import com.yk.Utils.ResponseUtils;
-import com.yk.constant.Consts;
+import com.yk.Utils.GsonUtils;
+import com.yk.Utils.ImageUtils;
 import com.yk.impl.UserInfoServiceImpl;
 import com.yk.pojo.UserInfo;
-import com.yk.response.ErrorCommonResponse;
-import com.yk.response.SuccessCommonResponse;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
+import java.io.*;
 
 @Api(description = "userInfo")
 @Controller
@@ -24,78 +23,121 @@ public class UserInfoController {
     @Autowired
     UserInfoServiceImpl userInfoService;
 
-    @ApiOperation(value="根据UserId查找用户",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "上传头像", httpMethod = "POST")
+    @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
+    public String uploadAvatar(@RequestParam("file") MultipartFile original, @RequestParam("userId") String userId) {
+        String[] paths = {"D:\\Avatar\\Source\\" + userId + ".jpg",
+                "D:\\Avatar\\High\\" + userId + ".jpg",
+                "D:\\Avatar\\Middle\\" + userId + ".jpg",
+                "D:\\Avatar\\Low\\" + userId + ".jpg"};
+        int[] size = {0, 512, 256, 128};
+
+        try {
+            for (int i = 0; i < paths.length; i++) {
+                File file = new File(paths[i]);
+                if (!file.getParentFile().exists())
+                    if (!file.getParentFile().mkdirs())
+                        return GsonUtils.responseErrorJson();
+
+                if (!file.exists()) {
+                    if (!file.createNewFile())
+                        return GsonUtils.responseErrorJson();
+                }
+
+                if (i == 0) {
+                    original.transferTo(file);
+                } else {
+                    ImageUtils.scale2(paths[0], paths[i], size[i], size[i], true);
+                }
+            }
+            return GsonUtils.responseSuccessJson();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return GsonUtils.responseErrorJson();
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "下载头像",httpMethod = "GET")
+    @RequestMapping(value = "/downloadAvatar",method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId")String userId,@RequestParam("level")String level){
+        try {
+        File file = new File("D:\\Avatar\\Source\\" + userId+".jpg");
+        InputStream in = new FileInputStream(file);
+            byte[] b=new byte[in.available()];
+            in.read(b);
+            HttpHeaders headers = new HttpHeaders();
+            String filename = new String(file.getName().getBytes("gbk"),"iso8859-1");
+            headers.add("Content-Disposition", "attachment;filename="+filename);
+            HttpStatus statusCode=HttpStatus.OK;
+            in.close();
+            return new ResponseEntity<byte[]>(b, headers, statusCode);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "根据UserId查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST)
-    public void findUserByUserId(@RequestParam("userId") String userId,
-                                 HttpServletResponse rp){
-
+    public String findUserByUserId(@RequestParam("userId") String userId) {
         UserInfo userInfo = userInfoService.searchUserId(userId);
-        if (userInfo!=null){
-            ResponseUtils.print(rp,new SuccessCommonResponse(userInfo));
-        }else{
-            ResponseUtils.print(rp,new ErrorCommonResponse());
-        }
+        return (userInfo != null) ?
+                GsonUtils.responseSuccessJson(userInfo) :
+                GsonUtils.responseErrorJson();
     }
 
-    @ApiOperation(value="根据UserName查找用户",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "根据UserName查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST)
-    public void findUserByUserName(@RequestParam("userName") String userName,
-                                 HttpServletResponse rp){
-
+    public String findUserByUserName(@RequestParam("userName") String userName) {
         UserInfo userInfo = userInfoService.searchUserName(userName);
-        if (userInfo!=null){
-            ResponseUtils.print(rp,new SuccessCommonResponse(userInfo));
-        }else{
-            ResponseUtils.print(rp,new ErrorCommonResponse());
-        }
+        return (userInfo != null) ?
+                GsonUtils.responseSuccessJson(userInfo) :
+                GsonUtils.responseErrorJson();
     }
 
-    @ApiOperation(value="根据UserPhone查找用户",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "根据UserPhone查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST)
-    public void findUserByUserPhone(@RequestParam("userPhone") String userPhone,
-                                 HttpServletResponse rp){
-
+    public String findUserByUserPhone(@RequestParam("userPhone") String userPhone) {
         UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
-        if (userInfo!=null){
-            ResponseUtils.print(rp,new SuccessCommonResponse(userInfo));
-        }else{
-            ResponseUtils.print(rp,new ErrorCommonResponse());
-        }
+        return (userInfo != null) ?
+                GsonUtils.responseSuccessJson(userInfo) :
+                GsonUtils.responseErrorJson();
     }
 
-    @ApiOperation(value="通过手机号注册用户",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "通过手机号注册用户", httpMethod = "POST")
     @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST)
-    public void registerUserByPhone(@RequestParam("userPhone") String userPhone,
-                                    HttpServletResponse rp) {
-
-        if (userInfoService.addUserByPhone(userPhone) > 0) {
-            ResponseUtils.print(rp, new SuccessCommonResponse());
-        } else {
-            ResponseUtils.print(rp, new ErrorCommonResponse());
-        }
+    public String registerUserByPhone(@RequestParam("userPhone") String userPhone) {
+        return (userInfoService.addUserByPhone(userPhone) > 0) ?
+                GsonUtils.responseSuccessJson() :
+                GsonUtils.responseErrorJson();
     }
 
-    @ApiOperation(value="通过用户名和密码注册用户",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "通过用户名和密码注册用户", httpMethod = "POST")
     @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST)
-    public void registerUserByName(@RequestParam("userName") String userName,
-                                   @RequestParam("userPassword") String userPassword,
-                                   HttpServletResponse rp) {
+    public String registerUserByName(@RequestParam("userName") String userName,
+                                     @RequestParam("userPassword") String userPassword) {
 
-        if (userInfoService.addUserByName(userName, userPassword) > 0) {
-            ResponseUtils.print(rp, new SuccessCommonResponse());
-        } else {
-            ResponseUtils.print(rp, new ErrorCommonResponse());
-        }
+        return (userInfoService.addUserByName(userName, userPassword) > 0) ?
+                GsonUtils.responseSuccessJson() :
+                GsonUtils.responseErrorJson();
     }
 
-    @ApiOperation(value="更新用户信息",httpMethod="POST")
+    @ResponseBody
+    @ApiOperation(value = "更新用户信息", httpMethod = "POST")
     @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
-    public void updateUserInfo(@RequestParam("userId") String userId,
-                               @RequestParam("userName") String userName,
-                               @RequestParam("userPhone") String userPhone,
-                               @RequestParam("userPassword") String userPassword,
-                               @RequestParam("userSex") String userSex,
-                               HttpServletResponse rp) {
+    public String updateUserInfo(@RequestParam("userId") String userId,
+                                 @RequestParam("userName") String userName,
+                                 @RequestParam("userPhone") String userPhone,
+                                 @RequestParam("userPassword") String userPassword,
+                                 @RequestParam("userSex") String userSex) {
 
         UserInfo userInfo = new UserInfo()
                 .setUserId(userId)
@@ -104,11 +146,8 @@ public class UserInfoController {
                 .setUserPassword(userPassword)
                 .setUserSex(userSex);
 
-        if (userInfoService.updateUserInfo(userInfo) > 0) {
-            ResponseUtils.print(rp, new SuccessCommonResponse());
-        } else {
-            ResponseUtils.print(rp, new ErrorCommonResponse());
-        }
-
+        return (userInfoService.updateUserInfo(userInfo) > 0) ?
+                GsonUtils.responseSuccessJson() :
+                GsonUtils.responseErrorJson();
     }
 }
