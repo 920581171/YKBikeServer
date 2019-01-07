@@ -87,6 +87,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.updateUserInfo(userInfo);
     }
 
+    @Override
+    public int deleteUserInfo(UserInfo userInfo) {
+        return userInfoDao.deleteUserInfo(userInfo);
+    }
+
     /**
      * 创建随机userId
      */

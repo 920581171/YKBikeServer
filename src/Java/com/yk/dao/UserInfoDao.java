@@ -8,4 +8,5 @@ public interface UserInfoDao {
     UserInfo selectByUserPhone(String userPhone);
     void insertUser(UserInfo userInfo);
     int updateUserInfo(UserInfo userInfo);
+    int deleteUserInfo(UserInfo userInfo);
 }

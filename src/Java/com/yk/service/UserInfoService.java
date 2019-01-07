@@ -9,4 +9,5 @@ public interface UserInfoService {
     int addUserByName(String userName, String userPassword);
     int addUserByPhone(String userPhone);
     int updateUserInfo(UserInfo userInfo);
+    int deleteUserInfo(UserInfo userInfo);
 }

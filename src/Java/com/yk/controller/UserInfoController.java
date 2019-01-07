@@ -150,4 +150,14 @@ public class UserInfoController {
                 GsonUtils.responseSuccessJson() :
                 GsonUtils.responseErrorJson();
     }
+
+    @ResponseBody
+    @ApiOperation(value = "通过userId删除用户",httpMethod = "POST")
+    @RequestMapping(value = "/deleteUserInfo",method = RequestMethod.POST)
+    public String deleteUserInfo(@RequestParam("userId")String userId){
+        UserInfo userInfo = new UserInfo().setUserId(userId);
+        return (userInfoService.deleteUserInfo(userInfo) > 0) ?
+                GsonUtils.responseSuccessJson() :
+                GsonUtils.responseErrorJson();
+    }
 }

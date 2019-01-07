@@ -62,4 +62,8 @@
         where
             user_id = #{userId}
     </update>
+
+    <delete id="deleteUserInfo" parameterMap="userInfoParameterMap">
+        delete from user_info where user_id = #{userId}
+    </delete>
 </mapper>
