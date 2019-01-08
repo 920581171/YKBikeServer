@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yk.dao.AdminInfoDao">
+
+    <resultMap type="com.yk.pojo.AdminInfo" id="resultMap">
+        <!-- 用id属性来映射主键字段 -->
+        <id property="id" column="_id"/>
+        <!-- 用result属性来映射非主键字段 -->
+        <result property="adminId" column="admin_id"/>
+        <result property="adminName" column="admin_name"/>
+        <result property="adminPassword" column="admin_password"/>
+        <result property="adminPhone" column="admin_phone"/>
+    </resultMap>
+
+    <parameterMap id="parameterMap" type="com.yk.pojo.AdminInfo">
+        <parameter property="adminId" resultMap="resultMap"/>
+        <parameter property="adminName" resultMap="resultMap"/>
+        <parameter property="adminPassword" resultMap="resultMap"/>
+        <parameter property="adminPhone" resultMap="resultMap"/>
+    </parameterMap>
+
+    <!-- 目的：为dao接口方法提供sql语句配置 -->
+    <select id="selectOne" resultMap="resultMap">
+        select *
+        from admin_info
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectList" resultMap="resultMap">
+        select *
+        from admin_info
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectTable" resultMap="resultMap">
+        select *
+        from admin_info
+    </select>
+
+    <insert id="insert" parameterMap="parameterMap">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        admin_info(`_id`,admin_id,admin_name,admin_password,admin_phone)
+        values
+        (null,#{adminId},#{adminName},#{adminPassword},#{adminPhone})
+    </insert>
+
+    <update id="update" parameterMap="parameterMap">
+        update
+            admin_info
+        set
+            admin_name     = #{adminName},
+            admin_password = #{adminPassword},
+            admin_phone    = #{adminPhone}
+        where
+            admin_id = #{adminId}
+    </update>
+
+    <delete id="delete" parameterMap="parameterMap">
+        delete from admin_info
+        where admin_id = #{adminId}
+    </delete>
+</mapper>
