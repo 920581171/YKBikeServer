@@ -7,6 +7,7 @@ public class BikeInfo {
     private double latitude;
     private double longitude;
     private int mileage;
+    private String fix;
 
     public int getId() {
         return id;
@@ -59,6 +60,15 @@ public class BikeInfo {
 
     public BikeInfo setMileage(int mileage) {
         this.mileage = mileage;
+        return this;
+    }
+
+    public String getFix() {
+        return fix;
+    }
+
+    public BikeInfo setFix(String fix) {
+        this.fix = fix;
         return this;
     }
 }

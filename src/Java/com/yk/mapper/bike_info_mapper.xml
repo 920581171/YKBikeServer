@@ -12,6 +12,7 @@
         <result property="latitude" column="latitude"/>
         <result property="longitude" column="longitude"/>
         <result property="mileage" column="mileage"/>
+        <result property="fix" column="fix"/>
     </resultMap>
 
     <parameterMap id="parameterMap" type="com.yk.pojo.BikeInfo">
@@ -20,6 +21,7 @@
         <parameter property="latitude" resultMap="resultMap"/>
         <parameter property="longitude" resultMap="resultMap"/>
         <parameter property="mileage" resultMap="resultMap"/>
+        <parameter property="fix" resultMap="resultMap"/>
     </parameterMap>
 
     <select id="selectOne" resultMap="resultMap">
@@ -44,9 +46,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        bike_info(`_id`,user_id,bike_id,latitude,longitude,mileage)
+        bike_info(`_id`,user_id,bike_id,latitude,longitude,mileage,fix)
         values
-        (null,#{userId},#{bikeId},#{latitude},#{longitude},#{mileage})
+        (null,#{userId},#{bikeId},#{latitude},#{longitude},#{mileage},#{fix})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -56,7 +58,8 @@
             user_id   = #{userId},
             latitude  = #{latitude},
             longitude = #{longitude},
-            mileage   = #{mileage}
+            mileage   = #{mileage},
+            fix = #{fix}
         where
             bike_id = #{bikeId}
     </update>

@@ -24,17 +24,17 @@ public class BikeInfoController {
     @ResponseBody
     @ApiOperation(value = "查找所有自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/findAllBikeInfo", method = RequestMethod.POST)
-    public String findAllBikeInfo(){
+    public String findAllBikeInfo() {
         List<BikeInfo> bikeInfos = bikeInfoService.searchAllBikeInfo();
-        return GsonUtils.responseObjectJson(bikeInfos!=null,bikeInfos);
+        return GsonUtils.responseObjectJson(bikeInfos != null, bikeInfos);
     }
 
     @ResponseBody
     @ApiOperation(value = "根据bikeId查询自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/findBikeInfoByBikeId", method = RequestMethod.POST)
-    public String findBikeInfoByBikeId(@RequestParam("bikeId") String bikeId){
+    public String findBikeInfoByBikeId(@RequestParam("bikeId") String bikeId) {
         BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
-        return GsonUtils.responseObjectJson(bikeInfo!=null,bikeInfo);
+        return GsonUtils.responseObjectJson(bikeInfo != null, bikeInfo);
     }
 
     @ResponseBody
@@ -50,16 +50,18 @@ public class BikeInfoController {
     @ApiOperation(value = "更新自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/updateBikeInfo", method = RequestMethod.POST)
     public String updateBikeInfo(@RequestParam("bikeId") String bikeId,
-                             @RequestParam("userId") String userId,
-                             @RequestParam("latitude") double latitude,
-                             @RequestParam("longitude") double longitude,
-                             @RequestParam("mileage") int mileage) {
+                                 @RequestParam("userId") String userId,
+                                 @RequestParam("latitude") double latitude,
+                                 @RequestParam("longitude") double longitude,
+                                 @RequestParam("mileage") int mileage,
+                                 @RequestParam("fix") String fix) {
 
         BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
         bikeInfo.setUserId(userId)
                 .setLatitude(latitude)
                 .setLongitude(longitude)
-                .setMileage(mileage);
+                .setMileage(mileage)
+                .setFix(fix);
 
         return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
     }

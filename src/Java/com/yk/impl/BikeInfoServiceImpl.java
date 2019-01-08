@@ -15,7 +15,7 @@ public class BikeInfoServiceImpl implements BikeInfoService {
 
     @Override
     public BikeInfo searchBikeId(String bikeId) {
-        return bikeInfoDao.selectOne(BikeInfoDao.COLUMN_BIKE_ID,bikeId);
+        return bikeInfoDao.selectOne(BikeInfoDao.COLUMN_BIKE_ID, bikeId);
     }
 
     @Override
@@ -25,12 +25,22 @@ public class BikeInfoServiceImpl implements BikeInfoService {
 
     @Override
     public int addBikeInfo(String bikeId, double latitude, double longitude) {
-        BikeInfo bikeInfo = new BikeInfo()
-                .setBikeId(bikeId)
-                .setLatitude(latitude)
-                .setLongitude(longitude)
-                .setMileage(0);
-        bikeInfoDao.insert(bikeInfo);
+
+        BikeInfo bikeInfo = searchBikeId(bikeId);
+
+        if (searchBikeId(bikeId) != null) {
+            bikeInfo.setLatitude(latitude);
+            bikeInfo.setLongitude(longitude);
+            bikeInfoDao.update(bikeInfo);
+        } else {
+            bikeInfo = new BikeInfo()
+                    .setBikeId(bikeId)
+                    .setLatitude(latitude)
+                    .setLongitude(longitude)
+                    .setMileage(0)
+                    .setFix("0");
+            bikeInfoDao.insert(bikeInfo);
+        }
         return bikeInfo.getId();
     }
 
