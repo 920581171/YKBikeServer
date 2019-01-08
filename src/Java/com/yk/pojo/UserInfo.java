@@ -6,7 +6,8 @@ public class UserInfo {
     private String userName;
     private String userPhone;
     private String userPassword;
-    private String userSex;
+    private float deposit;
+    private float balance;
 
     public int getId() {
         return id;
@@ -53,12 +54,21 @@ public class UserInfo {
         return this;
     }
 
-    public String getUserSex() {
-        return userSex;
+    public float getDeposit() {
+        return deposit;
     }
 
-    public UserInfo setUserSex(String userSex) {
-        this.userSex = userSex;
+    public UserInfo setDeposit(float deposit) {
+        this.deposit = deposit;
+        return this;
+    }
+
+    public float getBalance() {
+        return balance;
+    }
+
+    public UserInfo setBalance(float balance) {
+        this.balance = balance;
         return this;
     }
 }

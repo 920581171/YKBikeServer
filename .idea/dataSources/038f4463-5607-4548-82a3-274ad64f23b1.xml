@@ -854,41 +854,86 @@
       <Charset>utf8mb4</Charset>
       <DefaultForCharset>0</DefaultForCharset>
     </collation>
-    <table id="218" parent="20" name="user_info"/>
-    <column id="219" parent="218" name="_id">
+    <table id="218" parent="20" name="bike_info"/>
+    <table id="219" parent="20" name="user_info"/>
+    <column id="220" parent="218" name="_id">
       <Position>1</Position>
-      <DataType>int(10) unsigned|0s</DataType>
+      <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="220" parent="218" name="user_id">
+    <column id="221" parent="218" name="user_id">
+      <Position>2</Position>
+      <DataType>char(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="222" parent="218" name="bike_id">
+      <Position>3</Position>
+      <DataType>char(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="223" parent="218" name="latitude">
+      <Position>4</Position>
+      <DataType>double|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="224" parent="218" name="longitude">
+      <Position>5</Position>
+      <DataType>double|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="225" parent="218" name="mileage">
+      <Position>6</Position>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="226" parent="218" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>_id</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="227" parent="219" name="_id">
+      <Position>1</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="228" parent="219" name="user_id">
       <Position>2</Position>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="221" parent="218" name="user_name">
+    <column id="229" parent="219" name="user_name">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="222" parent="218" name="user_phone">
+    <column id="230" parent="219" name="user_phone">
       <Position>4</Position>
       <DataType>char(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="223" parent="218" name="user_password">
+    <column id="231" parent="219" name="user_password">
       <Position>5</Position>
       <DataType>char(16)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="224" parent="218" name="user_sex">
+    <column id="232" parent="219" name="deposit">
       <Position>6</Position>
-      <DataType>char(1)|0s</DataType>
+      <DataType>float|0s</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="225" parent="218" name="PRIMARY">
+    <column id="233" parent="219" name="balance">
+      <Position>7</Position>
+      <DataType>float|0s</DataType>
+      <DefaultExpression>&apos;0&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="234" parent="219" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>

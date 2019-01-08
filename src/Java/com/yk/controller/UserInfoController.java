@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.*;
+import java.util.List;
 
 @Api(description = "userInfo")
 @Controller
@@ -85,9 +86,15 @@ public class UserInfoController {
     @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST)
     public String findUserByUserId(@RequestParam("userId") String userId) {
         UserInfo userInfo = userInfoService.searchUserId(userId);
-        return (userInfo != null) ?
-                GsonUtils.responseSuccessJson(userInfo) :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "查找所有用户信息", httpMethod = "POST")
+    @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST)
+    public String findAllUserInfo() {
+        List<UserInfo> userInfos = userInfoService.searchAllUserInfo();
+        return GsonUtils.responseObjectJson(userInfos != null,userInfos);
     }
 
     @ResponseBody
@@ -95,9 +102,7 @@ public class UserInfoController {
     @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST)
     public String findUserByUserName(@RequestParam("userName") String userName) {
         UserInfo userInfo = userInfoService.searchUserName(userName);
-        return (userInfo != null) ?
-                GsonUtils.responseSuccessJson(userInfo) :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
     }
 
     @ResponseBody
@@ -105,18 +110,14 @@ public class UserInfoController {
     @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST)
     public String findUserByUserPhone(@RequestParam("userPhone") String userPhone) {
         UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
-        return (userInfo != null) ?
-                GsonUtils.responseSuccessJson(userInfo) :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
     }
 
     @ResponseBody
     @ApiOperation(value = "通过手机号注册用户", httpMethod = "POST")
     @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST)
     public String registerUserByPhone(@RequestParam("userPhone") String userPhone) {
-        return (userInfoService.addUserByPhone(userPhone) > 0) ?
-                GsonUtils.responseSuccessJson() :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseSimpleJson(userInfoService.addUserByPhone(userPhone) > 0);
     }
 
     @ResponseBody
@@ -124,10 +125,7 @@ public class UserInfoController {
     @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST)
     public String registerUserByName(@RequestParam("userName") String userName,
                                      @RequestParam("userPassword") String userPassword) {
-
-        return (userInfoService.addUserByName(userName, userPassword) > 0) ?
-                GsonUtils.responseSuccessJson() :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseSimpleJson(userInfoService.addUserByName(userName, userPassword) > 0);
     }
 
     @ResponseBody
@@ -137,18 +135,18 @@ public class UserInfoController {
                                  @RequestParam("userName") String userName,
                                  @RequestParam("userPhone") String userPhone,
                                  @RequestParam("userPassword") String userPassword,
-                                 @RequestParam("userSex") String userSex) {
+                                 @RequestParam("deposit") float deposit,
+                                 @RequestParam("balance") float balance) {
 
         UserInfo userInfo = new UserInfo()
                 .setUserId(userId)
                 .setUserName(userName)
                 .setUserPhone(userPhone)
                 .setUserPassword(userPassword)
-                .setUserSex(userSex);
+                .setDeposit(deposit)
+                .setBalance(balance);
 
-        return (userInfoService.updateUserInfo(userInfo) > 0) ?
-                GsonUtils.responseSuccessJson() :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseSimpleJson(userInfoService.updateUserInfo(userInfo) > 0);
     }
 
     @ResponseBody
@@ -156,8 +154,6 @@ public class UserInfoController {
     @RequestMapping(value = "/deleteUserInfo",method = RequestMethod.POST)
     public String deleteUserInfo(@RequestParam("userId")String userId){
         UserInfo userInfo = new UserInfo().setUserId(userId);
-        return (userInfoService.deleteUserInfo(userInfo) > 0) ?
-                GsonUtils.responseSuccessJson() :
-                GsonUtils.responseErrorJson();
+        return GsonUtils.responseSimpleJson(userInfoService.deleteUserInfo(userInfo) > 0);
     }
 }
