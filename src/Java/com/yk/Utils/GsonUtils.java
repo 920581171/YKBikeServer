@@ -37,6 +37,12 @@ public class GsonUtils {
                 GsonUtils.responseErrorJson();
     }
 
+    public static String responseMsgObjJson(boolean isSuccess,String msg,Object object){
+        return isSuccess?
+                GsonUtils.responseSuccessJson(object):
+                GsonUtils.responseErrorJson(msg);
+    }
+
     public static String responseSuccessJson() {
         return getGson().toJson(new SuccessCommonResponse());
     }
@@ -49,6 +55,10 @@ public class GsonUtils {
         return getGson().toJson(new SuccessCommonResponse(msg));
     }
 
+    public static String responseSuccessMsgObjJson(String msg,Object object){
+        return getGson().toJson(new SuccessCommonResponse(msg,object));
+    }
+
     public static String responseErrorJson() {
         return getGson().toJson(new ErrorCommonResponse());
     }
@@ -59,5 +69,9 @@ public class GsonUtils {
 
     public static String responseErrorJson(String msg) {
         return getGson().toJson(new ErrorCommonResponse(msg));
+    }
+
+    public static String responseErrorMsgObjJson(String msg,Object object){
+        return getGson().toJson(new ErrorCommonResponse(msg,object));
     }
 }

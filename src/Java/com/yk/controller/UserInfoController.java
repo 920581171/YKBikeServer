@@ -1,5 +1,6 @@
 package com.yk.controller;
 
+import com.google.gson.Gson;
 import com.yk.Utils.GsonUtils;
 import com.yk.Utils.ImageUtils;
 import com.yk.impl.UserInfoServiceImpl;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import sun.nio.cs.ext.ISCII91;
 
 import java.io.*;
 import java.util.List;
@@ -61,18 +63,18 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "下载头像",httpMethod = "GET")
-    @RequestMapping(value = "/downloadAvatar",method = RequestMethod.GET)
-    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId")String userId,@RequestParam("level")String level){
+    @ApiOperation(value = "下载头像", httpMethod = "GET")
+    @RequestMapping(value = "/downloadAvatar", method = RequestMethod.GET)
+    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId") String userId, @RequestParam("level") String level) {
         try {
-        File file = new File("D:\\Avatar\\Source\\" + userId+".jpg");
-        InputStream in = new FileInputStream(file);
-            byte[] b=new byte[in.available()];
+            File file = new File("D:\\Avatar\\Source\\" + userId + ".jpg");
+            InputStream in = new FileInputStream(file);
+            byte[] b = new byte[in.available()];
             in.read(b);
             HttpHeaders headers = new HttpHeaders();
-            String filename = new String(file.getName().getBytes("gbk"),"iso8859-1");
-            headers.add("Content-Disposition", "attachment;filename="+filename);
-            HttpStatus statusCode=HttpStatus.OK;
+            String filename = new String(file.getName().getBytes("gbk"), "iso8859-1");
+            headers.add("Content-Disposition", "attachment;filename=" + filename);
+            HttpStatus statusCode = HttpStatus.OK;
             in.close();
             return new ResponseEntity<byte[]>(b, headers, statusCode);
         } catch (IOException e) {
@@ -82,11 +84,26 @@ public class UserInfoController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "app端用户登陆", httpMethod = "POST")
+    @RequestMapping(value = "appLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String appLogin(@RequestParam("userName") String userName,
+                           @RequestParam("userPassword") String userPassword) {
+        UserInfo userInfo = userInfoService.searchUserName(userName);
+        if (userInfo == null) {
+            return GsonUtils.responseErrorJson("用户不存在");
+        } else if (!userInfo.getUserPassword().equals(userPassword)) {
+            return GsonUtils.responseErrorJson("用户名或密码错误");
+        } else {
+            return GsonUtils.responseSuccessJson(userInfo);
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "根据UserId查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST)
     public String findUserByUserId(@RequestParam("userId") String userId) {
         UserInfo userInfo = userInfoService.searchUserId(userId);
-        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
+        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
     }
 
     @ResponseBody
@@ -94,7 +111,7 @@ public class UserInfoController {
     @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST)
     public String findAllUserInfo() {
         List<UserInfo> userInfos = userInfoService.searchAllUserInfo();
-        return GsonUtils.responseObjectJson(userInfos != null,userInfos);
+        return GsonUtils.responseObjectJson(userInfos != null, userInfos);
     }
 
     @ResponseBody
@@ -102,7 +119,7 @@ public class UserInfoController {
     @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST)
     public String findUserByUserName(@RequestParam("userName") String userName) {
         UserInfo userInfo = userInfoService.searchUserName(userName);
-        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
+        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
     }
 
     @ResponseBody
@@ -110,7 +127,7 @@ public class UserInfoController {
     @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST)
     public String findUserByUserPhone(@RequestParam("userPhone") String userPhone) {
         UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
-        return GsonUtils.responseObjectJson(userInfo != null,userInfo);
+        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
     }
 
     @ResponseBody
@@ -150,9 +167,9 @@ public class UserInfoController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "通过userId删除用户",httpMethod = "POST")
-    @RequestMapping(value = "/deleteUserInfo",method = RequestMethod.POST)
-    public String deleteUserInfo(@RequestParam("userId")String userId){
+    @ApiOperation(value = "通过userId删除用户", httpMethod = "POST")
+    @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST)
+    public String deleteUserInfo(@RequestParam("userId") String userId) {
         UserInfo userInfo = new UserInfo().setUserId(userId);
         return GsonUtils.responseSimpleJson(userInfoService.deleteUserInfo(userInfo) > 0);
     }

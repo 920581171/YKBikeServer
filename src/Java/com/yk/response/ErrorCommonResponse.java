@@ -26,6 +26,12 @@ public class ErrorCommonResponse extends CommonResponse{
         super.setMsg(msg);
     }
 
+    public ErrorCommonResponse (String msg,Object object){
+        super.setCode(Consts.COMMON_RESPONSE_ERROR_CODE);
+        super.setMsg(msg);
+        super.setData(object);
+    }
+
     public ErrorCommonResponse (int code,String msg,Object object){
         super.setCode(code);
         super.setMsg(msg);

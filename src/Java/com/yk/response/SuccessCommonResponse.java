@@ -24,6 +24,12 @@ public class SuccessCommonResponse extends CommonResponse{
         super.setMsg(msg);
     }
 
+    public SuccessCommonResponse (String msg,Object data){
+        super.setCode(Consts.COMMON_RESPONSE_SUCCESS_CODE);
+        super.setMsg(msg);
+        super.setData(data);
+    }
+
     public SuccessCommonResponse (int code,String msg,Object data){
         super.setCode(code);
         super.setMsg(msg);
