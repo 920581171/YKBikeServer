@@ -50,10 +50,10 @@ public class BikeInfoController {
     @ApiOperation(value = "更新自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/updateBikeInfo", method = RequestMethod.POST)
     public String updateBikeInfo(@RequestParam("bikeId") String bikeId,
-                                 @RequestParam("userId") String userId,
+                                 @RequestParam(name = "userId",required = false) String userId,
                                  @RequestParam("latitude") double latitude,
                                  @RequestParam("longitude") double longitude,
-                                 @RequestParam("mileage") int mileage,
+                                 @RequestParam("mileage") float mileage,
                                  @RequestParam("fix") String fix) {
 
         BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);

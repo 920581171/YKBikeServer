@@ -134,7 +134,7 @@ public class UserInfoController {
     @ApiOperation(value = "通过手机号注册用户", httpMethod = "POST")
     @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST)
     public String registerUserByPhone(@RequestParam("userPhone") String userPhone) {
-        return GsonUtils.responseSimpleJson(userInfoService.addUserByPhone(userPhone) > 0);
+        return GsonUtils.responseObjectJson(userInfoService.addUserByPhone(userPhone) > 0,userInfoService.searchUserPhone(userPhone));
     }
 
     @ResponseBody
@@ -142,7 +142,7 @@ public class UserInfoController {
     @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST)
     public String registerUserByName(@RequestParam("userName") String userName,
                                      @RequestParam("userPassword") String userPassword) {
-        return GsonUtils.responseSimpleJson(userInfoService.addUserByName(userName, userPassword) > 0);
+        return GsonUtils.responseObjectJson(userInfoService.addUserByName(userName, userPassword) > 0,userInfoService.searchUserName(userName));
     }
 
     @ResponseBody
