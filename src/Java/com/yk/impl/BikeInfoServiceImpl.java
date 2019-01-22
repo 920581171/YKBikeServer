@@ -51,6 +51,6 @@ public class BikeInfoServiceImpl implements BikeInfoService {
 
     @Override
     public int deleteBikeInfo(BikeInfo bikeInfo) {
-        return bikeInfoDao.update(bikeInfo);
+        return bikeInfoDao.delete(bikeInfo);
     }
 }
