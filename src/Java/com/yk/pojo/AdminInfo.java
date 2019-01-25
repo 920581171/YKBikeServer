@@ -3,6 +3,7 @@ package com.yk.pojo;
 public class AdminInfo {
     private int id;
     private String adminId;
+    private String adminAccount;
     private String adminName;
     private String adminPassword;
     private String adminPhone;
@@ -22,6 +23,15 @@ public class AdminInfo {
 
     public AdminInfo setAdminId(String adminId) {
         this.adminId = adminId;
+        return this;
+    }
+
+    public String getAdminAccount() {
+        return adminAccount;
+    }
+
+    public AdminInfo setAdminAccount(String adminAccount) {
+        this.adminAccount = adminAccount;
         return this;
     }
 

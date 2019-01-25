@@ -22,6 +22,11 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
+    public AdminInfo searchAdminAccount(String adminAccount) {
+        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ACCOUNT,adminAccount) ;
+    }
+
+    @Override
     public AdminInfo searchAdminName(String adminName) {
         return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_NAME,adminName) ;
     }
@@ -37,13 +42,14 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public int addAdminInfo(String adminName,String adminPassword,String adminPhone) {
+    public int addAdminInfo(String adminAccount,String adminName,String adminPassword,String adminPhone) {
         String adminId = randomAdminId();
         while (adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID,adminId) != null) {
             adminId = randomAdminId();
         }
 
         AdminInfo adminInfo = new AdminInfo()
+                .setAdminAccount(adminAccount)
                 .setAdminId(adminId)
                 .setAdminName(adminName)
                 .setAdminPassword(adminPassword)

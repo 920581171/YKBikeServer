@@ -8,6 +8,7 @@
         <id property="id" column="_id"/>
         <!-- 用result属性来映射非主键字段 -->
         <result property="adminId" column="admin_id"/>
+        <result property="adminAccount" column="admin_account"/>
         <result property="adminName" column="admin_name"/>
         <result property="adminPassword" column="admin_password"/>
         <result property="adminPhone" column="admin_phone"/>
@@ -15,6 +16,7 @@
 
     <parameterMap id="parameterMap" type="com.yk.pojo.AdminInfo">
         <parameter property="adminId" resultMap="resultMap"/>
+        <parameter property="adminAccount" resultMap="resultMap"/>
         <parameter property="adminName" resultMap="resultMap"/>
         <parameter property="adminPassword" resultMap="resultMap"/>
         <parameter property="adminPhone" resultMap="resultMap"/>
@@ -43,24 +45,24 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        admin_info(`_id`,admin_id,admin_name,admin_password,admin_phone)
+        admin_info(`_id`,admin_id,admin_account,admin_name,admin_password,admin_phone)
         values
-        (null,#{adminId},#{adminName},#{adminPassword},#{adminPhone})
+        (null,#{adminId},#{adminAccount},#{adminName},#{adminPassword},#{adminPhone})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
         update
             admin_info
-        set
+        set admin_account  = #{adminAccount},
             admin_name     = #{adminName},
             admin_password = #{adminPassword},
             admin_phone    = #{adminPhone}
-        where
-            admin_id = #{adminId}
+        where admin_id = #{adminId}
     </update>
 
     <delete id="delete" parameterMap="parameterMap">
-        delete from admin_info
+        delete
+        from admin_info
         where admin_id = #{adminId}
     </delete>
 </mapper>

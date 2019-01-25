@@ -25,12 +25,12 @@ public class AdminInfoController {
 
     @ResponseBody
     @ApiOperation(value = "app端管理员登陆", httpMethod = "POST")
-    @RequestMapping(value = "/appAdminLogin", method = RequestMethod.POST,produces = "text/html;charset=UTF-8")
-    public String appAdminLogin(@RequestParam("adminNameOrPhone") String adminNameOrPhone,
+    @RequestMapping(value = "/appAdminLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String appAdminLogin(@RequestParam("adminAccountOrPhone") String adminAccountOrPhone,
                                 @RequestParam("adminPassword") String adminPassword) {
-        AdminInfo adminInfo = (adminInfoService.searchAdminName(adminNameOrPhone) == null) ?
-                adminInfoService.searchAdminPhone(adminNameOrPhone) :
-                adminInfoService.searchAdminName(adminNameOrPhone);
+        AdminInfo adminInfo = (adminInfoService.searchAdminAccount(adminAccountOrPhone) == null) ?
+                adminInfoService.searchAdminPhone(adminAccountOrPhone) :
+                adminInfoService.searchAdminAccount(adminAccountOrPhone);
 
         if (adminInfo == null) {
             return GsonUtils.responseErrorJson("管理员不存在");
@@ -43,15 +43,23 @@ public class AdminInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据adminId查找管理员", httpMethod = "POST")
-    @RequestMapping(value = "/findAdminByUserId", method = RequestMethod.POST)
-    public String findAdminByUserId(@RequestParam("adminId") String adminId) {
+    @RequestMapping(value = "/findAdminByAdminId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findAdminByAdminId(@RequestParam("adminId") String adminId) {
         AdminInfo adminInfo = adminInfoService.searchAdminId(adminId);
         return GsonUtils.responseObjectJson(adminInfo != null, adminInfo);
     }
 
     @ResponseBody
+    @ApiOperation(value = "根据adminAccount查找管理员", httpMethod = "POST")
+    @RequestMapping(value = "/findAdminByAdminAccount", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findAdminByAdminAccount(@RequestParam("adminAccount") String adminAccount) {
+        AdminInfo adminInfo = adminInfoService.searchAdminAccount(adminAccount);
+        return GsonUtils.responseObjectJson(adminInfo != null, adminInfo);
+    }
+
+    @ResponseBody
     @ApiOperation(value = "查找所有管理员信息", httpMethod = "POST")
-    @RequestMapping(value = "/findAllAdminInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllAdminInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findAllAdminInfo() {
         List<AdminInfo> adminInfos = adminInfoService.searchAllAdminInfo();
         return GsonUtils.responseObjectJson(adminInfos != null, adminInfos);
@@ -59,38 +67,41 @@ public class AdminInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据AdminName查找管理员", httpMethod = "POST")
-    @RequestMapping(value = "/findAdminByUserName", method = RequestMethod.POST)
-    public String findAdminByUserName(@RequestParam("adminName") String adminName) {
+    @RequestMapping(value = "/findAdminByAdminName", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findAdminByAdminName(@RequestParam("adminName") String adminName) {
         AdminInfo adminInfo = adminInfoService.searchAdminName(adminName);
         return GsonUtils.responseObjectJson(adminInfo != null, adminInfo);
     }
 
     @ResponseBody
     @ApiOperation(value = "根据AdminPhone查找管理员", httpMethod = "POST")
-    @RequestMapping(value = "/findAdminByUserPhone", method = RequestMethod.POST)
-    public String findUserByUserPhone(@RequestParam("adminPhone") String adminPhone) {
+    @RequestMapping(value = "/findAdminByAdminPhone", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findUserByAdminPhone(@RequestParam("adminPhone") String adminPhone) {
         AdminInfo adminInfo = adminInfoService.searchAdminPhone(adminPhone);
         return GsonUtils.responseObjectJson(adminInfo != null, adminInfo);
     }
 
     @ResponseBody
     @ApiOperation(value = "添加管理员", httpMethod = "POST")
-    @RequestMapping(value = "/registerAdminInfo", method = RequestMethod.POST)
-    public String registerAdminInfo(@RequestParam("adminName") String adminName,
+    @RequestMapping(value = "/registerAdminInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String registerAdminInfo(@RequestParam("adminAccount") String adminAccount,
+                                    @RequestParam("adminName") String adminName,
                                     @RequestParam("adminPassword") String adminPassword,
                                     @RequestParam("adminPhone") String adminPhone) {
-        return GsonUtils.responseSimpleJson(adminInfoService.addAdminInfo(adminName, adminPassword, adminPhone) > 0);
+        return GsonUtils.responseSimpleJson(adminInfoService.addAdminInfo(adminAccount, adminName, adminPassword, adminPhone) > 0);
     }
 
     @ResponseBody
     @ApiOperation(value = "更新管理员信息", httpMethod = "POST")
-    @RequestMapping(value = "/updateAdminInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateAdminInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateAdminInfo(@RequestParam("adminId") String adminId,
+                                  @RequestParam("adminAccount")String adminAccount,
                                   @RequestParam("adminName") String adminName,
                                   @RequestParam("adminPhone") String adminPhone,
                                   @RequestParam("adminPassword") String adminPassword) {
 
         AdminInfo adminInfo = new AdminInfo()
+                .setAdminAccount(adminAccount)
                 .setAdminId(adminId)
                 .setAdminName(adminName)
                 .setAdminPhone(adminPhone)
@@ -101,7 +112,7 @@ public class AdminInfoController {
 
     @ResponseBody
     @ApiOperation(value = "通过AdminId删除用户", httpMethod = "POST")
-    @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteUserInfo(@RequestParam("adminId") String adminId) {
         AdminInfo adminInfo = new AdminInfo().setAdminId(adminId);
         return GsonUtils.responseSimpleJson(adminInfoService.deleteAdminInfo(adminInfo) > 0);
