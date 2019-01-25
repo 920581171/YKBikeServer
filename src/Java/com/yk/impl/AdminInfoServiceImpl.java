@@ -17,34 +17,34 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     AdminInfoDao adminInfoDao;
 
     @Override
-    public AdminInfo searchAdminId(String adminId) {
-        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID,adminId) ;
+    public AdminInfo searchAdminId(String adminId) throws Exception {
+        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID, adminId);
     }
 
     @Override
-    public AdminInfo searchAdminAccount(String adminAccount) {
-        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ACCOUNT,adminAccount) ;
+    public AdminInfo searchAdminAccount(String adminAccount) throws Exception {
+        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ACCOUNT, adminAccount);
     }
 
     @Override
-    public AdminInfo searchAdminName(String adminName) {
-        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_NAME,adminName) ;
+    public AdminInfo searchAdminName(String adminName) throws Exception {
+        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_NAME, adminName);
     }
 
     @Override
-    public AdminInfo searchAdminPhone(String adminPhone) {
-        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_PHONE,adminPhone) ;
+    public AdminInfo searchAdminPhone(String adminPhone) throws Exception {
+        return adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_PHONE, adminPhone);
     }
 
     @Override
-    public List<AdminInfo> searchAllAdminInfo() {
+    public List<AdminInfo> searchAllAdminInfo() throws Exception {
         return adminInfoDao.selectTable();
     }
 
     @Override
-    public int addAdminInfo(String adminAccount,String adminName,String adminPassword,String adminPhone) {
+    public int addAdminInfo(String adminAccount, String adminName, String adminPassword, String adminPhone) throws Exception {
         String adminId = randomAdminId();
-        while (adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID,adminId) != null) {
+        while (adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID, adminId) != null) {
             adminId = randomAdminId();
         }
 
@@ -61,12 +61,12 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     }
 
     @Override
-    public int updateAdminInfo(AdminInfo adminInfo) {
+    public int updateAdminInfo(AdminInfo adminInfo) throws Exception {
         return adminInfoDao.update(adminInfo);
     }
 
     @Override
-    public int deleteAdminInfo(AdminInfo adminInfo) {
+    public int deleteAdminInfo(AdminInfo adminInfo) throws Exception {
         return adminInfoDao.delete(adminInfo);
     }
 

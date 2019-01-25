@@ -14,17 +14,17 @@ public class BikeInfoServiceImpl implements BikeInfoService {
     private BikeInfoDao bikeInfoDao;
 
     @Override
-    public BikeInfo searchBikeId(String bikeId) {
+    public BikeInfo searchBikeId(String bikeId) throws Exception {
         return bikeInfoDao.selectOne(BikeInfoDao.COLUMN_BIKE_ID, bikeId);
     }
 
     @Override
-    public List<BikeInfo> searchAllBikeInfo() {
+    public List<BikeInfo> searchAllBikeInfo() throws Exception {
         return bikeInfoDao.selectTable();
     }
 
     @Override
-    public int addBikeInfo(String bikeId, double latitude, double longitude) {
+    public int addBikeInfo(String bikeId, double latitude, double longitude) throws Exception {
 
         BikeInfo bikeInfo = searchBikeId(bikeId);
 
@@ -45,12 +45,12 @@ public class BikeInfoServiceImpl implements BikeInfoService {
     }
 
     @Override
-    public int updateBikeInfo(BikeInfo bikeInfo) {
+    public int updateBikeInfo(BikeInfo bikeInfo) throws Exception {
         return bikeInfoDao.update(bikeInfo);
     }
 
     @Override
-    public int deleteBikeInfo(BikeInfo bikeInfo) {
+    public int deleteBikeInfo(BikeInfo bikeInfo) throws Exception {
         return bikeInfoDao.delete(bikeInfo);
     }
 }

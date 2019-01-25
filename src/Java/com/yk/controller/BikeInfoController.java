@@ -25,16 +25,26 @@ public class BikeInfoController {
     @ApiOperation(value = "查找所有自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/findAllBikeInfo", method = RequestMethod.POST)
     public String findAllBikeInfo() {
-        List<BikeInfo> bikeInfos = bikeInfoService.searchAllBikeInfo();
-        return GsonUtils.responseObjectJson(bikeInfos != null, bikeInfos);
+        try {
+            List<BikeInfo> bikeInfos = bikeInfoService.searchAllBikeInfo();
+            return GsonUtils.responseObjectJson(bikeInfos != null, bikeInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据bikeId查询自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/findBikeInfoByBikeId", method = RequestMethod.POST)
     public String findBikeInfoByBikeId(@RequestParam("bikeId") String bikeId) {
-        BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
-        return GsonUtils.responseObjectJson(bikeInfo != null, bikeInfo);
+        try {
+            BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
+            return GsonUtils.responseObjectJson(bikeInfo != null, bikeInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
@@ -43,27 +53,37 @@ public class BikeInfoController {
     public String addBikeInfo(@RequestParam("bikeId") String bikeId,
                               @RequestParam("latitude") double latitude,
                               @RequestParam("longitude") double longitude) {
-        return GsonUtils.responseSimpleJson(bikeInfoService.addBikeInfo(bikeId, latitude, longitude) > 0);
+        try {
+            return GsonUtils.responseSimpleJson(bikeInfoService.addBikeInfo(bikeId, latitude, longitude) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "更新自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/updateBikeInfo", method = RequestMethod.POST)
     public String updateBikeInfo(@RequestParam("bikeId") String bikeId,
-                                 @RequestParam(name = "userId",required = false) String userId,
+                                 @RequestParam(name = "userId", required = false) String userId,
                                  @RequestParam("latitude") double latitude,
                                  @RequestParam("longitude") double longitude,
                                  @RequestParam("mileage") float mileage,
                                  @RequestParam("fix") String fix) {
 
-        BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
-        bikeInfo.setUserId(userId)
-                .setLatitude(latitude)
-                .setLongitude(longitude)
-                .setMileage(mileage)
-                .setFix(fix);
+        try {
+            BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
+            bikeInfo.setUserId(userId)
+                    .setLatitude(latitude)
+                    .setLongitude(longitude)
+                    .setMileage(mileage)
+                    .setFix(fix);
 
-        return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
+            return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
@@ -73,18 +93,28 @@ public class BikeInfoController {
                                      @RequestParam("latitude") double latitude,
                                      @RequestParam("longitude") double longitude) {
 
-        BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
-        bikeInfo.setLatitude(latitude);
-        bikeInfo.setLongitude(longitude);
+        try {
+            BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
+            bikeInfo.setLatitude(latitude);
+            bikeInfo.setLongitude(longitude);
 
-        return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
+            return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "删除自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/deleteBikeInfo", method = RequestMethod.POST)
     public String deleteBikeInfo(@RequestParam("bikeId") String bikeId) {
-        BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
-        return GsonUtils.responseSimpleJson(bikeInfoService.deleteBikeInfo(bikeInfo) > 0);
+        try {
+            BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
+            return GsonUtils.responseSimpleJson(bikeInfoService.deleteBikeInfo(bikeInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 }

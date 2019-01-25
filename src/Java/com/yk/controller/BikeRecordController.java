@@ -31,24 +31,39 @@ public class BikeRecordController {
     @ResponseBody
     @RequestMapping(value = "/findBikeRecordByUserId", method = RequestMethod.POST)
     public String findBikeRecordByUserId(@RequestParam("userId") String userId) {
-        List<BikeRecord> bikeRecords = bikeRecordService.searchUserId(userId);
-        return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        try {
+            List<BikeRecord> bikeRecords = bikeRecordService.searchUserId(userId);
+            return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ApiOperation(value = "根据自行车id查找记录", httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/findBikeRecordByBikeId", method = RequestMethod.POST)
     public String findBikeRecordByBikeId(@RequestParam("bikeId") String bikeId) {
-        List<BikeRecord> bikeRecords = bikeRecordService.searchBikeId(bikeId);
-        return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        try {
+            List<BikeRecord> bikeRecords = bikeRecordService.searchBikeId(bikeId);
+            return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ApiOperation(value = "查找所有记录", httpMethod = "POST")
     @ResponseBody
     @RequestMapping(value = "/findAllBikeRecord", method = RequestMethod.POST)
     public String findAllBikeRecord() {
-        List<BikeRecord> bikeRecords = bikeRecordService.searchAllBikeRecord();
-        return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        try {
+            List<BikeRecord> bikeRecords = bikeRecordService.searchAllBikeRecord();
+            return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
@@ -59,45 +74,60 @@ public class BikeRecordController {
                                 @RequestParam("charge") float charge,
                                 @RequestParam("mileage") float mileage,
                                 @RequestParam("createTime") long createTime,
-                                @RequestParam("endTime")long endTime) {
+                                @RequestParam("endTime") long endTime) {
 
-        BikeRecord bikeRecord = new BikeRecord()
-                .setUserId(userId)
-                .setBikeId(bikeId)
-                .setCharge(charge)
-                .setMileage(mileage)
-                .setCreateTime(new Timestamp(createTime))
-                .setEndTime(new Timestamp(endTime));
+        try {
+            BikeRecord bikeRecord = new BikeRecord()
+                    .setUserId(userId)
+                    .setBikeId(bikeId)
+                    .setCharge(charge)
+                    .setMileage(mileage)
+                    .setCreateTime(new Timestamp(createTime))
+                    .setEndTime(new Timestamp(endTime));
 
-        return GsonUtils.responseSimpleJson(bikeRecordService.addBikeRecord(bikeRecord) > 0);
+            return GsonUtils.responseSimpleJson(bikeRecordService.addBikeRecord(bikeRecord) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "更新记录", httpMethod = "POST")
     @RequestMapping(value = "/updateBikeRecord", method = RequestMethod.POST)
     public String updateBikeRecord(@RequestParam("orderId") String orderId,
-                                 @RequestParam("userId") String userId,
-                                 @RequestParam("bikeId") String bikeId,
-                                 @RequestParam("charge") float charge,
-                                 @RequestParam("mileage") float mileage,
-                                 @RequestParam("endTime") long endTime) {
+                                   @RequestParam("userId") String userId,
+                                   @RequestParam("bikeId") String bikeId,
+                                   @RequestParam("charge") float charge,
+                                   @RequestParam("mileage") float mileage,
+                                   @RequestParam("endTime") long endTime) {
 
-        BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
-        bikeRecord.setOrderId(orderId)
-                .setUserId(userId)
-                .setBikeId(bikeId)
-                .setCharge(charge)
-                .setMileage(mileage)
-                .setEndTime(new Timestamp(endTime));
+        try {
+            BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
+            bikeRecord.setOrderId(orderId)
+                    .setUserId(userId)
+                    .setBikeId(bikeId)
+                    .setCharge(charge)
+                    .setMileage(mileage)
+                    .setEndTime(new Timestamp(endTime));
 
-        return GsonUtils.responseSimpleJson(bikeRecordService.updateBikeRecord(bikeRecord) > 0);
+            return GsonUtils.responseSimpleJson(bikeRecordService.updateBikeRecord(bikeRecord) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "删除记录", httpMethod = "POST")
     @RequestMapping(value = "/deleteBikeRecord", method = RequestMethod.POST)
     public String deleteBikeRecord(@RequestParam("orderId") String orderId) {
-        BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
-        return GsonUtils.responseSimpleJson(bikeRecordService.deleteBikeRecord(bikeRecord) > 0);
+        try {
+            BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
+            return GsonUtils.responseSimpleJson(bikeRecordService.deleteBikeRecord(bikeRecord) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 }

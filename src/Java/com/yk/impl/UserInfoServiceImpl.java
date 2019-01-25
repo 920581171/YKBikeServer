@@ -21,7 +21,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 根据userId查找用户
      */
     @Override
-    public UserInfo searchUserId(String userId) {
+    public UserInfo searchUserId(String userId) throws Exception {
         return userInfoDao.selectOne(UserInfoDao.COLUMN_USER_ID, userId);
     }
 
@@ -29,7 +29,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 根据userName查找用户
      */
     @Override
-    public UserInfo searchUserName(String userName) {
+    public UserInfo searchUserName(String userName) throws Exception {
         return userInfoDao.selectOne(UserInfoDao.COLUMN_USER_NAME, userName);
     }
 
@@ -37,12 +37,12 @@ public class UserInfoServiceImpl implements UserInfoService {
      * 根据userPhone查找用户
      */
     @Override
-    public UserInfo searchUserPhone(String userPhone) {
+    public UserInfo searchUserPhone(String userPhone) throws Exception {
         return userInfoDao.selectOne(UserInfoDao.COLUMN_USER_PHONE, userPhone);
     }
 
     @Override
-    public List<UserInfo> searchAllUserInfo() {
+    public List<UserInfo> searchAllUserInfo() throws Exception {
         return userInfoDao.selectTable();
     }
 
@@ -52,7 +52,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return 自增的id
      */
     @Override
-    public int addUserByName(String userName, String userPassword) {
+    public int addUserByName(String userName, String userPassword) throws Exception {
         String userId = randomUserId();
         while (userInfoDao.selectOne(UserInfoDao.COLUMN_USER_ID, userId) != null) {
             userId = randomUserId();
@@ -73,7 +73,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return 自增的id
      */
     @Override
-    public int addUserByPhone(String userPhone) {
+    public int addUserByPhone(String userPhone) throws Exception {
         String userId = randomUserId();
         while (userInfoDao.selectOne(UserInfoDao.COLUMN_USER_ID, userId) != null) {
             userId = randomUserId();
@@ -93,7 +93,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return 更改的条数
      */
     @Override
-    public int updateUserInfo(UserInfo userInfo) {
+    public int updateUserInfo(UserInfo userInfo) throws Exception {
         return userInfoDao.update(userInfo);
     }
 
@@ -103,7 +103,7 @@ public class UserInfoServiceImpl implements UserInfoService {
      * @return 更改的条数
      */
     @Override
-    public int deleteUserInfo(UserInfo userInfo) {
+    public int deleteUserInfo(UserInfo userInfo) throws Exception {
         return userInfoDao.delete(userInfo);
     }
 

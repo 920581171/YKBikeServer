@@ -5,12 +5,19 @@ import com.yk.pojo.UserInfo;
 import java.util.List;
 
 public interface UserInfoService {
-    UserInfo searchUserId(String userId);
-    UserInfo searchUserName(String userName);
-    UserInfo searchUserPhone(String userPhone);
-    List<UserInfo> searchAllUserInfo();
-    int addUserByName(String userName, String userPassword);
-    int addUserByPhone(String userPhone);
-    int updateUserInfo(UserInfo userInfo);
-    int deleteUserInfo(UserInfo userInfo);
+    UserInfo searchUserId(String userId) throws Exception;
+
+    UserInfo searchUserName(String userName) throws Exception;
+
+    UserInfo searchUserPhone(String userPhone) throws Exception;
+
+    List<UserInfo> searchAllUserInfo() throws Exception;
+
+    int addUserByName(String userName, String userPassword) throws Exception;
+
+    int addUserByPhone(String userPhone) throws Exception;
+
+    int updateUserInfo(UserInfo userInfo) throws Exception;
+
+    int deleteUserInfo(UserInfo userInfo) throws Exception;
 }

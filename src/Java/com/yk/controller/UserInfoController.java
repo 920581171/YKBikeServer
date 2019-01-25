@@ -87,13 +87,18 @@ public class UserInfoController {
     @RequestMapping(value = "appLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String appLogin(@RequestParam("userName") String userName,
                            @RequestParam("userPassword") String userPassword) {
-        UserInfo userInfo = userInfoService.searchUserName(userName);
-        if (userInfo == null) {
-            return GsonUtils.responseErrorJson("用户不存在");
-        } else if (!userInfo.getUserPassword().equals(userPassword)) {
-            return GsonUtils.responseErrorJson("用户名或密码错误");
-        } else {
-            return GsonUtils.responseSuccessJson(userInfo);
+        try {
+            UserInfo userInfo = userInfoService.searchUserName(userName);
+            if (userInfo == null) {
+                return GsonUtils.responseErrorJson("用户不存在");
+            } else if (!userInfo.getUserPassword().equals(userPassword)) {
+                return GsonUtils.responseErrorJson("用户名或密码错误");
+            } else {
+                return GsonUtils.responseSuccessJson(userInfo);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
         }
     }
 
@@ -101,39 +106,65 @@ public class UserInfoController {
     @ApiOperation(value = "根据UserId查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST)
     public String findUserByUserId(@RequestParam("userId") String userId) {
-        UserInfo userInfo = userInfoService.searchUserId(userId);
-        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        UserInfo userInfo = null;
+        try {
+            userInfo = userInfoService.searchUserId(userId);
+            return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "查找所有用户信息", httpMethod = "POST")
     @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST)
     public String findAllUserInfo() {
-        List<UserInfo> userInfos = userInfoService.searchAllUserInfo();
-        return GsonUtils.responseObjectJson(userInfos != null, userInfos);
+        try {
+            List<UserInfo> userInfos = userInfoService.searchAllUserInfo();
+            return GsonUtils.responseObjectJson(userInfos != null, userInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据UserName查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST)
     public String findUserByUserName(@RequestParam("userName") String userName) {
-        UserInfo userInfo = userInfoService.searchUserName(userName);
-        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        try {
+            UserInfo userInfo = userInfoService.searchUserName(userName);
+            return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "根据UserPhone查找用户", httpMethod = "POST")
     @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST)
     public String findUserByUserPhone(@RequestParam("userPhone") String userPhone) {
-        UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
-        return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        try {
+            UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
+            return GsonUtils.responseObjectJson(userInfo != null, userInfo);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "通过手机号注册用户", httpMethod = "POST")
     @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST)
     public String registerUserByPhone(@RequestParam("userPhone") String userPhone) {
-        return GsonUtils.responseObjectJson(userInfoService.addUserByPhone(userPhone) > 0,userInfoService.searchUserPhone(userPhone));
+        try {
+            return GsonUtils.responseObjectJson(userInfoService.addUserByPhone(userPhone) > 0, userInfoService.searchUserPhone(userPhone));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
@@ -141,7 +172,12 @@ public class UserInfoController {
     @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST)
     public String registerUserByName(@RequestParam("userName") String userName,
                                      @RequestParam("userPassword") String userPassword) {
-        return GsonUtils.responseObjectJson(userInfoService.addUserByName(userName, userPassword) > 0,userInfoService.searchUserName(userName));
+        try {
+            return GsonUtils.responseObjectJson(userInfoService.addUserByName(userName, userPassword) > 0, userInfoService.searchUserName(userName));
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
@@ -154,22 +190,31 @@ public class UserInfoController {
                                  @RequestParam("deposit") float deposit,
                                  @RequestParam("balance") float balance) {
 
-        UserInfo userInfo = new UserInfo()
-                .setUserId(userId)
-                .setUserName(userName)
-                .setUserPhone(userPhone)
-                .setUserPassword(userPassword)
-                .setDeposit(deposit)
-                .setBalance(balance);
-
-        return GsonUtils.responseSimpleJson(userInfoService.updateUserInfo(userInfo) > 0);
+        try {
+            UserInfo userInfo = new UserInfo()
+                    .setUserId(userId)
+                    .setUserName(userName)
+                    .setUserPhone(userPhone)
+                    .setUserPassword(userPassword)
+                    .setDeposit(deposit)
+                    .setBalance(balance);
+            return GsonUtils.responseSimpleJson(userInfoService.updateUserInfo(userInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 
     @ResponseBody
     @ApiOperation(value = "通过userId删除用户", httpMethod = "POST")
     @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST)
     public String deleteUserInfo(@RequestParam("userId") String userId) {
-        UserInfo userInfo = new UserInfo().setUserId(userId);
-        return GsonUtils.responseSimpleJson(userInfoService.deleteUserInfo(userInfo) > 0);
+        try {
+            UserInfo userInfo = new UserInfo().setUserId(userId);
+            return GsonUtils.responseSimpleJson(userInfoService.deleteUserInfo(userInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
     }
 }

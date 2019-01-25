@@ -16,27 +16,27 @@ public class BikeRecordServiceImpl implements BikeRecordService {
 
 
     @Override
-    public BikeRecord searchOrderId(String orderId) {
-        return bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID,orderId);
+    public BikeRecord searchOrderId(String orderId) throws Exception {
+        return bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID, orderId);
     }
 
     @Override
-    public List<BikeRecord> searchUserId(String userId) {
-        return bikeRecordDao.selectList(BikeRecordDao.COLUMN_USER_ID,userId);
+    public List<BikeRecord> searchUserId(String userId) throws Exception {
+        return bikeRecordDao.selectList(BikeRecordDao.COLUMN_USER_ID, userId);
     }
 
     @Override
-    public List<BikeRecord> searchBikeId(String bikeId) {
-        return bikeRecordDao.selectList(BikeRecordDao.COLUMN_BIKE_ID,bikeId);
+    public List<BikeRecord> searchBikeId(String bikeId) throws Exception {
+        return bikeRecordDao.selectList(BikeRecordDao.COLUMN_BIKE_ID, bikeId);
     }
 
     @Override
-    public List<BikeRecord> searchAllBikeRecord() {
+    public List<BikeRecord> searchAllBikeRecord() throws Exception {
         return bikeRecordDao.selectTable();
     }
 
     @Override
-    public int addBikeRecord(BikeRecord bikeRecord) {
+    public int addBikeRecord(BikeRecord bikeRecord) throws Exception {
         String orderId = randomOrderId();
         while (bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID, orderId) != null) {
             orderId = randomOrderId();
@@ -48,12 +48,12 @@ public class BikeRecordServiceImpl implements BikeRecordService {
     }
 
     @Override
-    public int updateBikeRecord(BikeRecord bikeRecord) {
+    public int updateBikeRecord(BikeRecord bikeRecord) throws Exception {
         return bikeRecordDao.update(bikeRecord);
     }
 
     @Override
-    public int deleteBikeRecord(BikeRecord bikeRecord) {
+    public int deleteBikeRecord(BikeRecord bikeRecord) throws Exception {
         return bikeRecordDao.delete(bikeRecord);
     }
 
