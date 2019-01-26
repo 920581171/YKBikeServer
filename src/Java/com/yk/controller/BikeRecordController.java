@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 
@@ -82,8 +81,8 @@ public class BikeRecordController {
                     .setBikeId(bikeId)
                     .setCharge(charge)
                     .setMileage(mileage)
-                    .setCreateTime(new Timestamp(createTime))
-                    .setEndTime(new Timestamp(endTime));
+                    .setCreateTime(new Date(createTime))
+                    .setEndTime(new Date(endTime));
 
             return GsonUtils.responseSimpleJson(bikeRecordService.addBikeRecord(bikeRecord) > 0);
         } catch (Exception e) {
@@ -109,7 +108,7 @@ public class BikeRecordController {
                     .setBikeId(bikeId)
                     .setCharge(charge)
                     .setMileage(mileage)
-                    .setEndTime(new Timestamp(endTime));
+                    .setEndTime(new Date(endTime));
 
             return GsonUtils.responseSimpleJson(bikeRecordService.updateBikeRecord(bikeRecord) > 0);
         } catch (Exception e) {

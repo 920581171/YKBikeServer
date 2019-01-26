@@ -1,6 +1,6 @@
 package com.yk.pojo;
 
-import java.sql.Timestamp;
+import java.util.Date;
 
 public class BikeRecord {
     private int id;
@@ -9,8 +9,8 @@ public class BikeRecord {
     private String bikeId;
     private float charge;
     private float mileage;
-    private Timestamp createTime;
-    private Timestamp endTime;
+    private Date createTime;
+    private Date endTime;
 
     public int getId() {
         return id;
@@ -66,20 +66,20 @@ public class BikeRecord {
         return this;
     }
 
-    public Timestamp getCreateTime() {
+    public Date getCreateTime() {
         return createTime;
     }
 
-    public BikeRecord setCreateTime(Timestamp createTime) {
+    public BikeRecord setCreateTime(Date createTime) {
         this.createTime = createTime;
         return this;
     }
 
-    public Timestamp getEndTime() {
+    public Date getEndTime() {
         return endTime;
     }
 
-    public BikeRecord setEndTime(Timestamp endTime) {
+    public BikeRecord setEndTime(Date endTime) {
         this.endTime = endTime;
         return this;
     }
