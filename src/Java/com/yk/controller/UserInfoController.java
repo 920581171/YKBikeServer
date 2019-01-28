@@ -64,9 +64,13 @@ public class UserInfoController {
     @ResponseBody
     @ApiOperation(value = "下载头像", httpMethod = "GET")
     @RequestMapping(value = "/downloadAvatar", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId") String userId, @RequestParam("level") String level) {
+    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId") String userId, @RequestParam(value = "level", required = false) String level) {
         try {
-            File file = new File("D:\\Avatar\\Source\\" + userId + ".jpg");
+            File file;
+            if (level == null || "".equals(level))
+                file = new File("D:\\Avatar\\Source\\" + userId + ".jpg");
+            else
+                file = new File("D:\\" + level + "\\Source\\" + userId + ".jpg");
             InputStream in = new FileInputStream(file);
             byte[] b = new byte[in.available()];
             in.read(b);

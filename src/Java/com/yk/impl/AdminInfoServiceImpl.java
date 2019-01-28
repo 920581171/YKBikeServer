@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+import static com.yk.Utils.RandomUtils.randomId;
+
 @Service
 public class AdminInfoServiceImpl implements AdminInfoService {
     @Autowired
@@ -43,9 +45,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Override
     public int addAdminInfo(String adminAccount, String adminName, String adminPassword, String adminPhone) throws Exception {
-        String adminId = randomAdminId();
+        String adminId = randomId("admin");
         while (adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID, adminId) != null) {
-            adminId = randomAdminId();
+            adminId = randomId("admin");
         }
 
         AdminInfo adminInfo = new AdminInfo()
@@ -68,16 +70,5 @@ public class AdminInfoServiceImpl implements AdminInfoService {
     @Override
     public int deleteAdminInfo(AdminInfo adminInfo) throws Exception {
         return adminInfoDao.delete(adminInfo);
-    }
-
-    /**
-     * 创建随机userId
-     */
-    private String randomAdminId() {
-        StringBuilder stringBuilder = new StringBuilder();
-        int random = (int) (Math.random() * 100000);
-        stringBuilder.append("admin").append(random);
-
-        return stringBuilder.toString();
     }
 }

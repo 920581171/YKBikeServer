@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+import static com.yk.Utils.RandomUtils.randomId;
+
 @Service
 public class BikeRecordServiceImpl implements BikeRecordService {
 
@@ -37,9 +39,9 @@ public class BikeRecordServiceImpl implements BikeRecordService {
 
     @Override
     public int addBikeRecord(BikeRecord bikeRecord) throws Exception {
-        String orderId = randomOrderId();
+        String orderId = randomId("order");
         while (bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID, orderId) != null) {
-            orderId = randomOrderId();
+            orderId = randomId("order");
         }
 
         bikeRecord.setOrderId(orderId);
@@ -55,16 +57,5 @@ public class BikeRecordServiceImpl implements BikeRecordService {
     @Override
     public int deleteBikeRecord(BikeRecord bikeRecord) throws Exception {
         return bikeRecordDao.delete(bikeRecord);
-    }
-
-    /**
-     * 创建随机userId
-     */
-    private String randomOrderId() {
-        StringBuilder stringBuilder = new StringBuilder("order");
-        int random = (int) (Math.random() * 100000);
-        stringBuilder.append(random);
-
-        return stringBuilder.toString();
     }
 }

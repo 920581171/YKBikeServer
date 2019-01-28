@@ -1,16 +1,14 @@
 package com.yk.impl;
 
-import com.yk.dao.BaseDao;
 import com.yk.dao.UserInfoDao;
 import com.yk.pojo.UserInfo;
 import com.yk.service.UserInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
+
+import static com.yk.Utils.RandomUtils.randomUserId;
 
 @Service("userInfoService")
 public class UserInfoServiceImpl implements UserInfoService {
@@ -105,18 +103,5 @@ public class UserInfoServiceImpl implements UserInfoService {
     @Override
     public int deleteUserInfo(UserInfo userInfo) throws Exception {
         return userInfoDao.delete(userInfo);
-    }
-
-    /**
-     * 创建随机userId
-     */
-    private String randomUserId() {
-        DateFormat dateFormat = new SimpleDateFormat("yyMMdd");
-        Date date = new Date();
-        StringBuilder stringBuilder = new StringBuilder(dateFormat.format(date));
-        int random = (int) (Math.random() * 10000);
-        stringBuilder.append(random);
-
-        return stringBuilder.toString();
     }
 }
