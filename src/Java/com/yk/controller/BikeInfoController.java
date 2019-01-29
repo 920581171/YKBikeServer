@@ -87,6 +87,24 @@ public class BikeInfoController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "更新自行车维修状态", httpMethod = "POST")
+    @RequestMapping(value = "/updateBikeFix", method = RequestMethod.POST)
+    public String updateBikeFix(@RequestParam("bikeId") String bikeId,
+                                @RequestParam("fix") String fix) {
+
+        try {
+            BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
+            bikeInfo.setUserId("");
+            bikeInfo.setFix(fix);
+
+            return GsonUtils.responseSimpleJson(bikeInfoService.updateBikeInfo(bikeInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "更新自行车位置信息", httpMethod = "POST")
     @RequestMapping(value = "/updateBikeLocation", method = RequestMethod.POST)
     public String updateBikeLocation(@RequestParam("bikeId") String bikeId,

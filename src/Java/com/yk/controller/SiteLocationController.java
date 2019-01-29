@@ -3,7 +3,6 @@ package com.yk.controller;
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.SiteLocationServiceImpl;
 import com.yk.pojo.SiteLocation;
-import com.yk.service.SiteLocationService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
