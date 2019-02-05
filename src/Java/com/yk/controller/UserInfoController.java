@@ -26,67 +26,6 @@ public class UserInfoController {
     UserInfoServiceImpl userInfoService;
 
     @ResponseBody
-    @ApiOperation(value = "上传头像", httpMethod = "POST")
-    @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
-    public String uploadAvatar(@RequestParam("file") MultipartFile original, @RequestParam("userId") String userId) {
-        String[] paths = {"D:\\Avatar\\Source\\" + userId + ".jpg",
-                "D:\\Avatar\\High\\" + userId + ".jpg",
-                "D:\\Avatar\\Middle\\" + userId + ".jpg",
-                "D:\\Avatar\\Low\\" + userId + ".jpg"};
-        int[] size = {0, 512, 256, 128};
-
-        try {
-            for (int i = 0; i < paths.length; i++) {
-                File file = new File(paths[i]);
-                if (!file.getParentFile().exists())
-                    if (!file.getParentFile().mkdirs())
-                        return GsonUtils.responseErrorJson();
-
-                if (!file.exists()) {
-                    if (!file.createNewFile())
-                        return GsonUtils.responseErrorJson();
-                }
-
-                if (i == 0) {
-                    original.transferTo(file);
-                } else {
-                    ImageUtils.scale2(paths[0], paths[i], size[i], size[i], true);
-                }
-            }
-            return GsonUtils.responseSuccessJson();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return GsonUtils.responseErrorJson();
-    }
-
-    @ResponseBody
-    @ApiOperation(value = "下载头像", httpMethod = "GET")
-    @RequestMapping(value = "/downloadAvatar", method = RequestMethod.GET)
-    public ResponseEntity<byte[]> downloadAvatar(@RequestParam("userId") String userId, @RequestParam(value = "level", required = false) String level) {
-        try {
-            File file;
-            if (level == null || "".equals(level))
-                file = new File("D:\\Avatar\\Source\\" + userId + ".jpg");
-            else
-                file = new File("D:\\" + level + "\\Source\\" + userId + ".jpg");
-            InputStream in = new FileInputStream(file);
-            byte[] b = new byte[in.available()];
-            in.read(b);
-            HttpHeaders headers = new HttpHeaders();
-            String filename = new String(file.getName().getBytes("gbk"), "iso8859-1");
-            headers.add("Content-Disposition", "attachment;filename=" + filename);
-            HttpStatus statusCode = HttpStatus.OK;
-            in.close();
-            return new ResponseEntity<byte[]>(b, headers, statusCode);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    @ResponseBody
     @ApiOperation(value = "app端用户登陆", httpMethod = "POST")
     @RequestMapping(value = "appLogin", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String appLogin(@RequestParam("userName") String userName,
