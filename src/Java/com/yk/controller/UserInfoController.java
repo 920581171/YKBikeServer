@@ -1,21 +1,14 @@
 package com.yk.controller;
 
 import com.yk.Utils.GsonUtils;
-import com.yk.Utils.ImageUtils;
 import com.yk.impl.UserInfoServiceImpl;
 import com.yk.pojo.UserInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import sun.nio.cs.ext.ISCII91;
 
-import java.io.*;
 import java.util.List;
 
 @Api(description = "userInfo")
@@ -33,11 +26,11 @@ public class UserInfoController {
         try {
             UserInfo userInfo = userInfoService.searchUserName(userName);
             if (userInfo == null) {
-                return GsonUtils.responseErrorJson("用户不存在");
+                return GsonUtils.responseErrorMsgJson("用户不存在");
             } else if (!userInfo.getUserPassword().equals(userPassword)) {
-                return GsonUtils.responseErrorJson("用户名或密码错误");
+                return GsonUtils.responseErrorMsgJson("用户名或密码错误");
             } else {
-                return GsonUtils.responseSuccessJson(userInfo);
+                return GsonUtils.responseSuccessObjJson(userInfo);
             }
         } catch (Exception e) {
             e.printStackTrace();

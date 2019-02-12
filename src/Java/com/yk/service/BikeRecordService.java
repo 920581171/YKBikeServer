@@ -5,6 +5,10 @@ import com.yk.pojo.BikeRecord;
 import java.util.List;
 
 public interface BikeRecordService {
+    BikeRecord searchCycling(String userId) throws Exception;
+
+    BikeRecord searchById(String id) throws Exception;
+
     BikeRecord searchOrderId(String orderId) throws Exception;
 
     List<BikeRecord> searchUserId(String userId) throws Exception;

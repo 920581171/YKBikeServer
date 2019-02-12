@@ -3,7 +3,6 @@ package com.yk.controller;
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.AdminInfoServiceImpl;
 import com.yk.pojo.AdminInfo;
-import com.yk.pojo.UserInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.naming.Name;
 import java.util.List;
 
 @Api(description = "adminInfo")
@@ -34,11 +32,11 @@ public class AdminInfoController {
                     adminInfoService.searchAdminAccount(adminAccountOrPhone);
 
             if (adminInfo == null) {
-                return GsonUtils.responseErrorJson("管理员不存在");
+                return GsonUtils.responseErrorMsgJson("管理员不存在");
             } else if (!adminInfo.getAdminPassword().equals(adminPassword)) {
-                return GsonUtils.responseErrorJson("密码错误");
+                return GsonUtils.responseErrorMsgJson("密码错误");
             } else {
-                return GsonUtils.responseSuccessJson(adminInfo);
+                return GsonUtils.responseSuccessObjJson(adminInfo);
             }
         } catch (Exception e) {
             e.printStackTrace();

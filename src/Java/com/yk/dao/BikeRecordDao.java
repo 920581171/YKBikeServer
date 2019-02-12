@@ -1,6 +1,7 @@
 package com.yk.dao;
 
 import com.yk.pojo.BikeRecord;
+import org.apache.ibatis.annotations.Param;
 
 public interface BikeRecordDao extends BaseDao<BikeRecord>{
     String COLUMN_ORDER_ID="order_id";
@@ -10,4 +11,6 @@ public interface BikeRecordDao extends BaseDao<BikeRecord>{
     String COLUMN_MILEAGE="mileage";
     String COLUMN_CREATE_TIME="create_time";
     String COLUMN_END_TIME="end_time";
+
+    BikeRecord selectCycling(@Param("userId") String userId);
 }

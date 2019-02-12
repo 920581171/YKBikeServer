@@ -14,7 +14,7 @@ public class GsonUtils {
         if (gson == null) {
             synchronized (GsonUtils.class) {
                 if (gson == null) {
-                    gson = new Gson();
+                    gson = new Gson().newBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
                 }
             }
         }
@@ -33,25 +33,25 @@ public class GsonUtils {
 
     public static String responseObjectJson(boolean isSuccess,Object object) {
         return isSuccess ?
-                GsonUtils.responseSuccessJson(object) :
+                GsonUtils.responseSuccessObjJson(object) :
                 GsonUtils.responseErrorJson();
     }
 
     public static String responseMsgObjJson(boolean isSuccess,String msg,Object object){
         return isSuccess?
-                GsonUtils.responseSuccessJson(object):
-                GsonUtils.responseErrorJson(msg);
+                GsonUtils.responseSuccessObjJson(object):
+                GsonUtils.responseErrorMsgJson(msg);
     }
 
     public static String responseSuccessJson() {
         return getGson().toJson(new SuccessCommonResponse());
     }
 
-    public static String responseSuccessJson(Object object) {
+    public static String responseSuccessObjJson(Object object) {
         return getGson().toJson(new SuccessCommonResponse(object));
     }
 
-    public static String responseSuccessJson(String msg) {
+    public static String responseSuccessMsgJson(String msg) {
         return getGson().toJson(new SuccessCommonResponse(msg));
     }
 
@@ -63,11 +63,11 @@ public class GsonUtils {
         return getGson().toJson(new ErrorCommonResponse());
     }
 
-    public static String responseErrorJson(Object object) {
+    public static String responseErrorObjJson(Object object) {
         return getGson().toJson(new ErrorCommonResponse(object));
     }
 
-    public static String responseErrorJson(String msg) {
+    public static String responseErrorMsgJson(String msg) {
         return getGson().toJson(new ErrorCommonResponse(msg));
     }
 

@@ -22,9 +22,9 @@ public class RandomUtils {
      * 创建随机Id
      */
     public static String randomId(String s) {
-        int len = 1000*1000*1000;
-        for (int i = 1;i<s.length();i++){
-            len /=10;
+        int len = 1;
+        for (int i = 0; i < 10 - s.length(); i++) {
+            len *= 10;
         }
         StringBuilder stringBuilder = new StringBuilder();
         int random = (int) (Math.random() * len);

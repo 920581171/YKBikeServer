@@ -11,6 +11,7 @@ public class BikeRecord {
     private float mileage;
     private Date createTime;
     private Date endTime;
+    private String orderStatus;
 
     public int getId() {
         return id;
@@ -81,6 +82,15 @@ public class BikeRecord {
 
     public BikeRecord setEndTime(Date endTime) {
         this.endTime = endTime;
+        return this;
+    }
+
+    public String getOrderStatus() {
+        return orderStatus;
+    }
+
+    public BikeRecord setOrderStatus(String orderStatus) {
+        this.orderStatus = orderStatus;
         return this;
     }
 }

@@ -16,6 +16,15 @@ public class BikeRecordServiceImpl implements BikeRecordService {
     @Autowired
     BikeRecordDao bikeRecordDao;
 
+    @Override
+    public BikeRecord searchCycling(String userId) throws Exception {
+        return bikeRecordDao.selectCycling(userId);
+    }
+
+    @Override
+    public BikeRecord searchById(String id) throws Exception {
+        return bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ID, id);
+    }
 
     @Override
     public BikeRecord searchOrderId(String orderId) throws Exception {

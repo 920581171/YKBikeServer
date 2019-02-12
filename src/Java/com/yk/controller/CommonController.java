@@ -19,10 +19,17 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Api(value = "file")
+@Api(value = "common")
 @Controller
-@RequestMapping(value = "file")
-public class FileController {
+@RequestMapping(value = "common")
+public class CommonController {
+    @ApiOperation(value = "获得服务器时间", httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/getServiceTime", method = RequestMethod.POST)
+    public String getServiceTime() {
+        return GsonUtils.responseSuccessObjJson(String.valueOf(System.currentTimeMillis()));
+    }
+
     @ResponseBody
     @ApiOperation(value = "上传头像", httpMethod = "POST")
     @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
