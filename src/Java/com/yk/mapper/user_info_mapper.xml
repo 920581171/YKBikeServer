@@ -42,6 +42,12 @@
         from user_info
     </select>
 
+    <select id="selectDeposit" resultMap="resultMap">
+        select *
+        from user_info
+        where deposit <![CDATA[ < ]]> 0;
+    </select>
+
     <insert id="insert" parameterMap="parameterMap">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()
@@ -55,18 +61,17 @@
     <update id="update" parameterMap="parameterMap">
         update
             user_info
-        set
-            user_name     = #{userName},
+        set user_name     = #{userName},
             user_phone    = #{userPhone},
             user_password = #{userPassword},
             deposit       = #{deposit},
             balance       = #{balance}
-        where
-            user_id = #{userId}
+        where user_id = #{userId}
     </update>
 
     <delete id="delete" parameterMap="parameterMap">
-        delete from user_info
+        delete
+        from user_info
         where user_id = #{userId}
     </delete>
 </mapper>

@@ -44,6 +44,11 @@ public class UserInfoServiceImpl implements UserInfoService {
         return userInfoDao.selectTable();
     }
 
+    @Override
+    public List<UserInfo> searchDeposit() throws Exception {
+        return userInfoDao.selectDeposit();
+    }
+
     /**
      * 根据用户名添加用户
      *

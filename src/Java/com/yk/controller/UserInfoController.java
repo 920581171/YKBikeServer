@@ -53,6 +53,19 @@ public class UserInfoController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "查找申请退还押金的用户", httpMethod = "POST")
+    @RequestMapping(value = "/findDeposit", method = RequestMethod.POST)
+    public String findDeposit() {
+        try {
+            List<UserInfo> userInfos = userInfoService.searchDeposit();
+            return GsonUtils.responseObjectJson(userInfos != null, userInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "查找所有用户信息", httpMethod = "POST")
     @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST)
     public String findAllUserInfo() {

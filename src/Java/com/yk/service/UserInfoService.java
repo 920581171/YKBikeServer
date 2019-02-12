@@ -13,6 +13,8 @@ public interface UserInfoService {
 
     List<UserInfo> searchAllUserInfo() throws Exception;
 
+    List<UserInfo> searchDeposit() throws Exception;
+
     int addUserByName(String userName, String userPassword) throws Exception;
 
     int addUserByPhone(String userPhone) throws Exception;
