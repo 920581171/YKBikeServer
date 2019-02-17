@@ -10,7 +10,7 @@ import java.util.List;
 
 import static com.yk.Utils.RandomUtils.randomUserId;
 
-@Service("userInfoService")
+@Service
 public class UserInfoServiceImpl implements UserInfoService {
     @Autowired
     UserInfoDao userInfoDao;

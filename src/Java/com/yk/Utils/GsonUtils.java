@@ -4,6 +4,8 @@ import com.google.gson.Gson;
 import com.yk.response.ErrorCommonResponse;
 import com.yk.response.SuccessCommonResponse;
 
+import java.lang.reflect.Type;
+
 public class GsonUtils {
     private static Gson gson;
 
@@ -23,6 +25,10 @@ public class GsonUtils {
 
     public static String toJson(Object object) {
         return getGson().toJson(object);
+    }
+
+    public static <T>T fromJson(String string, Type type) throws IllegalStateException{
+        return getGson().fromJson(string,type);
     }
 
     public static String responseSimpleJson(boolean isSuccess) {
