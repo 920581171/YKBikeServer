@@ -12,6 +12,7 @@
         <result property="adminName" column="admin_name"/>
         <result property="adminPassword" column="admin_password"/>
         <result property="adminPhone" column="admin_phone"/>
+        <result property="adminType" column="admin_type"/>
     </resultMap>
 
     <parameterMap id="parameterMap" type="com.yk.pojo.AdminInfo">
@@ -20,6 +21,7 @@
         <parameter property="adminName" resultMap="resultMap"/>
         <parameter property="adminPassword" resultMap="resultMap"/>
         <parameter property="adminPhone" resultMap="resultMap"/>
+        <parameter property="adminType" resultMap="resultMap"/>
     </parameterMap>
 
     <!-- 目的：为dao接口方法提供sql语句配置 -->
@@ -45,9 +47,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        admin_info(`_id`,admin_id,admin_account,admin_name,admin_password,admin_phone)
+        admin_info(`_id`,admin_id,admin_account,admin_name,admin_password,admin_phone,admin_type)
         values
-        (null,#{adminId},#{adminAccount},#{adminName},#{adminPassword},#{adminPhone})
+        (null,#{adminId},#{adminAccount},#{adminName},#{adminPassword},#{adminPhone},#{adminType})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -56,7 +58,8 @@
         set admin_account  = #{adminAccount},
             admin_name     = #{adminName},
             admin_password = #{adminPassword},
-            admin_phone    = #{adminPhone}
+            admin_phone    = #{adminPhone},
+            admin_type = #{adminType}
         where admin_id = #{adminId}
     </update>
 

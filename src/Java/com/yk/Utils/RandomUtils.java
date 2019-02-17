@@ -11,25 +11,19 @@ public class RandomUtils {
     public static String randomUserId() {
         DateFormat dateFormat = new SimpleDateFormat("yyMMdd");
         Date date = new Date();
-        StringBuilder stringBuilder = new StringBuilder(dateFormat.format(date));
-        int random = (int) (Math.random() * 10000);
-        stringBuilder.append(random);
-
-        return stringBuilder.toString();
+        return randomId(dateFormat.format(date));
     }
 
     /**
      * 创建随机Id
      */
     public static String randomId(String s) {
-        int len = 1;
-        for (int i = 0; i < 10 - s.length(); i++) {
-            len *= 10;
-        }
         StringBuilder stringBuilder = new StringBuilder();
-        int random = (int) (Math.random() * len);
-        stringBuilder.append(s).append(random);
-
+        stringBuilder.append(s);
+        for (int i = 0; i < 10 - s.length(); i++) {
+            int random = (int) (Math.random() * 10);
+            stringBuilder.append(random);
+        }
         return stringBuilder.toString();
     }
 }

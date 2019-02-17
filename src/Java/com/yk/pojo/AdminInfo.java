@@ -7,6 +7,7 @@ public class AdminInfo {
     private String adminName;
     private String adminPassword;
     private String adminPhone;
+    private String adminType;
 
     public int getId() {
         return id;
@@ -59,6 +60,15 @@ public class AdminInfo {
 
     public AdminInfo setAdminPhone(String adminPhone) {
         this.adminPhone = adminPhone;
+        return this;
+    }
+
+    public String getAdminType() {
+        return adminType;
+    }
+
+    public AdminInfo setAdminType(String adminType) {
+        this.adminType = adminType;
         return this;
     }
 }

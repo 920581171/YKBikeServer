@@ -55,7 +55,8 @@ public class AdminInfoServiceImpl implements AdminInfoService {
                 .setAdminId(adminId)
                 .setAdminName(adminName)
                 .setAdminPassword(adminPassword)
-                .setAdminPhone(adminPhone);
+                .setAdminPhone(adminPhone)
+                .setAdminType("1");
 
         adminInfoDao.insert(adminInfo);
 

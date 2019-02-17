@@ -8,4 +8,5 @@ public interface AdminInfoDao extends BaseDao<AdminInfo>{
     String COLUMN_ADMIN_NAME = "admin_name";
     String COLUMN_ADMIN_PASSWORD = "admin_password";
     String COLUMN_ADMIN_PHONE = "admin_phone";
+    String COLUMN_ADMIN_TYPE = "admin_type";
 }

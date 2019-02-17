@@ -29,7 +29,7 @@
       <Collation>utf8mb4_0900_ai_ci</Collation>
     </schema>
     <schema id="9" parent="1" name="sjgzxt">
-      <Collation>utf8mb4_0900_ai_ci</Collation>
+      <Collation>utf8_bin</Collation>
     </schema>
     <schema id="10" parent="1" name="sys">
       <Collation>utf8mb4_0900_ai_ci</Collation>
@@ -1180,125 +1180,132 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="295" parent="284" name="PRIMARY">
+    <column id="295" parent="284" name="admin_type">
+      <Position>7</Position>
+      <Comment>管理员类型（0超管，1普管）</Comment>
+      <DataType>char(1)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="296" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="296" parent="285" name="_id">
+    <column id="297" parent="285" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="285" name="user_id">
+    <column id="298" parent="285" name="user_id">
       <Position>2</Position>
       <Comment>骑行人员id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="298" parent="285" name="bike_id">
+    <column id="299" parent="285" name="bike_id">
       <Position>3</Position>
       <Comment>自行车编号</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="285" name="latitude">
+    <column id="300" parent="285" name="latitude">
       <Position>4</Position>
       <Comment>纬度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="285" name="longitude">
+    <column id="301" parent="285" name="longitude">
       <Position>5</Position>
       <Comment>经度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="301" parent="285" name="mileage">
+    <column id="302" parent="285" name="mileage">
       <Position>6</Position>
       <Comment>行驶总里程</Comment>
       <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="302" parent="285" name="fix">
+    <column id="303" parent="285" name="fix">
       <Position>7</Position>
       <Comment>是否维修</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="303" parent="285" name="PRIMARY">
+    <key id="304" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="304" parent="286" name="_id">
+    <column id="305" parent="286" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="286" name="order_id">
+    <column id="306" parent="286" name="order_id">
       <Position>2</Position>
       <Comment>订单Id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="286" name="user_id">
+    <column id="307" parent="286" name="user_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="307" parent="286" name="bike_id">
+    <column id="308" parent="286" name="bike_id">
       <Position>4</Position>
       <Comment>自行车编号</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="286" name="charge">
+    <column id="309" parent="286" name="charge">
       <Position>5</Position>
       <Comment>计费</Comment>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="286" name="mileage">
+    <column id="310" parent="286" name="mileage">
       <Position>6</Position>
       <Comment>里程</Comment>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="286" name="create_time">
+    <column id="311" parent="286" name="create_time">
       <Position>7</Position>
       <Comment>开始时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="286" name="end_time">
+    <column id="312" parent="286" name="end_time">
       <Position>8</Position>
       <Comment>结束时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="286" name="order_status">
+    <column id="313" parent="286" name="order_status">
       <Position>9</Position>
       <Comment>状态</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="313" parent="286" name="PRIMARY">
+    <key id="314" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="314" parent="287" name="_id">
+    <column id="315" parent="287" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1306,86 +1313,86 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="287" name="site_id">
+    <column id="316" parent="287" name="site_id">
       <Position>2</Position>
       <Comment>站点id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="316" parent="287" name="latitude">
+    <column id="317" parent="287" name="latitude">
       <Position>3</Position>
       <Comment>纬度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="317" parent="287" name="longitude">
+    <column id="318" parent="287" name="longitude">
       <Position>4</Position>
       <Comment>经度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="287" name="radius">
+    <column id="319" parent="287" name="radius">
       <Position>5</Position>
       <Comment>半径/米</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="319" parent="287" name="PRIMARY">
+    <key id="320" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="320" parent="288" name="_id">
+    <column id="321" parent="288" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="288" name="user_id">
+    <column id="322" parent="288" name="user_id">
       <Position>2</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="322" parent="288" name="user_name">
+    <column id="323" parent="288" name="user_name">
       <Position>3</Position>
       <Comment>用户名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="323" parent="288" name="user_phone">
+    <column id="324" parent="288" name="user_phone">
       <Position>4</Position>
       <Comment>手机</Comment>
       <DataType>char(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="324" parent="288" name="user_password">
+    <column id="325" parent="288" name="user_password">
       <Position>5</Position>
       <Comment>密码</Comment>
       <DataType>varchar(32)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="325" parent="288" name="deposit">
+    <column id="326" parent="288" name="deposit">
       <Position>6</Position>
       <Comment>押金·</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="288" name="balance">
+    <column id="327" parent="288" name="balance">
       <Position>7</Position>
       <Comment>账户余额</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="327" parent="288" name="PRIMARY">
+    <key id="328" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>

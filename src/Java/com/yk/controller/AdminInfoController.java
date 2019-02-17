@@ -116,7 +116,13 @@ public class AdminInfoController {
                                     @RequestParam("adminName") String adminName,
                                     @RequestParam("adminPassword") String adminPassword,
                                     @RequestParam("adminPhone") String adminPhone) {
+
         try {
+
+            if (adminInfoService.searchAdminAccount(adminAccount) != null)
+                return GsonUtils.responseErrorMsgJson("账号已存在");
+            if (adminInfoService.searchAdminPhone(adminPhone) != null)
+                return GsonUtils.responseErrorMsgJson("手机号已存在");
             return GsonUtils.responseSimpleJson(adminInfoService.addAdminInfo(adminAccount, adminName, adminPassword, adminPhone) > 0);
         } catch (Exception e) {
             e.printStackTrace();
