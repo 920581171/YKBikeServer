@@ -45,9 +45,9 @@ public class AdminInfoServiceImpl implements AdminInfoService {
 
     @Override
     public int addAdminInfo(String adminAccount, String adminName, String adminPassword, String adminPhone) throws Exception {
-        String adminId = randomId("admin");
+        String adminId = randomId("ADMIN");
         while (adminInfoDao.selectOne(AdminInfoDao.COLUMN_ADMIN_ID, adminId) != null) {
-            adminId = randomId("admin");
+            adminId = randomId("ADMIN");
         }
 
         AdminInfo adminInfo = new AdminInfo()

@@ -37,9 +37,9 @@ public class MessageBroadServiceImpl implements MessageBroadService {
 
     @Override
     public int addMessageBroad(MessageBroad messageBroad) throws Exception {
-        String messageId = randomId("msg");
+        String messageId = randomId("MSG");
         while (messageBroadDao.selectOne(MessageBroadDao.COLUMN_MESSAGE_ID, messageId) != null) {
-            messageId = randomId("msg");
+            messageId = randomId("MSG");
         }
         messageBroad.setMessageId(messageId);
         messageBroadDao.insert(messageBroad);

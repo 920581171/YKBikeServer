@@ -29,10 +29,10 @@ public class SiteLocationServiceImpl implements SiteLocationService {
     @Override
     public int addSiteLocation(double latitude, double longitude, int radius) throws Exception {
 
-        String siteId = randomId("site");
+        String siteId = randomId("SITE");
 
         while (siteLocationDao.selectOne(SiteLocationDao.COLUMN_SITE_ID, siteId) != null) {
-            siteId = randomId("site");
+            siteId = randomId("SITE");
         }
 
         SiteLocation siteLocation = new SiteLocation()
