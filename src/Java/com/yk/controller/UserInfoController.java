@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(description = "userInfo")
+@Api(description = "用户信息相关")
 @Controller
 @RequestMapping("userinfo")
 public class UserInfoController {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Api(description = "siteLocation")
+@Api(description = "站点相关")
 @Controller
 @RequestMapping("siteLocation")
 public class SiteLocationController {

@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Api(description = "adminInfo")
+@Api(description = "管理员信息相关")
 @Controller
 @RequestMapping(value = "adminInfo")
 public class AdminInfoController {

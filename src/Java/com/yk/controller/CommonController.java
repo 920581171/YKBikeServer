@@ -19,7 +19,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-@Api(value = "common")
+@Api(description = "其他")
 @Controller
 @RequestMapping(value = "common")
 public class CommonController {

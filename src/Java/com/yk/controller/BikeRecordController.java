@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import java.util.Date;
 import java.util.List;
 
-@Api(value = "bikeRecord")
+@Api(description = "记录相关")
 @Controller
 @RequestMapping(value = "bikeRecord")
 public class BikeRecordController {

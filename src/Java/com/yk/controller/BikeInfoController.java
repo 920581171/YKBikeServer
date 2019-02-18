@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
 
-@Api(description = "bikeInfo")
+@Api(description = "车辆信息相关")
 @Controller
 @RequestMapping("bikeinfo")
 public class BikeInfoController {
