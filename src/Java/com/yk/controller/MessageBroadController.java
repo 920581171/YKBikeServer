@@ -51,9 +51,9 @@ public class MessageBroadController {
     @ResponseBody
     @ApiOperation(value = "根据发送者Id查询留言板", httpMethod = "POST")
     @RequestMapping(value = "/findMessageBroadBySenderId", method = RequestMethod.POST)
-    public String findMessageBroadBySenderId(@RequestParam("senderId") String senderId) {
+    public String findMessageBroadBySenderId(@RequestParam("senderId") String senderId,@RequestParam("messageType") String messageType) {
         try {
-            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadBySenderId(senderId);
+            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadBySenderId(senderId,messageType);
             return GsonUtils.responseObjectJson(messageBroads != null, messageBroads);
         } catch (Exception e) {
             e.printStackTrace();
@@ -64,9 +64,9 @@ public class MessageBroadController {
     @ResponseBody
     @ApiOperation(value = "根据处理者Id查询留言板", httpMethod = "POST")
     @RequestMapping(value = "/findMessageBroadByHandlerId", method = RequestMethod.POST)
-    public String findMessageBroadByHandlerId(@RequestParam("handlerId") String handlerId) {
+    public String findMessageBroadByHandlerId(@RequestParam("handlerId") String handlerId,@RequestParam("messageType") String messageType) {
         try {
-            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByHandler(handlerId);
+            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByHandler(handlerId,messageType);
             return GsonUtils.responseObjectJson(messageBroads != null, messageBroads);
         } catch (Exception e) {
             e.printStackTrace();
@@ -78,10 +78,11 @@ public class MessageBroadController {
     @ApiOperation(value = "添加留言板", httpMethod = "POST")
     @RequestMapping(value = "/addMessageBroad", method = RequestMethod.POST)
     public String addMessageBroad(@RequestParam("senderId") String senderId,
-                                  @RequestParam("messageContent") String messageContent) {
+                                  @RequestParam("messageContent") String messageContent,
+                                  @RequestParam("messageType") String messageType) {
 
         MessageBroad messageBroad = new MessageBroad()
-                .setSenderId(senderId).setMessageContent(messageContent).setMessageStatus("0");
+                .setSenderId(senderId).setMessageContent(messageContent).setMessageType(messageType).setMessageStatus("0");
 
         try {
             return GsonUtils.responseSimpleJson(messageBroadService.addMessageBroad(messageBroad) > 0);
@@ -97,8 +98,10 @@ public class MessageBroadController {
     public String updateSiteLocation(@RequestParam("messageId") String messageId,
                                      @RequestParam("senderId") String senderId,
                                      @RequestParam("handlerId") String handlerId,
+                                     @RequestParam("handlerName") String handlerName,
                                      @RequestParam("messageContent") String messageContent,
-                                     @RequestParam("messageStatus") String messageStatus) {
+                                     @RequestParam("messageStatus") String messageStatus,
+                                     @RequestParam("messageType") String messageType) {
 
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);
@@ -106,8 +109,10 @@ public class MessageBroadController {
                 return GsonUtils.responseErrorMsgJson("没有找到该留言");
             messageBroad.setSenderId(senderId)
                     .setHandlerId(handlerId)
+                    .setHandlerName(handlerName)
                     .setMessageContent(messageContent)
-                    .setMessageStatus(messageStatus);
+                    .setMessageStatus(messageStatus)
+                    .setMessageType(messageType);
 
 
             return GsonUtils.responseSimpleJson(messageBroadService.updateMessageBroad(messageBroad) > 0);

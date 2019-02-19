@@ -7,9 +7,9 @@ import java.util.List;
 public interface MessageBroadService {
     MessageBroad searchMessageBroadById(String messageId) throws Exception;
 
-    List<MessageBroad> searchMessageBroadBySenderId(String senderId) throws Exception;
+    List<MessageBroad> searchMessageBroadBySenderId(String senderId,String type) throws Exception;
 
-    List<MessageBroad> searchMessageBroadByHandler(String handlerId) throws Exception;
+    List<MessageBroad> searchMessageBroadByHandler(String handlerId,String type) throws Exception;
 
     List<MessageBroad> searchAllMessageBroad() throws Exception;
 

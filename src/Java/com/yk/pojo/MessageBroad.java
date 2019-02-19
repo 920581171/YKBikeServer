@@ -5,8 +5,10 @@ public class MessageBroad {
     private String messageId;
     private String senderId;
     private String handlerId;
+    private String handlerName;
     private String messageContent;
     private String messageStatus;
+    private String messageType;
 
     public int getId() {
         return id;
@@ -44,6 +46,15 @@ public class MessageBroad {
         return this;
     }
 
+    public String getHandlerName() {
+        return handlerName;
+    }
+
+    public MessageBroad setHandlerName(String handlerName) {
+        this.handlerName = handlerName;
+        return this;
+    }
+
     public String getMessageContent() {
         return messageContent;
     }
@@ -59,6 +70,15 @@ public class MessageBroad {
 
     public MessageBroad setMessageStatus(String messageStatus) {
         this.messageStatus = messageStatus;
+        return this;
+    }
+
+    public String getMessageType() {
+        return messageType;
+    }
+
+    public MessageBroad setMessageType(String messageType) {
+        this.messageType = messageType;
         return this;
     }
 }

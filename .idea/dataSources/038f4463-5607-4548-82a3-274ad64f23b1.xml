@@ -1332,24 +1332,36 @@
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="320" parent="287" name="message_content">
+    <column id="320" parent="287" name="handler_name">
       <Position>5</Position>
+      <Comment>处理人姓名</Comment>
+      <DataType>varchar(20)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="321" parent="287" name="message_content">
+      <Position>6</Position>
       <Comment>消息内容</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="287" name="message_status">
-      <Position>6</Position>
-      <Comment> 消息状态</Comment>
+    <column id="322" parent="287" name="message_status">
+      <Position>7</Position>
+      <Comment>消息状态</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="322" parent="287" name="PRIMARY">
+    <column id="323" parent="287" name="message_type">
+      <Position>8</Position>
+      <Comment>消息类型（0反馈1帮助）</Comment>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="324" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="323" parent="288" name="_id">
+    <column id="325" parent="288" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1357,86 +1369,86 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="324" parent="288" name="site_id">
+    <column id="326" parent="288" name="site_id">
       <Position>2</Position>
       <Comment>站点id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="325" parent="288" name="latitude">
+    <column id="327" parent="288" name="latitude">
       <Position>3</Position>
       <Comment>纬度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="326" parent="288" name="longitude">
+    <column id="328" parent="288" name="longitude">
       <Position>4</Position>
       <Comment>经度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="327" parent="288" name="radius">
+    <column id="329" parent="288" name="radius">
       <Position>5</Position>
       <Comment>半径/米</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="328" parent="288" name="PRIMARY">
+    <key id="330" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="329" parent="289" name="_id">
+    <column id="331" parent="289" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="289" name="user_id">
+    <column id="332" parent="289" name="user_id">
       <Position>2</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="289" name="user_name">
+    <column id="333" parent="289" name="user_name">
       <Position>3</Position>
       <Comment>用户名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="332" parent="289" name="user_phone">
+    <column id="334" parent="289" name="user_phone">
       <Position>4</Position>
       <Comment>手机</Comment>
       <DataType>char(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="289" name="user_password">
+    <column id="335" parent="289" name="user_password">
       <Position>5</Position>
       <Comment>密码</Comment>
       <DataType>varchar(32)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="289" name="deposit">
+    <column id="336" parent="289" name="deposit">
       <Position>6</Position>
       <Comment>押金·</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="289" name="balance">
+    <column id="337" parent="289" name="balance">
       <Position>7</Position>
       <Comment>账户余额</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="336" parent="289" name="PRIMARY">
+    <key id="338" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>

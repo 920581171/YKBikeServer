@@ -9,16 +9,20 @@
         <result property="messageId" column="message_id"/>
         <result property="senderId" column="sender_id"/>
         <result property="handlerId" column="handler_id"/>
+        <result property="handlerName" column="handler_name"/>
         <result property="messageContent" column="message_content"/>
         <result property="messageStatus" column="message_status"/>
+        <result property="messageType" column="message_type"/>
     </resultMap>
 
     <parameterMap id="parameterMap" type="com.yk.pojo.MessageBroad">
         <parameter property="messageId" resultMap="resultMap"/>
         <parameter property="senderId" resultMap="resultMap"/>
         <parameter property="handlerId" resultMap="resultMap"/>
+        <parameter property="handlerName" resultMap="resultMap"/>
         <parameter property="messageContent" resultMap="resultMap"/>
         <parameter property="messageStatus" resultMap="resultMap"/>
+        <parameter property="messageType" resultMap="resultMap"/>
     </parameterMap>
 
     <select id="selectOne" resultMap="resultMap">
@@ -33,6 +37,12 @@
         where ${column} = #{property}
     </select>
 
+    <select id="selectByType" resultMap="resultMap">
+        select *
+        from message_board
+        where ${column} = #{property} and message_type = #{type}
+    </select>
+
     <select id="selectTable" resultMap="resultMap">
         select *
         from message_board
@@ -43,9 +53,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        message_board(`_id`,message_id,sender_id,handler_id,message_content,message_status)
+        message_board(`_id`,message_id,sender_id,handler_id,handler_name,message_content,message_status,message_type)
         values
-        (null,#{messageId},#{senderId},#{handlerId},#{messageContent},#{messageStatus})
+        (null,#{messageId},#{senderId},#{handlerId},#{handlerName},#{messageContent},#{messageStatus},#{messageType})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -53,8 +63,10 @@
             message_board
         set sender_id       = #{senderId},
             handler_id      = #{handlerId},
+            handler_name    = #{handlerName},
             message_content = #{messageContent},
-            message_status  = #{messageStatus}
+            message_status  = #{messageStatus},
+            message_type    = #{messageType}
         where message_id = #{messageId};
     </update>
 
