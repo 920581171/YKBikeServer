@@ -7,6 +7,7 @@ public class MessageBroad {
     private String handlerId;
     private String handlerName;
     private String messageContent;
+    private String messageReply;
     private String messageStatus;
     private String messageType;
 
@@ -61,6 +62,15 @@ public class MessageBroad {
 
     public MessageBroad setMessageContent(String messageContent) {
         this.messageContent = messageContent;
+        return this;
+    }
+
+    public String getMessageReply() {
+        return messageReply;
+    }
+
+    public MessageBroad setMessageReply(String messageReply) {
+        this.messageReply = messageReply;
         return this;
     }
 

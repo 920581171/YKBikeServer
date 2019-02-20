@@ -40,7 +40,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据UserId查找用户", httpMethod = "POST")
-    @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST)
+    @RequestMapping(value = "/findUserByUserId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findUserByUserId(@RequestParam("userId") String userId) {
         UserInfo userInfo = null;
         try {
@@ -54,7 +54,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "查找申请退还押金的用户", httpMethod = "POST")
-    @RequestMapping(value = "/findDeposit", method = RequestMethod.POST)
+    @RequestMapping(value = "/findDeposit", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findDeposit() {
         try {
             List<UserInfo> userInfos = userInfoService.searchDeposit();
@@ -67,7 +67,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "查找所有用户信息", httpMethod = "POST")
-    @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllUserInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findAllUserInfo() {
         try {
             List<UserInfo> userInfos = userInfoService.searchAllUserInfo();
@@ -80,7 +80,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据UserName查找用户", httpMethod = "POST")
-    @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST)
+    @RequestMapping(value = "/findUserByUserName", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findUserByUserName(@RequestParam("userName") String userName) {
         try {
             UserInfo userInfo = userInfoService.searchUserName(userName);
@@ -93,7 +93,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据UserPhone查找用户", httpMethod = "POST")
-    @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST)
+    @RequestMapping(value = "/findUserByUserPhone", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findUserByUserPhone(@RequestParam("userPhone") String userPhone) {
         try {
             UserInfo userInfo = userInfoService.searchUserPhone(userPhone);
@@ -106,7 +106,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "通过手机号注册用户", httpMethod = "POST")
-    @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerUserByPhone", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String registerUserByPhone(@RequestParam("userPhone") String userPhone) {
         try {
             return GsonUtils.responseObjectJson(userInfoService.addUserByPhone(userPhone) > 0, userInfoService.searchUserPhone(userPhone));
@@ -118,7 +118,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "通过用户名和密码注册用户", httpMethod = "POST")
-    @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST)
+    @RequestMapping(value = "/registerUserByName", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String registerUserByName(@RequestParam("userName") String userName,
                                      @RequestParam("userPassword") String userPassword) {
         try {
@@ -131,7 +131,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "更新用户信息", httpMethod = "POST")
-    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateUserInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateUserInfo(@RequestParam("userId") String userId,
                                  @RequestParam("userName") String userName,
                                  @RequestParam("userPhone") String userPhone,
@@ -156,7 +156,7 @@ public class UserInfoController {
 
     @ResponseBody
     @ApiOperation(value = "通过userId删除用户", httpMethod = "POST")
-    @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteUserInfo(@RequestParam("userId") String userId) {
         try {
             UserInfo userInfo = new UserInfo().setUserId(userId);

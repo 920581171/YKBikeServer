@@ -11,6 +11,7 @@
         <result property="handlerId" column="handler_id"/>
         <result property="handlerName" column="handler_name"/>
         <result property="messageContent" column="message_content"/>
+        <result property="messageReply" column="message_reply"/>
         <result property="messageStatus" column="message_status"/>
         <result property="messageType" column="message_type"/>
     </resultMap>
@@ -21,8 +22,10 @@
         <parameter property="handlerId" resultMap="resultMap"/>
         <parameter property="handlerName" resultMap="resultMap"/>
         <parameter property="messageContent" resultMap="resultMap"/>
+        <parameter property="messageReply" resultMap="resultMap"/>
         <parameter property="messageStatus" resultMap="resultMap"/>
         <parameter property="messageType" resultMap="resultMap"/>
+
     </parameterMap>
 
     <select id="selectOne" resultMap="resultMap">
@@ -40,7 +43,8 @@
     <select id="selectByType" resultMap="resultMap">
         select *
         from message_board
-        where ${column} = #{property} and message_type = #{type}
+        where ${column} = #{property}
+          and message_type = #{type}
     </select>
 
     <select id="selectTable" resultMap="resultMap">
@@ -53,9 +57,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        message_board(`_id`,message_id,sender_id,handler_id,handler_name,message_content,message_status,message_type)
+        message_board(`_id`,message_id,sender_id,handler_id,handler_name,message_content,message_reply,message_status,message_type)
         values
-        (null,#{messageId},#{senderId},#{handlerId},#{handlerName},#{messageContent},#{messageStatus},#{messageType})
+        (null,#{messageId},#{senderId},#{handlerId},#{handlerName},#{messageContent},#{messageReply},#{messageStatus},#{messageType})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -65,6 +69,7 @@
             handler_id      = #{handlerId},
             handler_name    = #{handlerName},
             message_content = #{messageContent},
+            message_reply   = #{messageReply},
             message_status  = #{messageStatus},
             message_type    = #{messageType}
         where message_id = #{messageId};

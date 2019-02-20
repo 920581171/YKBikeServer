@@ -21,13 +21,28 @@ public class MessageBroadServiceImpl implements MessageBroadService {
     }
 
     @Override
-    public List<MessageBroad> searchMessageBroadBySenderId(String senderId, String type) throws Exception {
+    public List<MessageBroad> searchMessageBroadByType(String messageType) throws Exception {
+        return messageBroadDao.selectList(MessageBroadDao.COLUMN_MESSAGE_TYPE, messageType);
+    }
+
+    @Override
+    public List<MessageBroad> searchMessageBroadBySenderId(String senderId) throws Exception {
+        return messageBroadDao.selectList(MessageBroadDao.COLUMN_SENDER_ID, senderId);
+    }
+
+    @Override
+    public List<MessageBroad> searchMessageBroadBySenderIdWithType(String senderId, String type) throws Exception {
         return messageBroadDao.selectByType(MessageBroadDao.COLUMN_SENDER_ID, senderId, type);
     }
 
     @Override
-    public List<MessageBroad> searchMessageBroadByHandler(String handlerId, String type) throws Exception {
-        return messageBroadDao.selectByType(MessageBroadDao.COLUMN_HANDLER_ID, handlerId, type);
+    public List<MessageBroad> searchMessageBroadByHandler(String handlerId) throws Exception {
+        return messageBroadDao.selectList(MessageBroadDao.COLUMN_HANDLER_ID, handlerId);
+    }
+
+    @Override
+    public List<MessageBroad> searchMessageBroadByHandlerWithType(String senderId, String type) throws Exception {
+        return messageBroadDao.selectByType(MessageBroadDao.COLUMN_SENDER_ID, senderId, type);
     }
 
     @Override

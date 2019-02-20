@@ -24,7 +24,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "查询所有留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findAllMessageBroad", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findAllMessageBroad() {
         try {
             List<MessageBroad> messageBroads = messageBroadService.searchAllMessageBroad();
@@ -37,7 +37,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据messageId查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadByMessageId", method = RequestMethod.POST)
+    @RequestMapping(value = "/findMessageBroadByMessageId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findMessageBroadByMessageId(@RequestParam("messageId") String messageId) {
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);
@@ -50,10 +50,10 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据发送者Id查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadBySenderId", method = RequestMethod.POST)
-    public String findMessageBroadBySenderId(@RequestParam("senderId") String senderId,@RequestParam("messageType") String messageType) {
+    @RequestMapping(value = "/findMessageBroadBySenderId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findMessageBroadBySenderId(@RequestParam("senderId") String senderId) {
         try {
-            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadBySenderId(senderId,messageType);
+            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadBySenderId(senderId);
             return GsonUtils.responseObjectJson(messageBroads != null, messageBroads);
         } catch (Exception e) {
             e.printStackTrace();
@@ -63,10 +63,23 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据处理者Id查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadByHandlerId", method = RequestMethod.POST)
-    public String findMessageBroadByHandlerId(@RequestParam("handlerId") String handlerId,@RequestParam("messageType") String messageType) {
+    @RequestMapping(value = "/findMessageBroadByHandlerIdWithType", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findMessageBroadByHandlerIdWithType(@RequestParam("handlerId") String handlerId, @RequestParam("messageType") String messageType) {
         try {
-            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByHandler(handlerId,messageType);
+            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByHandlerWithType(handlerId, messageType);
+            return GsonUtils.responseObjectJson(messageBroads != null, messageBroads);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "根据messageType查询所有留言板", httpMethod = "POST")
+    @RequestMapping(value = "/findMessageBroadByType", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String findMessageBroadByType(@RequestParam("messageType") String messageType) {
+        try {
+            List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByType(messageType);
             return GsonUtils.responseObjectJson(messageBroads != null, messageBroads);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +89,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "添加留言板", httpMethod = "POST")
-    @RequestMapping(value = "/addMessageBroad", method = RequestMethod.POST)
+    @RequestMapping(value = "/addMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addMessageBroad(@RequestParam("senderId") String senderId,
                                   @RequestParam("messageContent") String messageContent,
                                   @RequestParam("messageType") String messageType) {
@@ -94,12 +107,13 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "更新留言板", httpMethod = "POST")
-    @RequestMapping(value = "/updateMessageBroad", method = RequestMethod.POST)
-    public String updateSiteLocation(@RequestParam("messageId") String messageId,
+    @RequestMapping(value = "/updateMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String updateMessageBroad(@RequestParam("messageId") String messageId,
                                      @RequestParam("senderId") String senderId,
                                      @RequestParam("handlerId") String handlerId,
                                      @RequestParam("handlerName") String handlerName,
                                      @RequestParam("messageContent") String messageContent,
+                                     @RequestParam("messageReply") String messageReply,
                                      @RequestParam("messageStatus") String messageStatus,
                                      @RequestParam("messageType") String messageType) {
 
@@ -111,6 +125,7 @@ public class MessageBroadController {
                     .setHandlerId(handlerId)
                     .setHandlerName(handlerName)
                     .setMessageContent(messageContent)
+                    .setMessageReply(messageReply)
                     .setMessageStatus(messageStatus)
                     .setMessageType(messageType);
 
@@ -124,7 +139,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "删除留言板", httpMethod = "POST")
-    @RequestMapping(value = "/deleteMessageBroad", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteMessageBroad(@RequestParam("messageId") String messageId) {
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);

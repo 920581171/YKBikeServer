@@ -24,7 +24,7 @@ public class SiteLocationController {
 
     @ResponseBody
     @ApiOperation(value = "查找所有站点", httpMethod = "POST")
-    @RequestMapping(value = "/findAllSiteLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/findAllSiteLocation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findAllSiteLocation() {
         try {
             List<SiteLocation> siteLocations = siteLocationService.searchAllSiteLocation();
@@ -37,7 +37,7 @@ public class SiteLocationController {
 
     @ResponseBody
     @ApiOperation(value = "根据Id查询站点", httpMethod = "POST")
-    @RequestMapping(value = "/findSiteLocationById", method = RequestMethod.POST)
+    @RequestMapping(value = "/findSiteLocationById", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String findSiteLocationById(@RequestParam("siteId") String siteId) {
         try {
             SiteLocation siteLocation = siteLocationService.searchSiteLocationId(siteId);
@@ -50,7 +50,7 @@ public class SiteLocationController {
 
     @ResponseBody
     @ApiOperation(value = "添加站点", httpMethod = "POST")
-    @RequestMapping(value = "/addSiteLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/addSiteLocation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String addSiteLocation(@RequestParam("latitude") double latitude,
                                   @RequestParam("longitude") double longitude,
                                   @RequestParam("radius") int radius) {
@@ -64,7 +64,7 @@ public class SiteLocationController {
 
     @ResponseBody
     @ApiOperation(value = "更新站点", httpMethod = "POST")
-    @RequestMapping(value = "/updateSiteLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/updateSiteLocation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateSiteLocation(@RequestParam("siteId") String siteId,
                                      @RequestParam("latitude") double latitude,
                                      @RequestParam("longitude") double longitude,
@@ -85,7 +85,7 @@ public class SiteLocationController {
 
     @ResponseBody
     @ApiOperation(value = "删除站点", httpMethod = "POST")
-    @RequestMapping(value = "/deleteSiteLocation", method = RequestMethod.POST)
+    @RequestMapping(value = "/deleteSiteLocation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteSiteLocation(@RequestParam("siteId") String siteId) {
         try {
             SiteLocation siteLocation = siteLocationService.searchSiteLocationId(siteId);
