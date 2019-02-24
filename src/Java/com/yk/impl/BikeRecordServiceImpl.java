@@ -48,9 +48,9 @@ public class BikeRecordServiceImpl implements BikeRecordService {
 
     @Override
     public int addBikeRecord(BikeRecord bikeRecord) throws Exception {
-        String orderId = randomId("RECORD");
+        String orderId = randomId("RC");
         while (bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID, orderId) != null) {
-            orderId = randomId("RECORD");
+            orderId = randomId("RC");
         }
 
         bikeRecord.setOrderId(orderId);
