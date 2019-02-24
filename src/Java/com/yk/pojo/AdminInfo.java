@@ -8,6 +8,7 @@ public class AdminInfo {
     private String adminPassword;
     private String adminPhone;
     private String adminType;
+    private String adminOnline;
 
     public int getId() {
         return id;
@@ -69,6 +70,15 @@ public class AdminInfo {
 
     public AdminInfo setAdminType(String adminType) {
         this.adminType = adminType;
+        return this;
+    }
+
+    public String getAdminOnline() {
+        return adminOnline;
+    }
+
+    public AdminInfo setAdminOnline(String adminOnline) {
+        this.adminOnline = adminOnline;
         return this;
     }
 }

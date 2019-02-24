@@ -3,6 +3,7 @@ package com.yk.controller;
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.AdminInfoServiceImpl;
 import com.yk.pojo.AdminInfo;
+import com.yk.pojo.WebSocketMessage;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.Map;
 
 @Api(description = "管理员信息相关")
 @Controller
@@ -63,6 +65,7 @@ public class AdminInfoController {
     public String findAdminByAdminAccount(@RequestParam("adminAccount") String adminAccount) {
         try {
             AdminInfo adminInfo = adminInfoService.searchAdminAccount(adminAccount);
+
             return GsonUtils.responseObjectJson(adminInfo != null, adminInfo);
         } catch (Exception e) {
             e.printStackTrace();
@@ -76,7 +79,14 @@ public class AdminInfoController {
     public String findAllAdminInfo() {
         try {
             List<AdminInfo> adminInfos = adminInfoService.searchAllAdminInfo();
-            return GsonUtils.responseObjectJson(adminInfos != null, adminInfos);
+            Map<String, WebSocketHandler> clients = WebSocketHandler.clients;
+            boolean b = adminInfos != null;
+            if (!b)
+                return GsonUtils.responseErrorJson();
+            for (AdminInfo info : adminInfos) {
+                info.setAdminOnline(clients.get(info.getAdminId()) == null ? "0" : "1");
+            }
+            return GsonUtils.responseSuccessObjJson(adminInfos);
         } catch (Exception e) {
             e.printStackTrace();
             return GsonUtils.responseErrorJson();
