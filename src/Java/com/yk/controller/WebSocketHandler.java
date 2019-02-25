@@ -68,8 +68,9 @@ public class WebSocketHandler {
             String chat = (String) (webSocketMessage.getData());
             ChatMessage chatMessage = GsonUtils.fromJson(chat, ChatMessage.class);
             chatMessageService.addChatMessage(chatMessage);
-            if (!toRoom){
-                toRoom = chatRoomService.searchBothAndAdd(chatMessage.getToId(), chatMessage.getFromId()) != null;}
+            if (!toRoom) {
+                toRoom = chatRoomService.searchBothAndAdd(chatMessage.getToId(), chatMessage.getFromId()) != null;
+            }
             if (fromRoom)
                 fromRoom = chatRoomService.searchBothAndAdd(chatMessage.getFromId(), chatMessage.getToId()) != null;
             sendMessageTo(message, chatMessage.getToId());
@@ -88,7 +89,8 @@ public class WebSocketHandler {
 
     public void sendMessageTo(String message, String toId) throws Exception {
         WebSocketHandler toHandler = clients.get(toId);
-        toHandler.session.getBasicRemote().sendText(message);
+        if (toHandler != null)
+            toHandler.session.getBasicRemote().sendText(message);
     }
 
     public void sendMessageAll(String message) throws Exception {
