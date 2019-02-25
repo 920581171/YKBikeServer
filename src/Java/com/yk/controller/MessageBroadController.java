@@ -109,25 +109,18 @@ public class MessageBroadController {
     @ApiOperation(value = "更新留言板", httpMethod = "POST")
     @RequestMapping(value = "/updateMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String updateMessageBroad(@RequestParam("messageId") String messageId,
-                                     @RequestParam("senderId") String senderId,
                                      @RequestParam("handlerId") String handlerId,
                                      @RequestParam("handlerName") String handlerName,
-                                     @RequestParam("messageContent") String messageContent,
-                                     @RequestParam("messageReply") String messageReply,
-                                     @RequestParam("messageStatus") String messageStatus,
-                                     @RequestParam("messageType") String messageType) {
+                                     @RequestParam("messageReply") String messageReply) {
 
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);
             if (messageBroad == null)
                 return GsonUtils.responseErrorMsgJson("没有找到该留言");
-            messageBroad.setSenderId(senderId)
-                    .setHandlerId(handlerId)
+            messageBroad.setHandlerId(handlerId)
                     .setHandlerName(handlerName)
-                    .setMessageContent(messageContent)
                     .setMessageReply(messageReply)
-                    .setMessageStatus(messageStatus)
-                    .setMessageType(messageType);
+                    .setMessageStatus("1");
 
 
             return GsonUtils.responseSimpleJson(messageBroadService.updateMessageBroad(messageBroad) > 0);
