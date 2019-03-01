@@ -2,9 +2,11 @@ package com.yk.controller;
 
 
 import com.yk.Utils.GsonUtils;
+import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.BikeInfoServiceImpl;
 import com.yk.impl.BikeRecordServiceImpl;
 import com.yk.impl.UserInfoServiceImpl;
+import com.yk.pojo.BalanceRecord;
 import com.yk.pojo.BikeInfo;
 import com.yk.pojo.BikeRecord;
 import com.yk.pojo.UserInfo;
@@ -32,6 +34,8 @@ public class BikeRecordController {
 
     @Autowired
     UserInfoServiceImpl userInfoService;
+    @Autowired
+    BalanceRecordServiceImpl balanceRecordService;
 
     @ApiOperation(value = "查找正在骑行的记录", httpMethod = "POST")
     @ResponseBody
@@ -157,13 +161,13 @@ public class BikeRecordController {
     @ResponseBody
     @ApiOperation(value = "结束骑行", httpMethod = "POST")
     @RequestMapping(value = "/finishBike", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
-    public String finishBike(@RequestParam("orderId") String orderId) {
+    public String finishBike(@RequestParam("orderId") String orderId, @RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
 
         try {
             BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeRecord.getBikeId());
             UserInfo userInfo = userInfoService.searchUserId(bikeRecord.getUserId());
-            if (bikeInfoService.updateBikeInfo(bikeInfo.setUserId("")) > 0) {
+            if (bikeInfoService.updateBikeInfo(bikeInfo.setUserId("").setLatitude(latitude).setLongitude(longitude)) > 0) {
                 long createTime = bikeRecord.getCreateTime().getTime();
                 long endTime = System.currentTimeMillis();
 
@@ -184,7 +188,14 @@ public class BikeRecordController {
                     if (b && balance < 0) {
                         return GsonUtils.responseErrorMsgJson("余额不足");
                     }
-                    return GsonUtils.responseObjectJson(b, bikeRecordService.searchOrderId(orderId));
+
+                    BalanceRecord balanceRecord = new BalanceRecord().setUserId(userInfo.getUserId())
+                            .setBalance(-charge)
+                            .setCreateTime(new Date(System.currentTimeMillis()));
+
+                    boolean b2 = balanceRecordService.addBalanceRecord(balanceRecord) > 0;
+
+                    return GsonUtils.responseObjectJson(b & b2, bikeRecordService.searchOrderId(orderId));
                 } else {
                     return GsonUtils.responseErrorJson();
                 }
