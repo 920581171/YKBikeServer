@@ -23,7 +23,7 @@ public class ChatMessageController {
 
     @ApiOperation(value = "根据双方id查找聊天记录")
     @ResponseBody
-    @RequestMapping(value = "/findALLChatMessageByBothId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findALLChatMessageByBothId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findALLChatMessageByBothId(@RequestParam("id1") String id1, @RequestParam("id2") String id2) {
         try {
             List<ChatMessage> chatMessages = chatMessageService.searchAllChatMessageByBothId(id1, id2);

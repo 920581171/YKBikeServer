@@ -28,7 +28,7 @@ public class BalanceRecordController {
 
     @ResponseBody
     @ApiOperation(value = "根据用户Id查询余额记录", httpMethod = "POST")
-    @RequestMapping(value = "/findBalanceRecordByUserId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBalanceRecordByUserId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBalanceRecordByUserId(@RequestParam("userId") String userId) {
         try {
             List<BalanceRecord> balanceRecords = balanceRecordService.searchBalanceRecordByUserId(userId);
@@ -41,7 +41,7 @@ public class BalanceRecordController {
 
     @ResponseBody
     @ApiOperation(value = "添加余额记录", httpMethod = "POST")
-    @RequestMapping(value = "/addBalanceRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBalanceRecord(@RequestParam("userId") String userId, @RequestParam("balance") float balance) {
         try {
             UserInfo userInfo = userInfoService.searchUserId(userId);
@@ -67,7 +67,7 @@ public class BalanceRecordController {
 
     @ResponseBody
     @ApiOperation(value = "更新余额记录", httpMethod = "POST")
-    @RequestMapping(value = "/updateBalanceRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateBalanceRecord(@RequestParam("recordId") String recordId) {
         try {
             BalanceRecord balanceRecord = balanceRecordService.searchBalanceRecordId(recordId);
@@ -80,7 +80,7 @@ public class BalanceRecordController {
 
     @ResponseBody
     @ApiOperation(value = "删除余额记录", httpMethod = "POST")
-    @RequestMapping(value = "/deleteBalanceRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteBalanceRecord(@RequestParam("recordId") String recordId) {
         try {
             return GsonUtils.responseSimpleJson(balanceRecordService.deleteBalanceRecord(new BalanceRecord().setRecordId(recordId)) > 0);

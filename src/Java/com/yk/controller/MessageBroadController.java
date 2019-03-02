@@ -24,7 +24,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "查询所有留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findAllMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findAllMessageBroad", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findAllMessageBroad() {
         try {
             List<MessageBroad> messageBroads = messageBroadService.searchAllMessageBroad();
@@ -37,7 +37,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据messageId查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadByMessageId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findMessageBroadByMessageId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findMessageBroadByMessageId(@RequestParam("messageId") String messageId) {
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);
@@ -50,7 +50,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据发送者Id查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadBySenderId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findMessageBroadBySenderId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findMessageBroadBySenderId(@RequestParam("senderId") String senderId) {
         try {
             List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadBySenderId(senderId);
@@ -63,7 +63,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据处理者Id查询留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadByHandlerIdWithType", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findMessageBroadByHandlerIdWithType", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findMessageBroadByHandlerIdWithType(@RequestParam("handlerId") String handlerId, @RequestParam("messageType") String messageType) {
         try {
             List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByHandlerWithType(handlerId, messageType);
@@ -76,7 +76,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "根据messageType查询所有留言板", httpMethod = "POST")
-    @RequestMapping(value = "/findMessageBroadByType", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findMessageBroadByType", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findMessageBroadByType(@RequestParam("messageType") String messageType) {
         try {
             List<MessageBroad> messageBroads = messageBroadService.searchMessageBroadByType(messageType);
@@ -89,7 +89,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "添加留言板", httpMethod = "POST")
-    @RequestMapping(value = "/addMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addMessageBroad", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addMessageBroad(@RequestParam("senderId") String senderId,
                                   @RequestParam("messageContent") String messageContent,
                                   @RequestParam("messageType") String messageType) {
@@ -107,7 +107,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "更新留言板", httpMethod = "POST")
-    @RequestMapping(value = "/updateMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateMessageBroad", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateMessageBroad(@RequestParam("messageId") String messageId,
                                      @RequestParam("handlerId") String handlerId,
                                      @RequestParam("handlerName") String handlerName,
@@ -132,7 +132,7 @@ public class MessageBroadController {
 
     @ResponseBody
     @ApiOperation(value = "删除留言板", httpMethod = "POST")
-    @RequestMapping(value = "/deleteMessageBroad", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteMessageBroad", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteMessageBroad(@RequestParam("messageId") String messageId) {
         try {
             MessageBroad messageBroad = messageBroadService.searchMessageBroadById(messageId);

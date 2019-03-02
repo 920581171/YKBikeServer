@@ -37,6 +37,19 @@
         from balance_record order by create_time desc;
     </select>
 
+    <select id="queryPage" resultMap="resultMap">
+        select *
+        from balance_record
+        where ${column} = #{property}
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="queryPageTable" resultMap="resultMap">
+        select *
+        from balance_record
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
     <insert id="insert" parameterMap="parameterMap">
         <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
             SELECT LAST_INSERT_ID()

@@ -44,6 +44,19 @@
         from user_info
     </select>
 
+    <select id="queryPage" resultMap="resultMap">
+        select *
+        from user_info
+        where ${column} = #{property}
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="queryPageTable" resultMap="resultMap">
+        select *
+        from user_info
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
     <select id="selectDeposit" resultMap="resultMap">
         select *
         from user_info

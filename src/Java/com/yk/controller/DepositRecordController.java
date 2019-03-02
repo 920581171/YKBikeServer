@@ -28,7 +28,7 @@ public class DepositRecordController {
 
     @ResponseBody
     @ApiOperation(value = "根据用户Id查询押金记录", httpMethod = "POST")
-    @RequestMapping(value = "/findDepositRecordByUserId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findDepositRecordByUserId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findDepositRecordByUserId(@RequestParam("userId") String userId) {
         try {
             List<DepositRecord> depositRecords = depositRecordService.searchDepositRecordByUserId(userId);
@@ -41,7 +41,7 @@ public class DepositRecordController {
 
     @ResponseBody
     @ApiOperation(value = "添加押金记录", httpMethod = "POST")
-    @RequestMapping(value = "/addDepositRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addDepositRecord(@RequestParam("userId") String userId, @RequestParam("deposit") float deposit) {
         try {
             UserInfo userInfo = userInfoService.searchUserId(userId);
@@ -69,7 +69,7 @@ public class DepositRecordController {
 
     @ResponseBody
     @ApiOperation(value = "更新押金记录", httpMethod = "POST")
-    @RequestMapping(value = "/updateDepositRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateDepositRecord(@RequestParam("recordId") String recordId) {
         try {
             DepositRecord depositRecord = depositRecordService.searchDepositRecordId(recordId);
@@ -82,7 +82,7 @@ public class DepositRecordController {
 
     @ResponseBody
     @ApiOperation(value = "删除押金记录", httpMethod = "POST")
-    @RequestMapping(value = "/deleteDepositRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteDepositRecord(@RequestParam("recordId") String recordId) {
         try {
             return GsonUtils.responseSimpleJson(depositRecordService.deleteDepositRecord(new DepositRecord().setRecordId(recordId)) > 0);

@@ -35,6 +35,19 @@
         from chat_room
     </select>
 
+    <select id="queryPage" resultMap="resultMap">
+        select *
+        from chat_room
+        where ${column} = #{property}
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="queryPageTable" resultMap="resultMap">
+        select *
+        from chat_room
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
     <select id="selectBoth" resultMap="resultMap">
         select *
         from chat_room

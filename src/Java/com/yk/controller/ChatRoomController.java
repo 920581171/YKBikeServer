@@ -23,7 +23,7 @@ public class ChatRoomController {
 
     @ApiOperation(value = "根据fristId查找聊天人员")
     @ResponseBody
-    @RequestMapping(value = "/findALLChatRoomByFristId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findALLChatRoomByFristId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findALLChatRoomByFristId(@RequestParam("fristId") String fristId) {
         try {
             List<ChatRoom> chatRooms = chatRoomService.searchByFristId(fristId);

@@ -23,7 +23,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "查找所有自行车信息", httpMethod = "POST")
-    @RequestMapping(value = "/findAllBikeInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findAllBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findAllBikeInfo() {
         try {
             List<BikeInfo> bikeInfos = bikeInfoService.searchAllBikeInfo();
@@ -36,7 +36,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "根据bikeId查询自行车信息", httpMethod = "POST")
-    @RequestMapping(value = "/findBikeInfoByBikeId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBikeInfoByBikeId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeInfoByBikeId(@RequestParam("bikeId") String bikeId) {
         try {
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
@@ -49,7 +49,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "添加自行车信息", httpMethod = "POST")
-    @RequestMapping(value = "/addBikeInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBikeInfo(@RequestParam("bikeId") String bikeId,
                               @RequestParam("latitude") double latitude,
                               @RequestParam("longitude") double longitude) {
@@ -63,7 +63,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "更新自行车信息", httpMethod = "POST")
-    @RequestMapping(value = "/updateBikeInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateBikeInfo(@RequestParam("bikeId") String bikeId,
                                  @RequestParam(name = "userId", required = false) String userId,
                                  @RequestParam("latitude") double latitude,
@@ -88,7 +88,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "更新自行车维修状态", httpMethod = "POST")
-    @RequestMapping(value = "/updateBikeFix", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateBikeFix", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateBikeFix(@RequestParam("bikeId") String bikeId,
                                 @RequestParam("fix") String fix) {
 
@@ -106,7 +106,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "更新自行车位置信息", httpMethod = "POST")
-    @RequestMapping(value = "/updateBikeLocation", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateBikeLocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateBikeLocation(@RequestParam("bikeId") String bikeId,
                                      @RequestParam("latitude") double latitude,
                                      @RequestParam("longitude") double longitude) {
@@ -125,7 +125,7 @@ public class BikeInfoController {
 
     @ResponseBody
     @ApiOperation(value = "删除自行车信息", httpMethod = "POST")
-    @RequestMapping(value = "/deleteBikeInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteBikeInfo(@RequestParam("bikeId") String bikeId) {
         try {
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);

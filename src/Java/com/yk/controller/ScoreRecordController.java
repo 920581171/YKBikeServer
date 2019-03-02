@@ -32,7 +32,7 @@ public class ScoreRecordController {
 
     @ResponseBody
     @ApiOperation(value = "根据用户Id查询积分记录", httpMethod = "POST")
-    @RequestMapping(value = "/findScoreRecordByUserId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findScoreRecordByUserId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findScoreRecordByUserId(@RequestParam("userId") String userId) {
         try {
             List<ScoreRecord> scoreRecords = scoreRecordService.searchScoreRecordByUserId(userId);
@@ -45,7 +45,7 @@ public class ScoreRecordController {
 
     @ResponseBody
     @ApiOperation(value = "添加余额记录", httpMethod = "POST")
-    @RequestMapping(value = "/addScoreRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addScoreRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addScoreRecord(@RequestParam("userId") String userId, @RequestParam("score") int score) {
         try {
             UserInfo userInfo = userInfoService.searchUserId(userId);
@@ -81,7 +81,7 @@ public class ScoreRecordController {
 
     @ResponseBody
     @ApiOperation(value = "更新积分记录", httpMethod = "POST")
-    @RequestMapping(value = "/updateScoreRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateScoreRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateScoreRecord(@RequestParam("recordId") String recordId) {
         try {
             ScoreRecord scoreRecord = scoreRecordService.searchScoreRecordId(recordId);
@@ -94,7 +94,7 @@ public class ScoreRecordController {
 
     @ResponseBody
     @ApiOperation(value = "删除积分记录", httpMethod = "POST")
-    @RequestMapping(value = "/deleteBalanceRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteBalanceRecord(@RequestParam("recordId") String recordId) {
         try {
             return GsonUtils.responseSimpleJson(scoreRecordService.deleteScoreRecord(new ScoreRecord().setRecordId(recordId)) > 0);

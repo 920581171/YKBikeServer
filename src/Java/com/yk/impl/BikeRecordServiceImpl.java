@@ -47,6 +47,11 @@ public class BikeRecordServiceImpl implements BikeRecordService {
     }
 
     @Override
+    public List<BikeRecord> queryPageBikeRecord(int pageIndex, int pageSize) throws Exception {
+        return bikeRecordDao.queryPageTable(pageIndex,pageSize);
+    }
+
+    @Override
     public int addBikeRecord(BikeRecord bikeRecord) throws Exception {
         String orderId = randomId("RC");
         while (bikeRecordDao.selectOne(BikeRecordDao.COLUMN_ORDER_ID, orderId) != null) {

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.websocket.server.PathParam;
 import java.util.Date;
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class BikeRecordController {
 
     @ApiOperation(value = "查找正在骑行的记录", httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findBikeRecordIsCycling", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBikeRecordIsCycling", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeRecordIsCycling(@RequestParam("userId") String userId) {
         try {
             BikeRecord bikeRecord = bikeRecordService.searchCycling(userId);
@@ -49,7 +50,7 @@ public class BikeRecordController {
 
     @ApiOperation(value = "根据订单id查找记录", httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findBikeRecordByOrderId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBikeRecordByOrderId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeRecordByOrderId(@RequestParam("orderId") String orderId) {
         try {
             BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
@@ -62,7 +63,7 @@ public class BikeRecordController {
 
     @ApiOperation(value = "根据用户id查找记录", httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findBikeRecordByUserId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBikeRecordByUserId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeRecordByUserId(@RequestParam("userId") String userId) {
         try {
             List<BikeRecord> bikeRecords = bikeRecordService.searchUserId(userId);
@@ -75,7 +76,7 @@ public class BikeRecordController {
 
     @ApiOperation(value = "根据自行车id查找记录", httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findBikeRecordByBikeId", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findBikeRecordByBikeId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeRecordByBikeId(@RequestParam("bikeId") String bikeId) {
         try {
             List<BikeRecord> bikeRecords = bikeRecordService.searchBikeId(bikeId);
@@ -88,7 +89,7 @@ public class BikeRecordController {
 
     @ApiOperation(value = "查找所有记录", httpMethod = "POST")
     @ResponseBody
-    @RequestMapping(value = "/findAllBikeRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/findAllBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findAllBikeRecord() {
         try {
             List<BikeRecord> bikeRecords = bikeRecordService.searchAllBikeRecord();
@@ -99,9 +100,22 @@ public class BikeRecordController {
         }
     }
 
+    @ApiOperation(value = "分页查找所有记录", httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/queryPageBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String queryPageBikeRecord(@RequestParam("pageIndex")int pageIndex,@RequestParam("pageSize")int pageSize) {
+        try {
+            List<BikeRecord> bikeRecords = bikeRecordService.queryPageBikeRecord(pageIndex,pageSize);
+            return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
     @ResponseBody
     @ApiOperation(value = "添加新记录", httpMethod = "POST")
-    @RequestMapping(value = "/addBikeRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/addBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBikeRecord(@RequestParam("userId") String userId,
                                 @RequestParam("bikeId") String bikeId) {
 
@@ -129,7 +143,7 @@ public class BikeRecordController {
 
     @ResponseBody
     @ApiOperation(value = "更新记录", httpMethod = "POST")
-    @RequestMapping(value = "/updateBikeRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/updateBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String updateBikeRecord(@RequestParam("orderId") String orderId,
                                    @RequestParam("userId") String userId,
                                    @RequestParam("bikeId") String bikeId,
@@ -157,7 +171,7 @@ public class BikeRecordController {
 
     @ResponseBody
     @ApiOperation(value = "结束骑行", httpMethod = "POST")
-    @RequestMapping(value = "/finishBike", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/finishBike", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String finishBike(@RequestParam("orderId") String orderId, @RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
 
         try {
@@ -215,7 +229,7 @@ public class BikeRecordController {
 
     @ResponseBody
     @ApiOperation(value = "删除记录", httpMethod = "POST")
-    @RequestMapping(value = "/deleteBikeRecord", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    @RequestMapping(value = "/deleteBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String deleteBikeRecord(@RequestParam("orderId") String orderId) {
         try {
             BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
