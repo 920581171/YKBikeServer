@@ -11,6 +11,8 @@ public interface BalanceRecordService {
 
     List<BalanceRecord> searchAllBalanceRecord() throws Exception;
 
+    List<BalanceRecord> queryPageBalanceRecord(int pageIndex, int pageSize) throws Exception;
+
     int addBalanceRecord(BalanceRecord balanceRecord) throws Exception;
 
     int updateBalanceRecord(BalanceRecord balanceRecord) throws Exception;

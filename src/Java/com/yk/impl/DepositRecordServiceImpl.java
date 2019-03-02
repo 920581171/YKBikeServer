@@ -32,6 +32,11 @@ public class DepositRecordServiceImpl implements DepositRecordService {
     }
 
     @Override
+    public List<DepositRecord> queryPageDepositRecord(int pageIndex, int pageSize) throws Exception {
+        return depositRecordDao.queryPageTable(pageIndex,pageSize);
+    }
+
+    @Override
     public int addDepositRecord(DepositRecord depositRecord) throws Exception {
         String recordId = randomId("DR");
         while (depositRecordDao.selectOne(DepositRecordDao.COLUMN_RECORD_ID, recordId) != null) {

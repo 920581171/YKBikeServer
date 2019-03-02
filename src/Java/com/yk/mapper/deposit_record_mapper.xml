@@ -41,12 +41,14 @@
         select *
         from deposit_record
         where ${column} = #{property}
+        order by create_time desc
         limit ${(pageIndex-1) * pageSize},#{pageSize}
     </select>
 
     <select id="queryPageTable" resultMap="resultMap">
         select *
         from deposit_record
+        order by create_time desc
         limit ${(pageIndex-1) * pageSize},#{pageSize}
     </select>
 

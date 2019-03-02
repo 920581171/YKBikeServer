@@ -40,6 +40,32 @@ public class BalanceRecordController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "查询所有余额记录", httpMethod = "POST")
+    @RequestMapping(value = "/findAllBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String findAllBalanceRecord() {
+        try {
+            List<BalanceRecord> balanceRecords = balanceRecordService.searchAllBalanceRecord();
+            return GsonUtils.responseObjectJson(balanceRecords != null, balanceRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "分页查询所有余额记录", httpMethod = "POST")
+    @RequestMapping(value = "/queryPageBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String queryPageBalanceRecord(@RequestParam("pageIndex")int pageIndex,@RequestParam("pageSize")int pageSize) {
+        try {
+            List<BalanceRecord> balanceRecords = balanceRecordService.queryPageBalanceRecord(pageIndex,pageSize);
+            return GsonUtils.responseObjectJson(balanceRecords != null, balanceRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "添加余额记录", httpMethod = "POST")
     @RequestMapping(value = "/addBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBalanceRecord(@RequestParam("userId") String userId, @RequestParam("balance") float balance) {

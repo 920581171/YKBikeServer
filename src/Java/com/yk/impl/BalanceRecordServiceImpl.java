@@ -31,6 +31,11 @@ public class BalanceRecordServiceImpl implements BalanceRecordService {
     }
 
     @Override
+    public List<BalanceRecord> queryPageBalanceRecord(int pageIndex, int pageSize) throws Exception {
+        return balanceRecordDao.queryPageTable(pageIndex,pageSize);
+    }
+
+    @Override
     public int addBalanceRecord(BalanceRecord balanceRecord) throws Exception {
         String recordId = randomId("BR");
         while (balanceRecordDao.selectOne(BalanceRecordDao.COLUMN_RECORD_ID, recordId) != null) {

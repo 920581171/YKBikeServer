@@ -17,7 +17,7 @@ public interface BikeRecordService {
 
     List<BikeRecord> searchAllBikeRecord() throws Exception;
 
-    List<BikeRecord> queryPageBikeRecord(int pageNum,int pageSize) throws Exception;
+    List<BikeRecord> queryPageBikeRecord(int pageIndex,int pageSize) throws Exception;
 
     int addBikeRecord(BikeRecord bikeRecord) throws Exception;
 

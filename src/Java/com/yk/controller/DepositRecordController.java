@@ -40,6 +40,32 @@ public class DepositRecordController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "查询所有押金记录", httpMethod = "POST")
+    @RequestMapping(value = "/findAllDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String findAllDepositRecord() {
+        try {
+            List<DepositRecord> depositRecords = depositRecordService.searchAllDepositRecord();
+            return GsonUtils.responseObjectJson(depositRecords != null, depositRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "分页查询所有押金记录", httpMethod = "POST")
+    @RequestMapping(value = "/queryPageDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String queryPageDepositRecord(@RequestParam("pageIndex")int pageIndex,@RequestParam("pageSize")int pageSize) {
+        try {
+            List<DepositRecord> depositRecords = depositRecordService.queryPageDepositRecord(pageIndex,pageSize);
+            return GsonUtils.responseObjectJson(depositRecords != null, depositRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "添加押金记录", httpMethod = "POST")
     @RequestMapping(value = "/addDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addDepositRecord(@RequestParam("userId") String userId, @RequestParam("deposit") float deposit) {

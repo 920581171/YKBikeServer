@@ -38,6 +38,7 @@
     <select id="selectTable" resultMap="resultMap">
         select *
         from balance_record
+        where isExchange <![CDATA[ < ]]> '1'
         order by create_time desc;
     </select>
 
@@ -45,12 +46,15 @@
         select *
         from balance_record
         where ${column} = #{property}
+        order by create_time desc
         limit ${(pageIndex-1) * pageSize},#{pageSize}
     </select>
 
     <select id="queryPageTable" resultMap="resultMap">
         select *
         from balance_record
+        where isExchange <![CDATA[ < ]]> '1'
+        order by create_time desc
         limit ${(pageIndex-1) * pageSize},#{pageSize}
     </select>
 

@@ -3,8 +3,12 @@ package com.yk.controller;
 import com.yk.Utils.ExcelUtil;
 import com.yk.Utils.GsonUtils;
 import com.yk.Utils.ImageUtils;
+import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.BikeRecordServiceImpl;
+import com.yk.impl.DepositRecordServiceImpl;
+import com.yk.pojo.BalanceRecord;
 import com.yk.pojo.BikeRecord;
+import com.yk.pojo.DepositRecord;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -33,6 +37,10 @@ public class CommonController {
 
     @Autowired
     BikeRecordServiceImpl bikeRecordService;
+    @Autowired
+    DepositRecordServiceImpl depositRecordService;
+    @Autowired
+    BalanceRecordServiceImpl balanceRecordService;
 
     @ApiOperation(value = "获得服务器时间", httpMethod = "POST")
     @ResponseBody
@@ -91,18 +99,13 @@ public class CommonController {
             byte[] bytes = new byte[in.available()];
             in.read(bytes);
             in.close();
-            return responseStream(bytes,file.getName());
+            return responseStream(bytes, file.getName());
         } catch (IOException e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    /**
-     * 导出报表
-     *
-     * @return
-     */
     @ApiOperation(value = "导出骑行记录EXCEL表", httpMethod = "GET")
     @RequestMapping(value = "/exportBikeRecord")
     @ResponseBody
@@ -155,7 +158,116 @@ public class CommonController {
         wb.close();
         byte[] bytes = byteArrayOutputStream.toByteArray();
         byteArrayOutputStream.close();
-        return responseStream(bytes,fileName);
+        return responseStream(bytes, fileName);
+    }
+
+    @ApiOperation(value = "导出押金记录EXCEL表", httpMethod = "GET")
+    @RequestMapping(value = "/exportDepositRecord")
+    @ResponseBody
+    public ResponseEntity<byte[]> exportDepositRecord() throws Exception {
+        //获取数据
+        List<DepositRecord> list = depositRecordService.searchAllDepositRecord();
+
+        DateFormat dateFormat = SimpleDateFormat.getDateTimeInstance();
+        //excel文件名
+        String fileName = "押金出入" + dateFormat.format(System.currentTimeMillis()) + ".xlsx";
+        //excel标题
+        String[] title = {"序号", "记录ID", "用户ID", "押金出入", "时间"};
+        //sheet名
+        String sheetName = "押金出入记录表";
+
+        String[][] content = new String[list.size() + 1][];
+
+        float total = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            String deposit = (list.get(i).getDeposit() > 0 ? "充值" : "退还") + Math.abs(list.get(i).getDeposit()) + "元";
+            String createTime = dateFormat.format(list.get(i).getCreateTime().getTime());
+
+            content[i] = new String[title.length];
+            content[i][0] = String.valueOf(i);
+            content[i][1] = list.get(i).getRecordId();
+            content[i][2] = list.get(i).getUserId();
+            content[i][3] = deposit;
+            content[i][4] = createTime;
+
+            total += list.get(i).getDeposit();
+        }
+
+        content[list.size()] = new String[title.length];
+        content[list.size()][0] = "总计";
+        content[list.size()][1] = "";
+        content[list.size()][2] = "";
+        content[list.size()][3] = total + "元";
+        content[list.size()][4] = list.size() + "条记录";
+
+        //创建XSSFWorkbook
+        XSSFWorkbook wb = ExcelUtil.getXSSFWorkbook(sheetName, title, content);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        wb.write(byteArrayOutputStream);
+        wb.close();
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        byteArrayOutputStream.close();
+        return responseStream(bytes, fileName);
+    }
+
+    @ApiOperation(value = "导出余额统计EXCEL表", httpMethod = "GET")
+    @RequestMapping(value = "/exportBalanceRecord")
+    @ResponseBody
+    public ResponseEntity<byte[]> exportBalanceRecord() throws Exception {
+        //获取数据
+        List<BalanceRecord> list = balanceRecordService.searchAllBalanceRecord();
+
+        DateFormat dateFormat = SimpleDateFormat.getDateTimeInstance();
+        //excel文件名
+        String fileName = "余额统计" + dateFormat.format(System.currentTimeMillis()) + ".xlsx";
+        //excel标题
+        String[] title = {"序号", "记录ID", "用户ID", "充值/消费", "时间"};
+        //sheet名
+        String sheetName = "余额统计表";
+
+        String[][] content = new String[list.size() + 1][];
+
+        float totalRecharge = 0;
+        float totalCharge = 0;
+
+        for (int i = 0; i < list.size(); i++) {
+            String balance = (list.get(i).getBalance() > 0 ? "充值" : "退还") + Math.abs(list.get(i).getBalance()) + "元";
+            String createTime = dateFormat.format(list.get(i).getCreateTime().getTime());
+
+            content[i] = new String[title.length];
+            content[i][0] = String.valueOf(i);
+            content[i][1] = list.get(i).getRecordId();
+            content[i][2] = list.get(i).getUserId();
+            content[i][3] = balance;
+            content[i][4] = createTime;
+
+            if (list.get(i).getBalance() > 0) {
+                totalRecharge += list.get(i).getBalance();
+            } else {
+                totalCharge += list.get(i).getBalance();
+            }
+        }
+
+        totalCharge = Math.round(Math.abs(totalCharge)*100f)/100f;
+
+        content[list.size()] = new String[title.length];
+        content[list.size()][0] = "总计";
+        content[list.size()][1] = "";
+        content[list.size()][2] = "用户充值：" + totalRecharge + "元";
+        content[list.size()][3] = "用户消费：" + totalCharge + "元";
+        content[list.size()][4] = list.size() + "条记录";
+
+        //创建XSSFWorkbook
+        XSSFWorkbook wb = ExcelUtil.getXSSFWorkbook(sheetName, title, content);
+
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        wb.write(byteArrayOutputStream);
+        wb.close();
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        byteArrayOutputStream.close();
+        return responseStream(bytes, fileName);
     }
 
     private ResponseEntity<byte[]> responseStream(byte[] bytes, String fileName) {

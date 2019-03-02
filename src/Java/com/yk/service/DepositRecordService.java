@@ -11,6 +11,8 @@ public interface DepositRecordService{
 
     List<DepositRecord> searchAllDepositRecord() throws Exception;
 
+    List<DepositRecord> queryPageDepositRecord(int pageIndex,int pageSize) throws Exception;
+
     int addDepositRecord(DepositRecord depositRecord) throws Exception;
 
     int updateDepositRecord(DepositRecord depositRecord) throws Exception;
