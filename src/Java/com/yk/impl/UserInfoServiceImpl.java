@@ -64,7 +64,10 @@ public class UserInfoServiceImpl implements UserInfoService {
         UserInfo userInfo = new UserInfo();
         userInfo.setUserId(userId)
                 .setUserName(userName)
-                .setUserPassword(userPassword);
+                .setUserPassword(userPassword)
+                .setScore(0)
+                .setBalance(0f)
+                .setDeposit(0f);
         userInfoDao.insert(userInfo);
 
         return userInfo.getId();

@@ -2,14 +2,9 @@ package com.yk.controller;
 
 
 import com.yk.Utils.GsonUtils;
-import com.yk.impl.BalanceRecordServiceImpl;
-import com.yk.impl.BikeInfoServiceImpl;
-import com.yk.impl.BikeRecordServiceImpl;
-import com.yk.impl.UserInfoServiceImpl;
-import com.yk.pojo.BalanceRecord;
-import com.yk.pojo.BikeInfo;
-import com.yk.pojo.BikeRecord;
-import com.yk.pojo.UserInfo;
+import com.yk.impl.*;
+import com.yk.pojo.*;
+import com.yk.service.BikeRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +31,8 @@ public class BikeRecordController {
     UserInfoServiceImpl userInfoService;
     @Autowired
     BalanceRecordServiceImpl balanceRecordService;
+    @Autowired
+    ScoreRecordServiceImpl scoreRecordService;
 
     @ApiOperation(value = "查找正在骑行的记录", httpMethod = "POST")
     @ResponseBody
@@ -181,21 +178,29 @@ public class BikeRecordController {
                         .setOrderStatus("1");
 
                 if (bikeRecordService.updateBikeRecord(bikeRecord) > 0) {
+                    Date systemTime = new Date(System.currentTimeMillis());
                     float balance = userInfo.getBalance() - charge;
                     balance = (float) (Math.round(balance * 100)) / 100;
+                    int score = (int)(charge*100);
 
-                    boolean b = userInfoService.updateUserInfo(userInfo.setBalance(balance)) > 0;
+                    boolean b = userInfoService.updateUserInfo(userInfo.setBalance(balance).setScore(userInfo.getScore()+score)) > 0;
                     if (b && balance < 0) {
                         return GsonUtils.responseErrorMsgJson("余额不足");
                     }
 
                     BalanceRecord balanceRecord = new BalanceRecord().setUserId(userInfo.getUserId())
                             .setBalance(-charge)
-                            .setCreateTime(new Date(System.currentTimeMillis()));
+                            .setCreateTime(systemTime);
 
                     boolean b2 = balanceRecordService.addBalanceRecord(balanceRecord) > 0;
 
-                    return GsonUtils.responseObjectJson(b & b2, bikeRecordService.searchOrderId(orderId));
+                    ScoreRecord scoreRecord = new ScoreRecord().setUserId(userInfo.getUserId())
+                            .setScore(score)
+                            .setCreateTime(systemTime);
+
+                    boolean b3 = scoreRecordService.addScoreRecord(scoreRecord) > 0;
+
+                    return GsonUtils.responseObjectJson(b && b2 && b3, bikeRecordService.searchOrderId(orderId));
                 } else {
                     return GsonUtils.responseErrorJson();
                 }

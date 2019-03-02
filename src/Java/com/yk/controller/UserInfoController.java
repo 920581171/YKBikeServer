@@ -136,6 +136,7 @@ public class UserInfoController {
                                  @RequestParam("userName") String userName,
                                  @RequestParam("userPhone") String userPhone,
                                  @RequestParam("userPassword") String userPassword,
+                                 @RequestParam("score") int score,
                                  @RequestParam("deposit") float deposit,
                                  @RequestParam("balance") float balance) {
 
@@ -145,6 +146,7 @@ public class UserInfoController {
                     .setUserName(userName)
                     .setUserPhone(userPhone)
                     .setUserPassword(userPassword)
+                    .setScore(score)
                     .setDeposit(deposit)
                     .setBalance(balance);
             return GsonUtils.responseSimpleJson(userInfoService.updateUserInfo(userInfo) > 0);

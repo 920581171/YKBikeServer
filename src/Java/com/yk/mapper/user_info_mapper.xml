@@ -13,6 +13,7 @@
         <result property="userPassword" column="user_password"/>
         <result property="deposit" column="deposit"/>
         <result property="balance" column="balance"/>
+        <result property="score" column="score"/>
     </resultMap>
 
     <parameterMap id="parameterMap" type="com.yk.pojo.UserInfo">
@@ -22,6 +23,7 @@
         <parameter property="userPassword" resultMap="resultMap"/>
         <parameter property="deposit" resultMap="resultMap"/>
         <parameter property="balance" resultMap="resultMap"/>
+        <parameter property="score" resultMap="resultMap"/>
     </parameterMap>
 
     <!-- 目的：为dao接口方法提供sql语句配置 -->
@@ -53,9 +55,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        user_info(`_id`,user_id,user_name,user_phone,user_password,deposit,balance)
+        user_info(`_id`,user_id,user_name,user_phone,user_password,deposit,balance,score)
         values
-        (null,#{userId},#{userName},#{userPhone},#{userPassword},#{deposit},#{balance})
+        (null,#{userId},#{userName},#{userPhone},#{userPassword},#{deposit},#{balance},#{score})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -65,7 +67,8 @@
             user_phone    = #{userPhone},
             user_password = #{userPassword},
             deposit       = #{deposit},
-            balance       = #{balance}
+            balance       = #{balance},
+            score       = #{score}
         where user_id = #{userId}
     </update>
 

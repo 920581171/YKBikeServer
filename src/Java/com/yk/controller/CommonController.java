@@ -45,10 +45,10 @@ public class CommonController {
     @ApiOperation(value = "上传头像", httpMethod = "POST")
     @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
     public String uploadAvatar(@RequestParam("file") MultipartFile original, @RequestParam("id") String id) {
-        String[] paths = {"D:\\Avatar\\Source\\" + id + ".jpg",
-                "D:\\Avatar\\High\\" + id + ".jpg",
-                "D:\\Avatar\\Middle\\" + id + ".jpg",
-                "D:\\Avatar\\Low\\" + id + ".jpg"};
+        String[] paths = {"C:\\Avatar\\Source\\" + id + ".jpg",
+                "C:\\Avatar\\High\\" + id + ".jpg",
+                "C:\\Avatar\\Middle\\" + id + ".jpg",
+                "C:\\Avatar\\Low\\" + id + ".jpg"};
         int[] size = {0, 512, 256, 128};
 
         try {
@@ -84,9 +84,9 @@ public class CommonController {
         try {
             File file;
             if (level == null || "".equals(level))
-                file = new File("D:\\Avatar\\Source\\" + id + ".jpg");
+                file = new File("C:\\Avatar\\Source\\" + id + ".jpg");
             else
-                file = new File("D:\\Avatar\\" + level + "\\" + id + ".jpg");
+                file = new File("C:\\Avatar\\" + level + "\\" + id + ".jpg");
             InputStream in = new FileInputStream(file);
             byte[] bytes = new byte[in.available()];
             in.read(bytes);

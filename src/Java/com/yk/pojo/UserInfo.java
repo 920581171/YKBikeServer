@@ -8,6 +8,7 @@ public class UserInfo {
     private String userPassword;
     private float deposit;
     private float balance;
+    private int score;
 
     public int getId() {
         return id;
@@ -69,6 +70,15 @@ public class UserInfo {
 
     public UserInfo setBalance(float balance) {
         this.balance = balance;
+        return this;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public UserInfo setScore(int score) {
+        this.score = score;
         return this;
     }
 }
