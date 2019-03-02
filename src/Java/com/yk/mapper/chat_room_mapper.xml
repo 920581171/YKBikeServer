@@ -20,24 +20,24 @@
 
     <select id="selectOne" resultMap="resultMap">
         select *
-        from char_room
+        from chat_room
         where ${column} = #{property}
     </select>
 
     <select id="selectList" resultMap="resultMap">
         select *
-        from char_room
+        from chat_room
         where ${column} = #{property}
     </select>
 
     <select id="selectTable" resultMap="resultMap">
         select *
-        from char_room
+        from chat_room
     </select>
 
     <select id="selectBoth" resultMap="resultMap">
         select *
-        from char_room
+        from chat_room
         where frist_id = #{fristId}
           and second_id = #{secondId}
     </select>
@@ -47,14 +47,14 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        char_room(`_id`,room_id,frist_id,second_id)
+        chat_room(`_id`,room_id,frist_id,second_id)
         values
         (null,#{roomId},#{fristId},#{secondId})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
         update
-            char_room
+            chat_room
         set room_id   = #{roomId},
             frist_id  = #{fristId},
             second_id = #{secondId}
@@ -63,7 +63,7 @@
 
     <delete id="delete" parameterMap="parameterMap">
         delete
-        from char_room
+        from chat_room
         where room_id = #{roomId}
     </delete>
 </mapper>

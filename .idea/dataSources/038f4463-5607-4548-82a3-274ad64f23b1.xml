@@ -1135,8 +1135,8 @@
     <table id="287" parent="13" name="bike_record">
       <Collation>utf8mb4_bin</Collation>
     </table>
-    <table id="288" parent="13" name="char_room"/>
-    <table id="289" parent="13" name="chat_message"/>
+    <table id="288" parent="13" name="chat_message"/>
+    <table id="289" parent="13" name="chat_room"/>
     <table id="290" parent="13" name="deposit_record"/>
     <table id="291" parent="13" name="message_board"/>
     <table id="292" parent="13" name="score_record"/>
@@ -1356,30 +1356,48 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="288" name="room_id">
+    <column id="328" parent="288" name="chat_id">
       <Position>2</Position>
-      <Comment>房间号id</Comment>
+      <Comment>聊天id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="288" name="frist_id">
+    <column id="329" parent="288" name="from_id">
       <Position>3</Position>
-      <Comment>第一个用户id</Comment>
+      <Comment>发送者id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="288" name="second_id">
+    <column id="330" parent="288" name="to_id">
       <Position>4</Position>
-      <Comment>第二个用户id</Comment>
+      <Comment>接收者id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="331" parent="288" name="PRIMARY">
+    <column id="331" parent="288" name="chat_content">
+      <Position>5</Position>
+      <Comment>聊天内容</Comment>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="332" parent="288" name="chat_type">
+      <Position>6</Position>
+      <Comment>消息类型</Comment>
+      <DataType>char(10)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="333" parent="288" name="send_time">
+      <Position>7</Position>
+      <Comment>发送时间</Comment>
+      <DataType>datetime|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="334" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="332" parent="289" name="_id">
+    <column id="335" parent="289" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1387,40 +1405,22 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="289" name="chat_id">
+    <column id="336" parent="289" name="room_id">
       <Position>2</Position>
-      <Comment>聊天id</Comment>
+      <Comment>房间号id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="334" parent="289" name="from_id">
+    <column id="337" parent="289" name="frist_id">
       <Position>3</Position>
-      <Comment>发送者id</Comment>
+      <Comment>第一个用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="335" parent="289" name="to_id">
+    <column id="338" parent="289" name="second_id">
       <Position>4</Position>
-      <Comment>接收者id</Comment>
+      <Comment>第二个用户id</Comment>
       <DataType>char(10)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="336" parent="289" name="chat_content">
-      <Position>5</Position>
-      <Comment>聊天内容</Comment>
-      <DataType>varchar(255)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="337" parent="289" name="chat_type">
-      <Position>6</Position>
-      <Comment>消息类型</Comment>
-      <DataType>char(10)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="338" parent="289" name="send_time">
-      <Position>7</Position>
-      <Comment>发送时间</Comment>
-      <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
     <key id="339" parent="289" name="PRIMARY">

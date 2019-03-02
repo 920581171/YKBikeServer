@@ -157,6 +157,23 @@ public class UserInfoController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "重置用户密码", httpMethod = "POST")
+    @RequestMapping(value = "/resetUserPassword", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
+    public String resetUserPassword(@RequestParam("userId") String userId) {
+        try {
+            UserInfo userInfo = userInfoService.searchUserId(userId);
+            if (userInfo == null) {
+                return GsonUtils.responseErrorMsgJson("用户不存在");
+            }
+            userInfo.setUserPassword("25d55ad283aa400af464c76d713c07ad");
+            return GsonUtils.responseSimpleJson(userInfoService.updateUserInfo(userInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "通过userId删除用户", httpMethod = "POST")
     @RequestMapping(value = "/deleteUserInfo", method = RequestMethod.POST, produces = "text/html;charset=UTF-8")
     public String deleteUserInfo(@RequestParam("userId") String userId) {
