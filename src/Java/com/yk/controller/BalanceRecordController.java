@@ -56,7 +56,8 @@ public class BalanceRecordController {
 
             BalanceRecord balanceRecord = new BalanceRecord().setUserId(userId)
                     .setBalance(balance)
-                    .setCreateTime(new Date(System.currentTimeMillis()));
+                    .setCreateTime(new Date(System.currentTimeMillis()))
+                    .setIsExchange("0");
 
             return GsonUtils.responseSimpleJson(balanceRecordService.addBalanceRecord(balanceRecord) > 0);
         } catch (Exception e) {

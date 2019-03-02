@@ -1,12 +1,12 @@
 package com.yk.controller;
 
 import com.yk.Utils.GsonUtils;
+import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.ScoreRecordServiceImpl;
 import com.yk.impl.UserInfoServiceImpl;
 import com.yk.pojo.BalanceRecord;
 import com.yk.pojo.ScoreRecord;
 import com.yk.pojo.UserInfo;
-import com.yk.service.BalanceRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ public class ScoreRecordController {
     @Autowired
     ScoreRecordServiceImpl scoreRecordService;
     @Autowired
-    BalanceRecordService balanceRecordService;
+    BalanceRecordServiceImpl balanceRecordService;
     @Autowired
     UserInfoServiceImpl userInfoService;
 
@@ -44,7 +44,7 @@ public class ScoreRecordController {
     }
 
     @ResponseBody
-    @ApiOperation(value = "添加余额记录", httpMethod = "POST")
+    @ApiOperation(value = "添加积分记录", httpMethod = "POST")
     @RequestMapping(value = "/addScoreRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addScoreRecord(@RequestParam("userId") String userId, @RequestParam("score") int score) {
         try {
@@ -64,7 +64,8 @@ public class ScoreRecordController {
 
             BalanceRecord balanceRecord = new BalanceRecord().setUserId(userId)
                     .setBalance(balance)
-                    .setCreateTime(createTime);
+                    .setCreateTime(createTime)
+                    .setIsExchange("1");
 
             balanceRecordService.addBalanceRecord(balanceRecord);
 

@@ -11,6 +11,7 @@
         <result property="userId" column="user_id"/>
         <result property="balance" column="balance"/>
         <result property="createTime" column="create_time"/>
+        <result property="isExchange" column="isExchange"/>
     </resultMap>
 
     <parameterMap id="parameterMap" type="com.yk.pojo.BalanceRecord">
@@ -18,6 +19,7 @@
         <parameter property="userId" resultMap="resultMap"/>
         <parameter property="balance" resultMap="resultMap"/>
         <parameter property="createTime" resultMap="resultMap"/>
+        <parameter property="isExchange" resultMap="resultMap"/>
     </parameterMap>
 
     <select id="selectOne" resultMap="resultMap">
@@ -29,12 +31,14 @@
     <select id="selectList" resultMap="resultMap">
         select *
         from balance_record
-        where ${column} = #{property} order by create_time desc;
+        where ${column} = #{property}
+        order by create_time desc;
     </select>
 
     <select id="selectTable" resultMap="resultMap">
         select *
-        from balance_record order by create_time desc;
+        from balance_record
+        order by create_time desc;
     </select>
 
     <select id="queryPage" resultMap="resultMap">
@@ -55,17 +59,18 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        balance_record(`_id`,record_id,user_id,balance,create_time)
+        balance_record(`_id`,record_id,user_id,balance,create_time,isExchange)
         values
-        (null,#{recordId},#{userId},#{balance},#{createTime})
+        (null,#{recordId},#{userId},#{balance},#{createTime},#{isExchange})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
         update
             balance_record
-        set user_id        = #{userId},
-            balance        = #{balance},
-            create_time    = #{createTime}
+        set user_id     = #{userId},
+            balance     = #{balance},
+            create_time = #{createTime},
+            isExchange  = #{isExchange}
         where record_id = #{recordId}
     </update>
 

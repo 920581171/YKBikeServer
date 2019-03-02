@@ -1230,125 +1230,131 @@
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="308" parent="285" name="PRIMARY">
+    <column id="308" parent="285" name="isExchange">
+      <Position>6</Position>
+      <Comment>是否为兑换，用于统计报表时排除统计</Comment>
+      <DataType>char(1)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="309" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="309" parent="286" name="_id">
+    <column id="310" parent="286" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="310" parent="286" name="user_id">
+    <column id="311" parent="286" name="user_id">
       <Position>2</Position>
       <Comment>骑行人员id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="311" parent="286" name="bike_id">
+    <column id="312" parent="286" name="bike_id">
       <Position>3</Position>
       <Comment>自行车编号</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="312" parent="286" name="latitude">
+    <column id="313" parent="286" name="latitude">
       <Position>4</Position>
       <Comment>纬度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="313" parent="286" name="longitude">
+    <column id="314" parent="286" name="longitude">
       <Position>5</Position>
       <Comment>经度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="314" parent="286" name="mileage">
+    <column id="315" parent="286" name="mileage">
       <Position>6</Position>
       <Comment>行驶总里程</Comment>
       <DataType>float|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="315" parent="286" name="fix">
+    <column id="316" parent="286" name="fix">
       <Position>7</Position>
       <Comment>是否维修</Comment>
       <DataType>char(1)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="316" parent="286" name="PRIMARY">
+    <key id="317" parent="286" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="317" parent="287" name="_id">
+    <column id="318" parent="287" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="318" parent="287" name="order_id">
+    <column id="319" parent="287" name="order_id">
       <Position>2</Position>
       <Comment>订单Id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="319" parent="287" name="user_id">
+    <column id="320" parent="287" name="user_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="320" parent="287" name="bike_id">
+    <column id="321" parent="287" name="bike_id">
       <Position>4</Position>
       <Comment>自行车编号</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="321" parent="287" name="charge">
+    <column id="322" parent="287" name="charge">
       <Position>5</Position>
       <Comment>计费</Comment>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="322" parent="287" name="mileage">
+    <column id="323" parent="287" name="mileage">
       <Position>6</Position>
       <Comment>里程</Comment>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="323" parent="287" name="create_time">
+    <column id="324" parent="287" name="create_time">
       <Position>7</Position>
       <Comment>开始时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="324" parent="287" name="end_time">
+    <column id="325" parent="287" name="end_time">
       <Position>8</Position>
       <Comment>结束时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="325" parent="287" name="order_status">
+    <column id="326" parent="287" name="order_status">
       <Position>9</Position>
       <Comment>状态</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="326" parent="287" name="PRIMARY">
+    <key id="327" parent="287" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="327" parent="288" name="_id">
+    <column id="328" parent="288" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1356,48 +1362,48 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="328" parent="288" name="chat_id">
+    <column id="329" parent="288" name="chat_id">
       <Position>2</Position>
       <Comment>聊天id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="329" parent="288" name="from_id">
+    <column id="330" parent="288" name="from_id">
       <Position>3</Position>
       <Comment>发送者id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="330" parent="288" name="to_id">
+    <column id="331" parent="288" name="to_id">
       <Position>4</Position>
       <Comment>接收者id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="331" parent="288" name="chat_content">
+    <column id="332" parent="288" name="chat_content">
       <Position>5</Position>
       <Comment>聊天内容</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="332" parent="288" name="chat_type">
+    <column id="333" parent="288" name="chat_type">
       <Position>6</Position>
       <Comment>消息类型</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="333" parent="288" name="send_time">
+    <column id="334" parent="288" name="send_time">
       <Position>7</Position>
       <Comment>发送时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="334" parent="288" name="PRIMARY">
+    <key id="335" parent="288" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="335" parent="289" name="_id">
+    <column id="336" parent="289" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1405,30 +1411,30 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="336" parent="289" name="room_id">
+    <column id="337" parent="289" name="room_id">
       <Position>2</Position>
       <Comment>房间号id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="337" parent="289" name="frist_id">
+    <column id="338" parent="289" name="frist_id">
       <Position>3</Position>
       <Comment>第一个用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="338" parent="289" name="second_id">
+    <column id="339" parent="289" name="second_id">
       <Position>4</Position>
       <Comment>第二个用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="339" parent="289" name="PRIMARY">
+    <key id="340" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="340" parent="290" name="_id">
+    <column id="341" parent="290" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1436,36 +1442,36 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="341" parent="290" name="record_id">
+    <column id="342" parent="290" name="record_id">
       <Position>2</Position>
       <Comment>押金记录id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="342" parent="290" name="user_id">
+    <column id="343" parent="290" name="user_id">
       <Position>3</Position>
       <Comment>用户Id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="343" parent="290" name="deposit">
+    <column id="344" parent="290" name="deposit">
       <Position>4</Position>
       <Comment>押金</Comment>
       <DataType>float|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="344" parent="290" name="create_time">
+    <column id="345" parent="290" name="create_time">
       <Position>5</Position>
       <Comment>生成时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="345" parent="290" name="PRIMARY">
+    <key id="346" parent="290" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="346" parent="291" name="_id">
+    <column id="347" parent="291" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1473,60 +1479,60 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="347" parent="291" name="message_id">
+    <column id="348" parent="291" name="message_id">
       <Position>2</Position>
       <Comment>留言id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="348" parent="291" name="sender_id">
+    <column id="349" parent="291" name="sender_id">
       <Position>3</Position>
       <Comment>发送者id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="349" parent="291" name="handler_id">
+    <column id="350" parent="291" name="handler_id">
       <Position>4</Position>
       <Comment>处理人id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="350" parent="291" name="handler_name">
+    <column id="351" parent="291" name="handler_name">
       <Position>5</Position>
       <Comment>处理人姓名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="351" parent="291" name="message_content">
+    <column id="352" parent="291" name="message_content">
       <Position>6</Position>
       <Comment>消息内容</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="352" parent="291" name="message_reply">
+    <column id="353" parent="291" name="message_reply">
       <Position>7</Position>
       <Comment>处理者回复</Comment>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="353" parent="291" name="message_status">
+    <column id="354" parent="291" name="message_status">
       <Position>8</Position>
       <Comment>消息状态</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="354" parent="291" name="message_type">
+    <column id="355" parent="291" name="message_type">
       <Position>9</Position>
       <Comment>消息类型（0反馈1帮助）</Comment>
       <DataType>char(1)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="355" parent="291" name="PRIMARY">
+    <key id="356" parent="291" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="356" parent="292" name="_id">
+    <column id="357" parent="292" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1534,36 +1540,36 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="357" parent="292" name="record_id">
+    <column id="358" parent="292" name="record_id">
       <Position>2</Position>
       <Comment>id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="358" parent="292" name="user_id">
+    <column id="359" parent="292" name="user_id">
       <Position>3</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="359" parent="292" name="score">
+    <column id="360" parent="292" name="score">
       <Position>4</Position>
       <Comment>积分</Comment>
       <DataType>int(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="360" parent="292" name="create_time">
+    <column id="361" parent="292" name="create_time">
       <Position>5</Position>
       <Comment>创建时间</Comment>
       <DataType>datetime|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="361" parent="292" name="PRIMARY">
+    <key id="362" parent="292" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="362" parent="293" name="_id">
+    <column id="363" parent="293" name="_id">
       <Position>1</Position>
       <Comment>主键</Comment>
       <DataType>int(11)|0s</DataType>
@@ -1571,92 +1577,92 @@
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="363" parent="293" name="site_id">
+    <column id="364" parent="293" name="site_id">
       <Position>2</Position>
       <Comment>站点id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="364" parent="293" name="latitude">
+    <column id="365" parent="293" name="latitude">
       <Position>3</Position>
       <Comment>纬度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="365" parent="293" name="longitude">
+    <column id="366" parent="293" name="longitude">
       <Position>4</Position>
       <Comment>经度</Comment>
       <DataType>double|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="366" parent="293" name="radius">
+    <column id="367" parent="293" name="radius">
       <Position>5</Position>
       <Comment>半径/米</Comment>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="367" parent="293" name="PRIMARY">
+    <key id="368" parent="293" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="368" parent="294" name="_id">
+    <column id="369" parent="294" name="_id">
       <Position>1</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="369" parent="294" name="user_id">
+    <column id="370" parent="294" name="user_id">
       <Position>2</Position>
       <Comment>用户id</Comment>
       <DataType>char(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="370" parent="294" name="user_name">
+    <column id="371" parent="294" name="user_name">
       <Position>3</Position>
       <Comment>用户名</Comment>
       <DataType>varchar(20)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="371" parent="294" name="user_phone">
+    <column id="372" parent="294" name="user_phone">
       <Position>4</Position>
       <Comment>手机</Comment>
       <DataType>char(11)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="372" parent="294" name="user_password">
+    <column id="373" parent="294" name="user_password">
       <Position>5</Position>
       <Comment>密码</Comment>
       <DataType>varchar(32)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="373" parent="294" name="score">
-      <Position>6</Position>
-      <Comment>会员积分</Comment>
-      <DataType>int(11)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
     <column id="374" parent="294" name="deposit">
-      <Position>7</Position>
+      <Position>6</Position>
       <Comment>押金·</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
     <column id="375" parent="294" name="balance">
-      <Position>8</Position>
+      <Position>7</Position>
       <Comment>账户余额</Comment>
       <DataType>float|0s</DataType>
       <DefaultExpression>0</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="376" parent="294" name="PRIMARY">
+    <column id="376" parent="294" name="score">
+      <Position>8</Position>
+      <Comment>会员积分</Comment>
+      <DataType>int(11)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="377" parent="294" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>_id</ColNames>
       <Primary>1</Primary>

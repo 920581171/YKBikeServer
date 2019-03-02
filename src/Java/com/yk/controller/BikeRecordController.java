@@ -204,7 +204,8 @@ public class BikeRecordController {
 
                     BalanceRecord balanceRecord = new BalanceRecord().setUserId(userInfo.getUserId())
                             .setBalance(-charge)
-                            .setCreateTime(systemTime);
+                            .setCreateTime(systemTime)
+                            .setIsExchange("0");
 
                     boolean b2 = balanceRecordService.addBalanceRecord(balanceRecord) > 0;
 
