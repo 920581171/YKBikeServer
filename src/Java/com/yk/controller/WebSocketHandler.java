@@ -6,14 +6,11 @@ import com.yk.impl.ChatMessageServiceImpl;
 import com.yk.impl.ChatRoomServiceImpl;
 import com.yk.impl.UserInfoServiceImpl;
 import com.yk.pojo.*;
-import org.apache.ibatis.javassist.bytecode.annotation.CharMemberValue;
 import org.springframework.web.context.ContextLoader;
 
 import javax.websocket.*;
 import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
-import java.io.IOException;
-import java.net.URLDecoder;
 import java.nio.ByteBuffer;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -33,16 +30,16 @@ public class WebSocketHandler {
     private String loginId;
     private boolean toRoom = false;
     private boolean fromRoom = false;
+    private boolean isCheck = false;
 
     @OnOpen
-    public void onOpen(@PathParam("param") String param, Session session) throws Exception {
-
-        param = URLDecoder.decode(param, "utf-8");
-
+    public void onOpen(@PathParam("param") String param, final Session session) throws Exception {
         this.loginId = param;
         this.session = session;
 
         session.getBasicRemote().sendText(GsonUtils.toJson(new WebSocketMessage().setType(WEBSOCKET_TYPE_GET_PARAM)));
+
+        checkTimeOut();
     }
 
     @OnClose
@@ -63,6 +60,7 @@ public class WebSocketHandler {
                 checkLogin();
             } else {
                 session.close();
+                isCheck = true;
             }
         } else if (webSocketMessage.getType() == WEBSOCKET_TYPE_CHAT) {
             String chat = (String) (webSocketMessage.getData());
@@ -111,6 +109,7 @@ public class WebSocketHandler {
     }
 
     private void checkLogin() throws Exception {
+        isCheck = true;
         WebSocketHandler webSocketHandler = clients.get(loginId);
         if (webSocketHandler == null) {
             clients.put(loginId, WebSocketHandler.this);
@@ -129,7 +128,7 @@ public class WebSocketHandler {
     private boolean checkAdminInfo(String password) {
         try {
             AdminInfo adminInfo = adminInfoService.searchAdminId(loginId);
-            if (adminInfo.getAdminPassword().equals(password))
+            if (adminInfo != null && adminInfo.getAdminPassword().equals(password))
                 return true;
         } catch (Exception e) {
             e.printStackTrace();
@@ -146,5 +145,26 @@ public class WebSocketHandler {
             e.printStackTrace();
         }
         return false;
+    }
+    private void checkTimeOut(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int timeout = 5;
+                while (!isCheck) {
+                    try {
+                        Thread.sleep(1000);
+                        timeout--;
+                        if (timeout < 0) {
+                            System.out.println("验证超时：" + loginId + " SESSION：" + System.identityHashCode(session) + " 当前连接数：" + clients.size());
+                            session.close();
+                            isCheck = true;
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
     }
 }
