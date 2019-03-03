@@ -1,6 +1,7 @@
 package com.yk.controller;
 
 import com.yk.Utils.GsonUtils;
+import com.yk.constant.Consts;
 import com.yk.impl.AdminInfoServiceImpl;
 import com.yk.impl.ChatMessageServiceImpl;
 import com.yk.impl.ChatRoomServiceImpl;
@@ -28,6 +29,7 @@ public class WebSocketHandler {
     static Map<String, WebSocketHandler> clients = new ConcurrentHashMap<>();
     private Session session;
     private String loginId;
+    private boolean isWeb = false;
     private boolean toRoom = false;
     private boolean fromRoom = false;
     private boolean isCheck = false;
@@ -45,7 +47,10 @@ public class WebSocketHandler {
     @OnClose
     public void onClose() throws Exception {
         clients.remove(loginId);
-        System.out.println("断开链接：" + loginId + " SESSION：" + System.identityHashCode(session) + " 当前连接数：" + clients.size());
+        System.out.println("断开链接：" + loginId +
+                " SESSION：" + System.identityHashCode(session) +
+                " 当前连接数：" + clients.size() +
+                " 设备类型：" + (isWeb ? LOGIN_DEVICE_WEB : LOGIN_DEVICE_MOBILE));
     }
 
     @OnMessage
@@ -56,6 +61,7 @@ public class WebSocketHandler {
             boolean b = param.getLoginType().equals(LOGIN_TYPE_ADMIN) ?
                     checkAdminInfo(param.getPassword()) :
                     checkUserInfo(param.getPassword());
+            isWeb = param.getLoginDevice().endsWith(LOGIN_DEVICE_WEB);
             if (b) {
                 checkLogin();
             } else {
@@ -72,6 +78,13 @@ public class WebSocketHandler {
             if (fromRoom)
                 fromRoom = chatRoomService.searchBothAndAdd(chatMessage.getFromId(), chatMessage.getToId()) != null;
             sendMessageTo(message, chatMessage.getToId());
+        } else if (webSocketMessage.getType() == WEBSOCKET_TYPE_LOCATION||webSocketMessage.getType() == WEBSOCKET_TYPE_STOP_LOCATION){
+            for (WebSocketHandler webSocketHandler:clients.values()){
+                if (webSocketHandler.isWeb){
+                    webSocketHandler.session.getBasicRemote().sendText(message);
+                    System.out.println(message);
+                }
+            }
         }
     }
 
@@ -113,7 +126,10 @@ public class WebSocketHandler {
         WebSocketHandler webSocketHandler = clients.get(loginId);
         if (webSocketHandler == null) {
             clients.put(loginId, WebSocketHandler.this);
-            System.out.println("建立连接：" + loginId + " SESSION：" + System.identityHashCode(session) + " 当前连接数：" + clients.size());
+            System.out.println("建立连接：" + loginId +
+                    " SESSION：" + System.identityHashCode(session) +
+                    " 当前连接数：" + clients.size() +
+                    " 设备类型：" + (isWeb ? LOGIN_DEVICE_WEB : LOGIN_DEVICE_MOBILE));
         } else {
             webSocketHandler.session.getBasicRemote().sendText(GsonUtils.toJson(new WebSocketMessage().setType(WEBSOCKET_TYPE_FORCE_LOGOUT)));
             webSocketHandler.session.close();
@@ -121,7 +137,8 @@ public class WebSocketHandler {
             System.out.println("强制登录：" + loginId +
                     " SESSION：" + System.identityHashCode(session) +
                     " 强制下线SESSION：" + System.identityHashCode(webSocketHandler.session) +
-                    " 当前连接数：" + clients.size());
+                    " 当前连接数：" + clients.size() +
+                    " 设备类型：" + (isWeb ? LOGIN_DEVICE_WEB : LOGIN_DEVICE_MOBILE));
         }
     }
 
@@ -146,7 +163,8 @@ public class WebSocketHandler {
         }
         return false;
     }
-    private void checkTimeOut(){
+
+    private void checkTimeOut() {
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -156,7 +174,10 @@ public class WebSocketHandler {
                         Thread.sleep(1000);
                         timeout--;
                         if (timeout < 0) {
-                            System.out.println("验证超时：" + loginId + " SESSION：" + System.identityHashCode(session) + " 当前连接数：" + clients.size());
+                            System.out.println("验证超时：" + loginId +
+                                    " SESSION：" + System.identityHashCode(session) +
+                                    " 当前连接数：" + clients.size() +
+                                    " 设备类型：" + (isWeb ? LOGIN_DEVICE_WEB : LOGIN_DEVICE_MOBILE));
                             session.close();
                             isCheck = true;
                         }
