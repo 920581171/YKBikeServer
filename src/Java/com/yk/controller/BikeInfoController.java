@@ -35,6 +35,19 @@ public class BikeInfoController {
     }
 
     @ResponseBody
+    @ApiOperation(value = "分页查找所有自行车信息", httpMethod = "POST")
+    @RequestMapping(value = "/queryPageBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String queryPageBikeInfo(@RequestParam("pageIndex")int pageIndex,@RequestParam("pageSize")int pageSize) {
+        try {
+            List<BikeInfo> bikeInfos = bikeInfoService.queryPageBikeInfo(pageIndex,pageSize);
+            return GsonUtils.responseObjectJson(bikeInfos != null, bikeInfos);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
     @ApiOperation(value = "根据bikeId查询自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/findBikeInfoByBikeId", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String findBikeInfoByBikeId(@RequestParam("bikeId") String bikeId) {
@@ -130,6 +143,25 @@ public class BikeInfoController {
         try {
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
             return GsonUtils.responseSimpleJson(bikeInfoService.deleteBikeInfo(bikeInfo) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "批量删除自行车信息", httpMethod = "POST")
+    @RequestMapping(value = "/deleteMoreBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String deleteMoreBikeInfo(@RequestParam(value = "bikeIds") String[] bikeIds) {
+        try {
+            boolean b = true;
+            for (String id:bikeIds){
+                BikeInfo bikeInfo = bikeInfoService.searchBikeId(id);
+                boolean b1 = bikeInfoService.deleteBikeInfo(bikeInfo) > 0;
+                if (!b1)
+                    b = false;
+            }
+            return GsonUtils.responseSimpleJson(b);
         } catch (Exception e) {
             e.printStackTrace();
             return GsonUtils.responseErrorJson();

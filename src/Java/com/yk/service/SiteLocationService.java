@@ -9,7 +9,9 @@ public interface SiteLocationService {
 
     List<SiteLocation> searchAllSiteLocation() throws Exception;
 
-    int addSiteLocation(double latitude, double longitude,int radius) throws Exception;
+    List<SiteLocation> queryPageSiteLocation(int pageIndex, int pageSize) throws Exception;
+
+    int addSiteLocation(double latitude, double longitude, int radius) throws Exception;
 
     int updateSiteLocation(SiteLocation siteLocation) throws Exception;
 

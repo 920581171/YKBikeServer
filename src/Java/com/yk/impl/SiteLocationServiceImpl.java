@@ -27,6 +27,11 @@ public class SiteLocationServiceImpl implements SiteLocationService {
     }
 
     @Override
+    public List<SiteLocation> queryPageSiteLocation(int pageIndex, int pageSize) throws Exception {
+        return siteLocationDao.queryPageTable(pageIndex, pageSize);
+    }
+
+    @Override
     public int addSiteLocation(double latitude, double longitude, int radius) throws Exception {
 
         String siteId = randomId("SITE");

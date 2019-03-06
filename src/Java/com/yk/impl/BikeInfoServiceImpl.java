@@ -24,6 +24,11 @@ public class BikeInfoServiceImpl implements BikeInfoService {
     }
 
     @Override
+    public List<BikeInfo> queryPageBikeInfo(int pageIndex, int pageSize) throws Exception {
+        return bikeInfoDao.queryPageTable(pageIndex,pageSize);
+    }
+
+    @Override
     public int addBikeInfo(String bikeId, double latitude, double longitude) throws Exception {
 
         BikeInfo bikeInfo = searchBikeId(bikeId);

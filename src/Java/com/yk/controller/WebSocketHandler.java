@@ -47,7 +47,7 @@ public class WebSocketHandler {
     @OnClose
     public void onClose() throws Exception {
         clients.remove(loginId);
-        System.out.println("断开链接：" + loginId +
+        System.out.println("断开连接：" + loginId +
                 " SESSION：" + System.identityHashCode(session) +
                 " 当前连接数：" + clients.size() +
                 " 设备类型：" + (isWeb ? LOGIN_DEVICE_WEB : LOGIN_DEVICE_MOBILE));

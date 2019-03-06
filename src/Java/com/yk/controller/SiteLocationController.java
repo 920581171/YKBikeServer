@@ -2,6 +2,7 @@ package com.yk.controller;
 
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.SiteLocationServiceImpl;
+import com.yk.pojo.BikeInfo;
 import com.yk.pojo.SiteLocation;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -28,6 +29,19 @@ public class SiteLocationController {
     public String findAllSiteLocation() {
         try {
             List<SiteLocation> siteLocations = siteLocationService.searchAllSiteLocation();
+            return GsonUtils.responseObjectJson(siteLocations != null, siteLocations);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "分页查找所有自行车信息", httpMethod = "POST")
+    @RequestMapping(value = "/queryPageSiteLocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String queryPageSiteLocation(@RequestParam("pageIndex") int pageIndex, @RequestParam("pageSize") int pageSize) {
+        try {
+            List<SiteLocation> siteLocations = siteLocationService.queryPageSiteLocation(pageIndex, pageSize);
             return GsonUtils.responseObjectJson(siteLocations != null, siteLocations);
         } catch (Exception e) {
             e.printStackTrace();
@@ -90,6 +104,25 @@ public class SiteLocationController {
         try {
             SiteLocation siteLocation = siteLocationService.searchSiteLocationId(siteId);
             return GsonUtils.responseSimpleJson(siteLocationService.deleteSiteLocation(siteLocation) > 0);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ResponseBody
+    @ApiOperation(value = "批量删除站点", httpMethod = "POST")
+    @RequestMapping(value = "/deleteMoreSiteLocation", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String deleteMoreSiteLocation(@RequestParam(value = "sites") String[] sites) {
+        try {
+            boolean b = true;
+            for (String id:sites){
+                SiteLocation siteLocation = siteLocationService.searchSiteLocationId(id);
+                boolean b1 = siteLocationService.deleteSiteLocation(siteLocation) > 0;
+                if (!b1)
+                    b = false;
+            }
+            return GsonUtils.responseSimpleJson(b);
         } catch (Exception e) {
             e.printStackTrace();
             return GsonUtils.responseErrorJson();

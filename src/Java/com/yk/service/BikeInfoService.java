@@ -9,6 +9,8 @@ public interface BikeInfoService {
 
     List<BikeInfo> searchAllBikeInfo() throws Exception;
 
+    List<BikeInfo> queryPageBikeInfo(int pageIndex, int pageSize) throws Exception;
+
     int addBikeInfo(String bikeId, double latitude, double longitude) throws Exception;
 
     int updateBikeInfo(BikeInfo bikeInfo) throws Exception;
