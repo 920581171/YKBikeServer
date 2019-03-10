@@ -1,8 +1,13 @@
 package com.yk.controller;
 
+import com.google.zxing.BarcodeFormat;
+import com.google.zxing.EncodeHintType;
+import com.google.zxing.MultiFormatWriter;
+import com.google.zxing.common.BitMatrix;
 import com.yk.Utils.ExcelUtil;
 import com.yk.Utils.GsonUtils;
 import com.yk.Utils.ImageUtils;
+import com.yk.Utils.MatrixToImageWriter;
 import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.BikeRecordServiceImpl;
 import com.yk.impl.DepositRecordServiceImpl;
@@ -11,7 +16,7 @@ import com.yk.pojo.BikeRecord;
 import com.yk.pojo.DepositRecord;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -19,6 +24,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.Base64Utils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -28,7 +34,11 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
 
 @Api(description = "其他")
 @Controller
@@ -250,7 +260,7 @@ public class CommonController {
             }
         }
 
-        totalCharge = Math.round(Math.abs(totalCharge)*100f)/100f;
+        totalCharge = Math.round(Math.abs(totalCharge) * 100f) / 100f;
 
         content[list.size()] = new String[title.length];
         content[list.size()][0] = "总计";
@@ -268,6 +278,64 @@ public class CommonController {
         byte[] bytes = byteArrayOutputStream.toByteArray();
         byteArrayOutputStream.close();
         return responseStream(bytes, fileName);
+    }
+
+    @ApiOperation(value = "批量生成二维码", httpMethod = "GET")
+    @RequestMapping(value = "/createQRCode")
+    @ResponseBody
+    public ResponseEntity<byte[]> createQRCode(@RequestParam("startNum") int startNum,@RequestParam("endNum") int endNum) {
+        try {
+
+            File[] files = new File[endNum - startNum];
+
+            for (int i = 0; i < endNum - startNum; i++) {
+                String content = "BIKE" + (startNum + i);
+                content = Base64Utils.encodeToString(content.getBytes());
+                String path = "C:\\QRCode\\"+(startNum + i) + ".jpg";
+                MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
+                Map hints = new HashMap();
+                hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
+                BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, 400, 400, hints);
+                files[i] = new File(path);
+                if (!files[i].getParentFile().exists())
+                    if (!files[i].getParentFile().mkdirs())
+                        return null;
+
+                if (!files[i].exists()) {
+                    if (!files[i].createNewFile())
+                        return null;
+                }
+                MatrixToImageWriter.writeToFile(bitMatrix, "jpg", files[i]);
+            }
+
+            String fileName = "二维码-" + startNum + "-" + endNum + ".rar";
+
+            byte[] buffer = new byte[1024];
+
+            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+
+            ZipOutputStream out = new ZipOutputStream(byteArrayOutputStream);
+            for (File file : files) {
+                FileInputStream fis = new FileInputStream(file);
+                out.putNextEntry(new ZipEntry(file.getName()));
+                int len;
+                //读入需要下载的文件的内容，打包到zip文件
+                while ((len = fis.read(buffer)) > 0) {
+                    out.write(buffer, 0, len);
+                }
+                out.closeEntry();
+                fis.close();
+            }
+            out.close();
+
+            byte[] bytes = byteArrayOutputStream.toByteArray();
+            byteArrayOutputStream.close();
+            return responseStream(bytes, fileName);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private ResponseEntity<byte[]> responseStream(byte[] bytes, String fileName) {
