@@ -7,6 +7,7 @@ import com.yk.service.DepositRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.yk.Utils.RandomUtils.randomId;
@@ -29,6 +30,11 @@ public class DepositRecordServiceImpl implements DepositRecordService {
     @Override
     public List<DepositRecord> searchAllDepositRecord() throws Exception {
         return depositRecordDao.selectTable();
+    }
+
+    @Override
+    public List<DepositRecord> searchAllDateDepositRecord(Date startTime, Date endTime) throws Exception {
+        return depositRecordDao.selectDate(startTime,endTime);
     }
 
     @Override

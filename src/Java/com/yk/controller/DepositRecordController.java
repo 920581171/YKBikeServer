@@ -3,6 +3,7 @@ package com.yk.controller;
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.DepositRecordServiceImpl;
 import com.yk.impl.UserInfoServiceImpl;
+import com.yk.pojo.BikeRecord;
 import com.yk.pojo.DepositRecord;
 import com.yk.pojo.UserInfo;
 import io.swagger.annotations.Api;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +35,20 @@ public class DepositRecordController {
     public String findDepositRecordByUserId(@RequestParam("userId") String userId) {
         try {
             List<DepositRecord> depositRecords = depositRecordService.searchDepositRecordByUserId(userId);
+            return GsonUtils.responseObjectJson(depositRecords != null, depositRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ApiOperation(value = "根据时间范围查找所有押金记录", httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/findAllDateDepositRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String findAllDateDepositRecord(@RequestParam("startTime")String startTime,@RequestParam("endTime") String endTime) {
+        try {
+            DateFormat format = SimpleDateFormat.getDateInstance();
+            List<DepositRecord> depositRecords = depositRecordService.searchAllDateDepositRecord(format.parse(startTime),format.parse(endTime));
             return GsonUtils.responseObjectJson(depositRecords != null, depositRecords);
         } catch (Exception e) {
             e.printStackTrace();

@@ -6,6 +6,7 @@ import com.yk.service.BikeRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.yk.Utils.RandomUtils.randomId;
@@ -44,6 +45,11 @@ public class BikeRecordServiceImpl implements BikeRecordService {
     @Override
     public List<BikeRecord> searchAllBikeRecord() throws Exception {
         return bikeRecordDao.selectTable();
+    }
+
+    @Override
+    public List<BikeRecord> searchAllDate(Date startTime, Date endTime) throws Exception {
+        return bikeRecordDao.selectDate(startTime,endTime);
     }
 
     @Override

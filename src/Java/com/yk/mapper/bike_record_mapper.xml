@@ -47,6 +47,18 @@
         where ${column} = #{property}
     </select>
 
+    <select id="selectDate" resultMap="resultMap">
+        select *
+        from bike_record
+        where create_time &gt;= #{startTime} and create_time &lt;= #{endTime}
+    </select>
+
+    <select id="selectLike" resultMap="resultMap">
+        select *
+        from bike_record
+        where ${column} like '%#{property}%'
+    </select>
+
     <select id="selectTable" resultMap="resultMap">
         select *
         from bike_record

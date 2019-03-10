@@ -32,6 +32,18 @@
         where ${column} = #{property} order by create_time desc;
     </select>
 
+    <select id="selectDate" resultMap="resultMap">
+        select *
+        from deposit_record
+        where create_time &gt;= #{startTime} and create_time &lt;= #{endTime}
+    </select>
+
+    <select id="selectLike" resultMap="resultMap">
+        select *
+        from deposit_record
+        where ${column} like '%#{property}%'
+    </select>
+
     <select id="selectTable" resultMap="resultMap">
         select *
         from deposit_record order by create_time desc;

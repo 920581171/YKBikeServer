@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.websocket.server.PathParam;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -93,6 +95,20 @@ public class BikeRecordController {
     public String findAllBikeRecord() {
         try {
             List<BikeRecord> bikeRecords = bikeRecordService.searchAllBikeRecord();
+            return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ApiOperation(value = "根据时间范围查找所有记录", httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/findAllDateBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String findAllDateBikeRecord(@RequestParam("startTime")String startTime,@RequestParam("endTime") String endTime) {
+        try {
+            DateFormat format = SimpleDateFormat.getDateInstance();
+            List<BikeRecord> bikeRecords = bikeRecordService.searchAllDate(format.parse(startTime),format.parse(endTime));
             return GsonUtils.responseObjectJson(bikeRecords != null, bikeRecords);
         } catch (Exception e) {
             e.printStackTrace();

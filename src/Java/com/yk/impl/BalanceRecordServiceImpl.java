@@ -6,6 +6,7 @@ import com.yk.service.BalanceRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.yk.Utils.RandomUtils.randomId;
@@ -28,6 +29,11 @@ public class BalanceRecordServiceImpl implements BalanceRecordService {
     @Override
     public List<BalanceRecord> searchAllBalanceRecord() throws Exception {
         return balanceRecordDao.selectTable();
+    }
+
+    @Override
+    public List<BalanceRecord> searchAllDateBalanceRecord(Date startTime, Date endTime) throws Exception {
+        return balanceRecordDao.selectDate(startTime, endTime);
     }
 
     @Override

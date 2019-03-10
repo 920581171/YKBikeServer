@@ -2,6 +2,7 @@ package com.yk.service;
 
 import com.yk.pojo.BalanceRecord;
 
+import java.util.Date;
 import java.util.List;
 
 public interface BalanceRecordService {
@@ -10,6 +11,8 @@ public interface BalanceRecordService {
     List<BalanceRecord> searchBalanceRecordByUserId(String userId) throws Exception;
 
     List<BalanceRecord> searchAllBalanceRecord() throws Exception;
+
+    List<BalanceRecord> searchAllDateBalanceRecord(Date startTime, Date endTime) throws Exception;
 
     List<BalanceRecord> queryPageBalanceRecord(int pageIndex, int pageSize) throws Exception;
 

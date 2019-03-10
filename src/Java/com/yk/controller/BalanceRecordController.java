@@ -4,6 +4,7 @@ import com.yk.Utils.GsonUtils;
 import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.UserInfoServiceImpl;
 import com.yk.pojo.BalanceRecord;
+import com.yk.pojo.BikeRecord;
 import com.yk.pojo.UserInfo;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -14,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
@@ -45,6 +48,20 @@ public class BalanceRecordController {
     public String findAllBalanceRecord() {
         try {
             List<BalanceRecord> balanceRecords = balanceRecordService.searchAllBalanceRecord();
+            return GsonUtils.responseObjectJson(balanceRecords != null, balanceRecords);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return GsonUtils.responseErrorJson();
+        }
+    }
+
+    @ApiOperation(value = "根据时间范围查询所有余额记录", httpMethod = "POST")
+    @ResponseBody
+    @RequestMapping(value = "/findAllDateBalanceRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
+    public String findAllDateBalanceRecord(@RequestParam("startTime")String startTime,@RequestParam("endTime") String endTime) {
+        try {
+            DateFormat format = SimpleDateFormat.getDateInstance();
+            List<BalanceRecord> balanceRecords = balanceRecordService.searchAllDateBalanceRecord(format.parse(startTime),format.parse(endTime));
             return GsonUtils.responseObjectJson(balanceRecords != null, balanceRecords);
         } catch (Exception e) {
             e.printStackTrace();
