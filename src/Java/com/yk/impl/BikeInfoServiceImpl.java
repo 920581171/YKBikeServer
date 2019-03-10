@@ -40,6 +40,7 @@ public class BikeInfoServiceImpl implements BikeInfoService {
             bikeInfoDao.update(bikeInfo);
         } else {
             bikeInfo = new BikeInfo()
+                    .setUserId("")
                     .setBikeId(bikeId)
                     .setLatitude(latitude)
                     .setLongitude(longitude)
