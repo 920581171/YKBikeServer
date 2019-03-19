@@ -64,10 +64,11 @@ public class BikeInfoController {
     @ApiOperation(value = "添加自行车信息", httpMethod = "POST")
     @RequestMapping(value = "/addBikeInfo", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBikeInfo(@RequestParam("bikeId") String bikeId,
+                              @RequestParam("bikeType") String bikeType,
                               @RequestParam("latitude") double latitude,
                               @RequestParam("longitude") double longitude) {
         try {
-            return GsonUtils.responseSimpleJson(bikeInfoService.addBikeInfo(bikeId, latitude, longitude) > 0);
+            return GsonUtils.responseSimpleJson(bikeInfoService.addBikeInfo(bikeId,bikeType, latitude, longitude) > 0);
         } catch (Exception e) {
             e.printStackTrace();
             return GsonUtils.responseErrorJson();

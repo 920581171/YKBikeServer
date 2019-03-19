@@ -1,5 +1,6 @@
 package com.yk.controller;
 
+import com.google.gson.JsonObject;
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
 import com.google.zxing.MultiFormatWriter;
@@ -283,17 +284,19 @@ public class CommonController {
     @ApiOperation(value = "批量生成二维码", httpMethod = "GET")
     @RequestMapping(value = "/createQRCode")
     @ResponseBody
-    public ResponseEntity<byte[]> createQRCode(@RequestParam("startNum") int startNum,@RequestParam("endNum") int endNum) {
+    public ResponseEntity<byte[]> createQRCode(@RequestParam("startNum") int startNum,@RequestParam("endNum") int endNum,@RequestParam("bikeType") String bikeType) {
         try {
 
             File[] files = new File[endNum - startNum];
 
             for (int i = 0; i < endNum - startNum; i++) {
-                String content = "BIKE" + (startNum + i);
-                content = Base64Utils.encodeToString(content.getBytes());
+                JsonObject jsonObject = new JsonObject();
+                jsonObject.addProperty("bikeId","BIKE" + (startNum + i));
+                jsonObject.addProperty("bikeType",bikeType);
+                String content = Base64Utils.encodeToString(jsonObject.toString().getBytes());
                 String path = "C:\\QRCode\\"+(startNum + i) + ".jpg";
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                Map hints = new HashMap();
+                Map<EncodeHintType,String> hints = new HashMap<>();
                 hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
                 BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, 400, 400, hints);
                 files[i] = new File(path);
@@ -325,6 +328,7 @@ public class CommonController {
                 }
                 out.closeEntry();
                 fis.close();
+                file.delete();
             }
             out.close();
 

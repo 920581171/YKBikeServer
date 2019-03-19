@@ -4,6 +4,7 @@ public class BikeInfo {
     private int id;
     private String userId;
     private String bikeId;
+    private String bikeType;
     private double latitude;
     private double longitude;
     private float mileage;
@@ -33,6 +34,15 @@ public class BikeInfo {
 
     public BikeInfo setBikeId(String bikeId) {
         this.bikeId = bikeId;
+        return this;
+    }
+
+    public String getBikeType() {
+        return bikeType;
+    }
+
+    public BikeInfo setBikeType(String bikeType) {
+        this.bikeType = bikeType;
         return this;
     }
 

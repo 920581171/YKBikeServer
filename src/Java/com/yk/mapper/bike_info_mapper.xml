@@ -9,6 +9,7 @@
         <!-- 用result属性来映射非主键字段 -->
         <result property="userId" column="user_id"/>
         <result property="bikeId" column="bike_id"/>
+        <result property="bikeType" column="bike_type"/>
         <result property="latitude" column="latitude"/>
         <result property="longitude" column="longitude"/>
         <result property="mileage" column="mileage"/>
@@ -18,6 +19,7 @@
     <parameterMap id="parameterMap" type="com.yk.pojo.BikeInfo">
         <parameter property="userId" resultMap="resultMap"/>
         <parameter property="bikeId" resultMap="resultMap"/>
+        <parameter property="bikeType" resultMap="resultMap"/>
         <parameter property="latitude" resultMap="resultMap"/>
         <parameter property="longitude" resultMap="resultMap"/>
         <parameter property="mileage" resultMap="resultMap"/>
@@ -59,15 +61,16 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        bike_info(`_id`,user_id,bike_id,latitude,longitude,mileage,fix)
+        bike_info(`_id`,user_id,bike_id,bike_type,latitude,longitude,mileage,fix)
         values
-        (null,#{userId},#{bikeId},#{latitude},#{longitude},#{mileage},#{fix})
+        (null,#{userId},#{bikeId},#{bikeType},#{latitude},#{longitude},#{mileage},#{fix})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
         update
             bike_info
         set
+            bike_type = #{bikeType},
             user_id   = #{userId},
             latitude  = #{latitude},
             longitude = #{longitude},

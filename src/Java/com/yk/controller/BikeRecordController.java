@@ -4,7 +4,6 @@ package com.yk.controller;
 import com.yk.Utils.GsonUtils;
 import com.yk.impl.*;
 import com.yk.pojo.*;
-import com.yk.service.BikeRecordService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.websocket.server.PathParam;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
 
 @Api(description = "记录相关")
@@ -36,6 +35,8 @@ public class BikeRecordController {
     BalanceRecordServiceImpl balanceRecordService;
     @Autowired
     ScoreRecordServiceImpl scoreRecordService;
+    @Autowired
+    BikeTypeServiceImpl bikeTypeService;
 
     @ApiOperation(value = "查找正在骑行的记录", httpMethod = "POST")
     @ResponseBody
@@ -133,7 +134,8 @@ public class BikeRecordController {
     @ApiOperation(value = "添加新记录", httpMethod = "POST")
     @RequestMapping(value = "/addBikeRecord", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String addBikeRecord(@RequestParam("userId") String userId,
-                                @RequestParam("bikeId") String bikeId) {
+                                @RequestParam("bikeId") String bikeId,
+                                @RequestParam("bikeType") String bikeType) {
 
         try {
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeId);
@@ -141,6 +143,7 @@ public class BikeRecordController {
                 BikeRecord bikeRecord = new BikeRecord()
                         .setUserId(userId)
                         .setBikeId(bikeId)
+                        .setBikeType(bikeType)
                         .setCharge(0f)
                         .setMileage(0f)
                         .setCreateTime(new Date(System.currentTimeMillis()))
@@ -163,6 +166,7 @@ public class BikeRecordController {
     public String updateBikeRecord(@RequestParam("orderId") String orderId,
                                    @RequestParam("userId") String userId,
                                    @RequestParam("bikeId") String bikeId,
+                                   @RequestParam("bikeType") String bikeType,
                                    @RequestParam("charge") float charge,
                                    @RequestParam("mileage") float mileage,
                                    @RequestParam("endTime") long endTime,
@@ -173,6 +177,7 @@ public class BikeRecordController {
             bikeRecord.setOrderId(orderId)
                     .setUserId(userId)
                     .setBikeId(bikeId)
+                    .setBikeId(bikeType)
                     .setCharge(charge)
                     .setMileage(mileage)
                     .setEndTime(new Date(endTime))
@@ -189,8 +194,8 @@ public class BikeRecordController {
     @ApiOperation(value = "结束骑行", httpMethod = "POST")
     @RequestMapping(value = "/finishBike", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public String finishBike(@RequestParam("orderId") String orderId, @RequestParam("latitude") double latitude, @RequestParam("longitude") double longitude) {
-
         try {
+            LinkedHashMap<String,Float> unitPrice = bikeTypeService.getMapBikeTypeUnitPrice();
             BikeRecord bikeRecord = bikeRecordService.searchOrderId(orderId);
             BikeInfo bikeInfo = bikeInfoService.searchBikeId(bikeRecord.getBikeId());
             UserInfo userInfo = userInfoService.searchUserId(bikeRecord.getUserId());
@@ -199,6 +204,7 @@ public class BikeRecordController {
                 long endTime = System.currentTimeMillis();
 
                 float charge = (endTime - createTime) / 1000f / 60f / 10f;
+                charge = charge * unitPrice.get(bikeInfo.getBikeType());
                 charge = (float) (Math.round(charge * 100)) / 100;
 
                 bikeRecord.setOrderId(orderId)

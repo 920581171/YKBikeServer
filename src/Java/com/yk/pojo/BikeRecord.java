@@ -7,6 +7,7 @@ public class BikeRecord {
     private String orderId;
     private String userId;
     private String bikeId;
+    private String bikeType;
     private float charge;
     private float mileage;
     private Date createTime;
@@ -46,6 +47,15 @@ public class BikeRecord {
 
     public BikeRecord setBikeId(String bikeId) {
         this.bikeId = bikeId;
+        return this;
+    }
+
+    public String getBikeType() {
+        return bikeType;
+    }
+
+    public BikeRecord setBikeType(String bikeType) {
+        this.bikeType = bikeType;
         return this;
     }
 

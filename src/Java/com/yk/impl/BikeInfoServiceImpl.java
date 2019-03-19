@@ -29,11 +29,12 @@ public class BikeInfoServiceImpl implements BikeInfoService {
     }
 
     @Override
-    public int addBikeInfo(String bikeId, double latitude, double longitude) throws Exception {
+    public int addBikeInfo(String bikeId,String bikeType, double latitude, double longitude) throws Exception {
 
         BikeInfo bikeInfo = searchBikeId(bikeId);
 
         if (searchBikeId(bikeId) != null) {
+            bikeInfo.setBikeType(bikeType);
             bikeInfo.setUserId("");
             bikeInfo.setLatitude(latitude);
             bikeInfo.setLongitude(longitude);
@@ -42,6 +43,7 @@ public class BikeInfoServiceImpl implements BikeInfoService {
             bikeInfo = new BikeInfo()
                     .setUserId("")
                     .setBikeId(bikeId)
+                    .setBikeType(bikeType)
                     .setLatitude(latitude)
                     .setLongitude(longitude)
                     .setMileage(0)

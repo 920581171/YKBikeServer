@@ -10,6 +10,7 @@
         <result property="orderId" column="order_id"/>
         <result property="userId" column="user_id"/>
         <result property="bikeId" column="bike_id"/>
+        <result property="bikeType" column="bike_type"/>
         <result property="charge" column="charge"/>
         <result property="mileage" column="mileage"/>
         <result property="createTime" column="create_time"/>
@@ -21,6 +22,7 @@
         <parameter property="orderId" resultMap="resultMap"/>
         <parameter property="userId" resultMap="resultMap"/>
         <parameter property="bikeId" resultMap="resultMap"/>
+        <parameter property="bikeType" resultMap="resultMap"/>
         <parameter property="charge" resultMap="resultMap"/>
         <parameter property="mileage" resultMap="resultMap"/>
         <parameter property="createTime" resultMap="resultMap"/>
@@ -85,9 +87,9 @@
             SELECT LAST_INSERT_ID()
         </selectKey>
         insert into
-        bike_record(`_id`,order_id,user_id,bike_id,charge,mileage,create_time,end_time,order_status)
+        bike_record(`_id`,order_id,user_id,bike_id,bike_type,charge,mileage,create_time,end_time,order_status)
         values
-        (null,#{orderId},#{userId},#{bikeId},#{charge},#{mileage},#{createTime},#{endTime},#{orderStatus})
+        (null,#{orderId},#{userId},#{bikeId},#{bikeType},#{charge},#{mileage},#{createTime},#{endTime},#{orderStatus})
     </insert>
 
     <update id="update" parameterMap="parameterMap">
@@ -95,6 +97,7 @@
             bike_record
         set user_id      = #{userId},
             bike_id      = #{bikeId},
+            bike_type      = #{bikeType},
             charge       = #{charge},
             mileage      = #{mileage},
             create_time  = #{createTime},
