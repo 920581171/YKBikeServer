@@ -311,7 +311,7 @@ public class CommonController {
                 MatrixToImageWriter.writeToFile(bitMatrix, "jpg", files[i]);
             }
 
-            String fileName = "二维码-" + startNum + "-" + endNum + ".rar";
+            String fileName = "二维码-" + startNum + "-" + endNum + ".zip";
 
             byte[] buffer = new byte[1024];
 
