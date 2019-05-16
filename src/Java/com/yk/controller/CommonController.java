@@ -9,6 +9,7 @@ import com.yk.Utils.ExcelUtil;
 import com.yk.Utils.GsonUtils;
 import com.yk.Utils.ImageUtils;
 import com.yk.Utils.MatrixToImageWriter;
+import com.yk.constant.Consts;
 import com.yk.impl.BalanceRecordServiceImpl;
 import com.yk.impl.BikeRecordServiceImpl;
 import com.yk.impl.DepositRecordServiceImpl;
@@ -64,10 +65,10 @@ public class CommonController {
     @ApiOperation(value = "上传头像", httpMethod = "POST")
     @RequestMapping(value = "/uploadAvatar", method = RequestMethod.POST)
     public String uploadAvatar(@RequestParam("file") MultipartFile original, @RequestParam("id") String id) {
-        String[] paths = {"C:\\Avatar\\Source\\" + id + ".jpg",
-                "C:\\Avatar\\High\\" + id + ".jpg",
-                "C:\\Avatar\\Middle\\" + id + ".jpg",
-                "C:\\Avatar\\Low\\" + id + ".jpg"};
+        String[] paths = {Consts.AVATAR_PATH + File.separator + "Source" + File.separator + id + ".jpg",
+                Consts.AVATAR_PATH + File.separator + "High" + File.separator + id + ".jpg",
+                Consts.AVATAR_PATH + File.separator + "Middle" + File.separator + id + ".jpg",
+                Consts.AVATAR_PATH + File.separator + "Low" + File.separator + id + ".jpg"};
         int[] size = {0, 512, 256, 128};
 
         try {
@@ -103,9 +104,9 @@ public class CommonController {
         try {
             File file;
             if (level == null || "".equals(level))
-                file = new File("C:\\Avatar\\Source\\" + id + ".jpg");
+                file = new File(Consts.AVATAR_PATH + File.separator + "Source" + File.separator + id + ".jpg");
             else
-                file = new File("C:\\Avatar\\" + level + "\\" + id + ".jpg");
+                file = new File(Consts.AVATAR_PATH + File.separator + level + File.separator + id + ".jpg");
             InputStream in = new FileInputStream(file);
             byte[] bytes = new byte[in.available()];
             in.read(bytes);
@@ -284,19 +285,19 @@ public class CommonController {
     @ApiOperation(value = "批量生成二维码", httpMethod = "GET")
     @RequestMapping(value = "/createQRCode")
     @ResponseBody
-    public ResponseEntity<byte[]> createQRCode(@RequestParam("startNum") int startNum,@RequestParam("endNum") int endNum,@RequestParam("bikeType") String bikeType) {
+    public ResponseEntity<byte[]> createQRCode(@RequestParam("startNum") int startNum, @RequestParam("endNum") int endNum, @RequestParam("bikeType") String bikeType) {
         try {
 
             File[] files = new File[endNum - startNum];
 
             for (int i = 0; i < endNum - startNum; i++) {
                 JsonObject jsonObject = new JsonObject();
-                jsonObject.addProperty("bikeId","BIKE" + (startNum + i));
-                jsonObject.addProperty("bikeType",bikeType);
+                jsonObject.addProperty("bikeId", "BIKE" + (startNum + i));
+                jsonObject.addProperty("bikeType", bikeType);
                 String content = Base64Utils.encodeToString(jsonObject.toString().getBytes());
-                String path = "C:\\QRCode\\"+(startNum + i) + ".jpg";
+                String path = Consts.AVATAR_PATH + File.separator + (startNum + i) + ".jpg";
                 MultiFormatWriter multiFormatWriter = new MultiFormatWriter();
-                Map<EncodeHintType,String> hints = new HashMap<>();
+                Map<EncodeHintType, String> hints = new HashMap<>();
                 hints.put(EncodeHintType.CHARACTER_SET, "UTF-8");
                 BitMatrix bitMatrix = multiFormatWriter.encode(content, BarcodeFormat.QR_CODE, 400, 400, hints);
                 files[i] = new File(path);

@@ -13,6 +13,10 @@ public class Consts {
     public static final int WEBSOCKET_TYPE_LOCATION = 2;
     public static final int WEBSOCKET_TYPE_STOP_LOCATION = 3;
 
+    public static final String ROOT_PATH = System.getProperty("root");
+    public static final String QR_CODE_PATH = ROOT_PATH + "QRCode";
+    public static final String AVATAR_PATH = ROOT_PATH + "AVATAR";
+
     public static final String LOGIN_TYPE_PHONE = "typePhone";
     public static final String LOGIN_TYPE_USER = "typeUser";
     public static final String LOGIN_TYPE_ADMIN = "typeAdmin";
