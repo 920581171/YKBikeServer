@@ -21,7 +21,7 @@
         <property name="suffix" value=".jsp"/>
     </bean>
     <!--添加swagger配置-->
-    <bean class="com.yk.bike.utils.SwaggerConfig"/>
+    <bean class="com.yk.bike.SwaggerConfig"/>
     <mvc:resources mapping="swagger-ui.html" location="classpath:/META-INF/resources/"/>
     <mvc:resources mapping="/webjars/**" location="classpath:/META-INF/resources/webjars/"/>
     <!--文件上传解析-->

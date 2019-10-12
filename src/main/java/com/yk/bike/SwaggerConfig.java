@@ -1,4 +1,4 @@
-package com.yk.bike.utils;
+package com.yk.bike;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
