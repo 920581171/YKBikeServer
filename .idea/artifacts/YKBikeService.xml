@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="war" name="YKBikeService">
-    <output-path>$PROJECT_DIR$/..</output-path>
-    <root id="archive" name="YKBikeService.war">
-      <element id="artifact" artifact-name="YKBikeService:war exploded" />
-    </root>
-  </artifact>
-</component>
