@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yk.bike.mapper.MessageBroadMapper">
+    <resultMap type="com.yk.bike.pojo.MessageBroad" id="resultMap">
+        <!-- 用id属性来映射主键字段 -->
+        <id property="id" column="_id"/>
+        <!-- 用result属性来映射非主键字段 -->
+        <result property="messageId" column="message_id"/>
+        <result property="senderId" column="sender_id"/>
+        <result property="handlerId" column="handler_id"/>
+        <result property="handlerName" column="handler_name"/>
+        <result property="messageContent" column="message_content"/>
+        <result property="messageReply" column="message_reply"/>
+        <result property="messageStatus" column="message_status"/>
+        <result property="messageType" column="message_type"/>
+    </resultMap>
+
+    <parameterMap id="parameterMap" type="com.yk.bike.pojo.MessageBroad">
+        <parameter property="messageId" resultMap="resultMap"/>
+        <parameter property="senderId" resultMap="resultMap"/>
+        <parameter property="handlerId" resultMap="resultMap"/>
+        <parameter property="handlerName" resultMap="resultMap"/>
+        <parameter property="messageContent" resultMap="resultMap"/>
+        <parameter property="messageReply" resultMap="resultMap"/>
+        <parameter property="messageStatus" resultMap="resultMap"/>
+        <parameter property="messageType" resultMap="resultMap"/>
+
+    </parameterMap>
+
+    <select id="selectOne" resultMap="resultMap">
+        select *
+        from message_board
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectList" resultMap="resultMap">
+        select *
+        from message_board
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectByType" resultMap="resultMap">
+        select *
+        from message_board
+        where ${column} = #{property}
+          and message_type = #{type}
+    </select>
+
+    <select id="selectTable" resultMap="resultMap">
+        select *
+        from message_board
+    </select>
+
+    <select id="queryPage" resultMap="resultMap">
+        select *
+        from message_board
+        where ${column} = #{property}
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="queryPageTable" resultMap="resultMap">
+        select *
+        from message_board
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <insert id="insert" parameterMap="parameterMap">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        message_board(`_id`,message_id,sender_id,handler_id,handler_name,message_content,message_reply,message_status,message_type)
+        values
+        (null,#{messageId},#{senderId},#{handlerId},#{handlerName},#{messageContent},#{messageReply},#{messageStatus},#{messageType})
+    </insert>
+
+    <update id="update" parameterMap="parameterMap">
+        update
+            message_board
+        set sender_id       = #{senderId},
+            handler_id      = #{handlerId},
+            handler_name    = #{handlerName},
+            message_content = #{messageContent},
+            message_reply   = #{messageReply},
+            message_status  = #{messageStatus},
+            message_type    = #{messageType}
+        where message_id = #{messageId};
+    </update>
+
+    <delete id="delete" parameterMap="parameterMap">
+        delete
+        from message_board
+        where message_id = #{messageId}
+    </delete>
+</mapper>

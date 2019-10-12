@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.yk.bike.mapper.BikeInfoMapper">
+
+    <resultMap type="com.yk.bike.pojo.BikeInfo" id="resultMap">
+        <!-- 用id属性来映射主键字段 -->
+        <id property="id" column="_id"/>
+        <!-- 用result属性来映射非主键字段 -->
+        <result property="userId" column="user_id"/>
+        <result property="bikeId" column="bike_id"/>
+        <result property="bikeType" column="bike_type"/>
+        <result property="latitude" column="latitude"/>
+        <result property="longitude" column="longitude"/>
+        <result property="mileage" column="mileage"/>
+        <result property="fix" column="fix"/>
+    </resultMap>
+
+    <parameterMap id="parameterMap" type="com.yk.bike.pojo.BikeInfo">
+        <parameter property="userId" resultMap="resultMap"/>
+        <parameter property="bikeId" resultMap="resultMap"/>
+        <parameter property="bikeType" resultMap="resultMap"/>
+        <parameter property="latitude" resultMap="resultMap"/>
+        <parameter property="longitude" resultMap="resultMap"/>
+        <parameter property="mileage" resultMap="resultMap"/>
+        <parameter property="fix" resultMap="resultMap"/>
+    </parameterMap>
+
+    <select id="selectOne" resultMap="resultMap">
+        select *
+        from bike_info
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectList" resultMap="resultMap">
+        select *
+        from bike_info
+        where ${column} = #{property}
+    </select>
+
+    <select id="selectTable" resultMap="resultMap">
+        select *
+        from bike_info
+    </select>
+
+    <select id="queryPage" resultMap="resultMap">
+        select *
+        from bike_info
+        where ${column} = #{property}
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <select id="queryPageTable" resultMap="resultMap">
+        select *
+        from bike_info
+        limit ${(pageIndex-1) * pageSize},#{pageSize}
+    </select>
+
+    <insert id="insert" parameterMap="parameterMap">
+        <selectKey resultType="java.lang.Integer" order="AFTER" keyProperty="id">
+            SELECT LAST_INSERT_ID()
+        </selectKey>
+        insert into
+        bike_info(`_id`,user_id,bike_id,bike_type,latitude,longitude,mileage,fix)
+        values
+        (null,#{userId},#{bikeId},#{bikeType},#{latitude},#{longitude},#{mileage},#{fix})
+    </insert>
+
+    <update id="update" parameterMap="parameterMap">
+        update
+            bike_info
+        set
+            bike_type = #{bikeType},
+            user_id   = #{userId},
+            latitude  = #{latitude},
+            longitude = #{longitude},
+            mileage   = #{mileage},
+            fix = #{fix}
+        where
+            bike_id = #{bikeId}
+    </update>
+
+    <delete id="delete" parameterMap="parameterMap">
+        delete from bike_info
+        where bike_id = #{bikeId}
+    </delete>
+</mapper>
