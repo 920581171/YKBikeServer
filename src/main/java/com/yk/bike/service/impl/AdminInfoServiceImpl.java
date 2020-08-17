@@ -1,6 +1,6 @@
 package com.yk.bike.service.impl;
 
-import com.yk.bike.controller.WebSocketHandler;
+import com.yk.bike.websocket.WebSocketHandler;
 import com.yk.bike.dao.AdminInfoDao;
 import com.yk.bike.pojo.AdminInfo;
 import com.yk.bike.service.AdminInfoService;

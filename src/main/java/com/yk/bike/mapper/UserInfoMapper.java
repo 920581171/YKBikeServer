@@ -1,9 +1,11 @@
 package com.yk.bike.mapper;
 
 import com.yk.bike.pojo.UserInfo;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 
+@Mapper
 public interface UserInfoMapper extends BaseMapper<UserInfo> {
     String COLUMN_USER_ID = "user_id";
     String COLUMN_USER_NAME="user_name";

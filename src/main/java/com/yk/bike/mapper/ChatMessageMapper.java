@@ -1,10 +1,12 @@
 package com.yk.bike.mapper;
 
 import com.yk.bike.pojo.ChatMessage;
+import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
+@Mapper
 public interface ChatMessageMapper extends BaseMapper<ChatMessage> {
     String COLUMN_CHAT_ID = "chat_id";
     String COLUMN_FROM_ID = "from_id";

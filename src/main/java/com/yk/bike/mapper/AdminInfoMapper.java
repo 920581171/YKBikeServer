@@ -1,7 +1,9 @@
 package com.yk.bike.mapper;
 
 import com.yk.bike.pojo.AdminInfo;
+import org.apache.ibatis.annotations.Mapper;
 
+@Mapper
 public interface AdminInfoMapper extends BaseMapper<AdminInfo> {
     String COLUMN_ADMIN_ID = "admin_id";
     String COLUMN_ADMIN_ACCOUNT = "admin_account";
